@@ -13,7 +13,7 @@
 static NSString *const MenuItemTitleNewFileFromCustomTemplate = @"New File from Custom Template…";
 static NSString *const MenuItemTitleFileFromCustomTemplate = @"File from Custom Template…";
 static NSString *const PluginNameAndCorrespondingDirectory = @"Stencil";
-
+static NSString *const FileTemplatesDirectoryPath = @"File Templates/Custom";
 static XcodeCustomFileTemplates *sharedPlugin;
 
 @interface NSObject (IDETemplate_Additions)
@@ -21,6 +21,7 @@ static XcodeCustomFileTemplates *sharedPlugin;
 @end
 
 @interface XcodeCustomFileTemplates()
+@property (nonatomic, strong) NSBundle *pluginBundle;
 @property (nonatomic, assign) BOOL shouldShowNewDocumentCustomTemplatesOnly;
 @property (nonatomic, weak) NSMenuItem *menuItemNewFile;
 @property (nonatomic, weak) NSMenuItem *menuItemNewFromCustomTemplate;
@@ -34,7 +35,7 @@ static XcodeCustomFileTemplates *sharedPlugin;
   NSString *currentApplicationName = [[NSBundle mainBundle] infoDictionary][@"CFBundleName"];
   if ([currentApplicationName isEqual:@"Xcode"]) {
     dispatch_once(&onceToken, ^{
-      sharedPlugin = [self new];
+      sharedPlugin = [[self alloc] initWithBundle:plugin];
     });
   }
 }
@@ -44,11 +45,12 @@ static XcodeCustomFileTemplates *sharedPlugin;
   return sharedPlugin;
 }
 
-- (instancetype)init
+- (id)initWithBundle:(NSBundle *)pluginBundle
 {
   if (!(self = [super init])) {
     return nil;
   }
+  self.pluginBundle = pluginBundle;
   
   NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"File"];
   [[menuItem submenu] itemWithTitle:@"New"];
@@ -67,7 +69,7 @@ static XcodeCustomFileTemplates *sharedPlugin;
 {
   NSString *projectRootPath = [self projectRootPath];
   NSString *stencilDirectory = [projectRootPath stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory];
-  NSString *customTemplatesDirectory = [stencilDirectory stringByAppendingPathComponent:@"File Templates/Custom"];
+  NSString *customTemplatesDirectory = [stencilDirectory stringByAppendingPathComponent:FileTemplatesDirectoryPath];
   
   NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:customTemplatesDirectory error:nil];
   for (NSString *fileOrDir in contents) {
@@ -145,6 +147,7 @@ static XcodeCustomFileTemplates *sharedPlugin;
 @interface NSObject (IDEAdditions)
 + (id)availableTemplatesOfTemplateKind:(id)kind;
 + (void)_processChildrenOfFilePath:(id)path enumerator:(id)enumerator;
+- (char)_testOrDeleteItems:(char)items useContextualMenuSelection:(char)selection;
 - (void)contextMenu_newDocument:(NSMenuItem *)item;
 - (void)newDocument:(NSMenuItem *)menuItem;
 @end
@@ -174,14 +177,13 @@ static XcodeCustomFileTemplates *sharedPlugin;
     BOOL isMappingModel = [[template valueForKey:@"templateName"] isEqualToString:@"Mapping Model"];
     return !isDataModel && !isMappingModel;
   }]];
-  return templates.count ? @[templates.firstObject] : @[];
+  return [[NSSet setWithArray:templates] allObjects];
 }
 
 + (void)_processChildrenOfFilePath:(id)path enumerator:(id)enumerator
 {
   if ([XcodeCustomFileTemplates sharedPlugin].shouldShowNewDocumentCustomTemplatesOnly && [[path valueForKey:@"pathString"] containsString: @"Templates"]) {
-    NSLog(@"ignoring path: %@", path);
-    NSString *pathString = [[XcodeCustomFileTemplates projectRootPath] stringByAppendingPathComponent:@"Stencil"];
+    NSString *pathString = [[XcodeCustomFileTemplates projectRootPath] stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory];
     SEL factorySel = NSSelectorFromString(@"filePathForPathString:");
     path = objc_msgSend([path class], factorySel, pathString);
   }
@@ -209,6 +211,94 @@ static XcodeCustomFileTemplates *sharedPlugin;
   dzlSuper(contextMenu_newDocument:menuItem);
 }
 
+- (char)_testOrDeleteItems:(char)items useContextualMenuSelection:(char)selection
+{
+  id group = [self valueForKey:@"_itemFromContextualClickedRows"];
+  if (![group isKindOfClass:NSClassFromString(@"IDEGroupNavigableItem")]) {
+    return 0;
+  }
+  
+  NSString *groupName = [group name];
+  groupName = [self input:@"Enter templte name" defaultValue:groupName];
+  if (!groupName) {
+    return 0;
+  }
+  groupName = [groupName stringByAppendingString:@".xctemplate"];
+  
+  NSString *targetPath = [[[XcodeCustomFileTemplates projectRootPath] stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory] stringByAppendingPathComponent:FileTemplatesDirectoryPath];
+  targetPath = [targetPath stringByAppendingPathComponent:groupName];
+  
+  NSArray *groupFileRefs = [group valueForKey:@"childRepresentedObjects"];
+
+  NSMutableArray *filePaths = [NSMutableArray new];
+  for (id fileRef in groupFileRefs) {
+    NSString *newFilePath = [self makeTemplateFromFileRef:fileRef withGroupName:groupName targetPath:targetPath];
+    [filePaths addObject:newFilePath];
+  }
+  
+  NSURL *sourceURL = [[XcodeCustomFileTemplates sharedPlugin].pluginBundle URLForResource:@"TemplateInfo" withExtension:@"plist"];
+  NSString *targetFilePath = [targetPath stringByAppendingPathComponent:@"TemplateInfo.plist"];
+  NSURL *targetURL = [NSURL fileURLWithPath:targetFilePath];
+  [[NSFileManager defaultManager] copyItemAtURL:sourceURL toURL:targetURL error:nil];
+  
+  NSArray *filesWithoutXIB = [filePaths filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSString *filePath, NSDictionary *bindings) {
+    return ![filePath hasSuffix:@".xib"];
+  }]];
+  NSArray *filesOnlyXIB = [filePaths filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSString *filePath, NSDictionary *bindings) {
+    return [filePath hasSuffix:@".xib"];
+  }]];
+  
+  [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFiles:filesWithoutXIB];
+  [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFiles:filesOnlyXIB];
+  
+  return dzlSuper(_testOrDeleteItems:items useContextualMenuSelection:selection);
+}
+
+- (NSString *)makeTemplateFromFileRef:(id)fileRef withGroupName:(NSString *)groupName targetPath:(NSString *)targetPath
+{
+  NSString *sourcePath = [fileRef valueForKeyPath:@"reference.resolvedAbsolutePath"];
+  NSURL *sourceURL = [NSURL fileURLWithPath:sourcePath];
+  
+  NSString *filename = [sourceURL lastPathComponent];
+  NSRange rangeOfDot = [filename rangeOfString:@"."];
+  
+  NSString *fileExtension = [filename substringFromIndex:rangeOfDot.location];
+  
+  
+  [[NSFileManager defaultManager] createDirectoryAtPath:targetPath withIntermediateDirectories:YES attributes:nil error:nil];
+  filename = [@"___FILEBASENAME___" stringByAppendingString:fileExtension];
+  targetPath = [targetPath stringByAppendingPathComponent:filename];
+  NSURL *targetURL = [NSURL fileURLWithPath:targetPath];
+  
+  NSError *error = nil;
+  BOOL success = [[NSFileManager defaultManager] copyItemAtURL:sourceURL toURL:targetURL error:&error];
+
+  return targetPath;
+}
+
+- (NSString *)input:(NSString *)prompt defaultValue:(NSString *)defaultValue
+{
+  NSAlert *alert = [NSAlert new];
+  alert.messageText = prompt;
+  [alert addButtonWithTitle:@"OK"];
+  [alert addButtonWithTitle:@"Cancel"];
+  alert.informativeText = @"";
+  
+  NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 200, 24)];
+  input.stringValue = defaultValue;
+  alert.accessoryView = input;
+  NSInteger button = [alert runModal];
+  if (button == NSAlertFirstButtonReturn) {
+    [input validateEditing];
+    return [input stringValue];
+  } else if (button == NSAlertSecondButtonReturn) {
+    return nil;
+  } else {
+    NSAssert1(NO, @"Invalid input dialog button %zd", button);
+    return nil;
+  }
+}
+
 @end
 
 
@@ -228,5 +318,25 @@ static XcodeCustomFileTemplates *sharedPlugin;
   [XcodeCustomFileTemplates sharedPlugin].shouldShowNewDocumentCustomTemplatesOnly = ([menuItem.title isEqualToString:MenuItemTitleFileFromCustomTemplate]);
   dzlSuper(newDocument:menuItem);
 }
+
+@end
+
+
+
+@implementation NSObject (PrintMethods)
+
++ (NSArray *)printMethods
+{
+  uint numberOfMethods;
+  Method *methods = class_copyMethodList(self, &numberOfMethods);
+  NSMutableArray *methodNames = [NSMutableArray new];
+  for (uint m = 0; m < numberOfMethods; m++) {
+    Method method = methods[m];
+    SEL name = method_getName(method);
+    [methodNames addObject:NSStringFromSelector(name)];
+  }
+  return methodNames.copy;
+}
+
 
 @end

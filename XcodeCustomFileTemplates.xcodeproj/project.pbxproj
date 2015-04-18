@@ -11,8 +11,8 @@
 		EA31BC3B1AE1AFDE00167EFD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA31BC3A1AE1AFDE00167EFD /* Foundation.framework */; };
 		EA31BC401AE1AFDE00167EFD /* XcodeCustomFileTemplates.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = EA31BC3F1AE1AFDE00167EFD /* XcodeCustomFileTemplates.xcscheme */; };
 		EA31BC431AE1AFDE00167EFD /* XcodeCustomFileTemplates.m in Sources */ = {isa = PBXBuildFile; fileRef = EA31BC421AE1AFDE00167EFD /* XcodeCustomFileTemplates.m */; };
-		EA4D96BB1AE1D7F60078D395 /* Additions in Resources */ = {isa = PBXBuildFile; fileRef = EA4D96BA1AE1D7F60078D395 /* Additions */; };
 		EA4D96BE1AE1D8C20078D395 /* NSObject+DZLObjcAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4D96BD1AE1D8C20078D395 /* NSObject+DZLObjcAdditions.m */; };
+		EA918CEC1AE2980300380453 /* TemplateInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA918CEB1AE2980300380453 /* TemplateInfo.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,12 +23,12 @@
 		EA31BC3F1AE1AFDE00167EFD /* XcodeCustomFileTemplates.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = XcodeCustomFileTemplates.xcscheme; path = XcodeCustomFileTemplates.xcodeproj/xcshareddata/xcschemes/XcodeCustomFileTemplates.xcscheme; sourceTree = SOURCE_ROOT; };
 		EA31BC411AE1AFDE00167EFD /* XcodeCustomFileTemplates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XcodeCustomFileTemplates.h; sourceTree = "<group>"; };
 		EA31BC421AE1AFDE00167EFD /* XcodeCustomFileTemplates.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XcodeCustomFileTemplates.m; sourceTree = "<group>"; tabWidth = 2; wrapsLines = 1; };
-		EA4D96BA1AE1D7F60078D395 /* Additions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Additions; sourceTree = "<group>"; };
 		EA4D96BC1AE1D8C20078D395 /* NSObject+DZLObjcAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DZLObjcAdditions.h"; sourceTree = "<group>"; };
 		EA4D96BD1AE1D8C20078D395 /* NSObject+DZLObjcAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DZLObjcAdditions.m"; sourceTree = "<group>"; };
 		EA4D96BF1AE1D9220078D395 /* DZLSuper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZLSuper.h; sourceTree = "<group>"; };
 		EA4D96C01AE1D94F0078D395 /* DZLSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZLSingleton.h; sourceTree = "<group>"; };
 		EA4D96C11AE1D9740078D395 /* DZLImplementationCombine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZLImplementationCombine.h; sourceTree = "<group>"; };
+		EA918CEB1AE2980300380453 /* TemplateInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +78,7 @@
 		EA31BC3C1AE1AFDE00167EFD /* XcodeCustomFileTemplates */ = {
 			isa = PBXGroup;
 			children = (
-				EA4D96BA1AE1D7F60078D395 /* Additions */,
+				EA918CEB1AE2980300380453 /* TemplateInfo.plist */,
 				EA31BC411AE1AFDE00167EFD /* XcodeCustomFileTemplates.h */,
 				EA31BC421AE1AFDE00167EFD /* XcodeCustomFileTemplates.m */,
 				EA31BC3D1AE1AFDE00167EFD /* Supporting Files */,
@@ -151,7 +151,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA4D96BB1AE1D7F60078D395 /* Additions in Resources */,
+				EA918CEC1AE2980300380453 /* TemplateInfo.plist in Resources */,
 				EA31BC401AE1AFDE00167EFD /* XcodeCustomFileTemplates.xcscheme in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
