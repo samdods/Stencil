@@ -11,10 +11,20 @@
 #import "XcodeCustomFileTemplates.h"
 
 @interface NSObject (IDEAdditions)
+- (void)loadView;
 - (char)_testOrDeleteItems:(char)items useContextualMenuSelection:(char)selection;
-- (void)contextMenu_newDocument:(NSMenuItem *)item;
 @end
 
+static __weak id sharedNavigator;
+
+@implementation XcodeCustomFileTemplates (IDEStructureNavigator)
+
++ (id)sharedNavigator
+{
+  return sharedNavigator;
+}
+
+@end
 
 
 @interface IDEStructureNavigator_Additions : NSObject
@@ -27,16 +37,28 @@
   dzl_implementationCombine(NSClassFromString(@"IDEStructureNavigator"), self, dzl_no_assert);
 }
 
-- (void)contextMenu_newDocument:(NSMenuItem *)menuItem
+- (void)loadView
 {
-  [XcodeCustomFileTemplates sharedPlugin].shouldShowNewDocumentCustomTemplatesOnly = ([menuItem.title isEqualToString:MenuItemTitleNewFileFromCustomTemplate]);
-  dzlSuper(contextMenu_newDocument:menuItem);
+  sharedNavigator = self;
+  dzlSuper(loadView);
+}
+
+- (id)projectNavigatorSelectedGroup
+{
+  id group = [self valueForKey:@"_itemFromContextualClickedRows"];
+  if ([group isKindOfClass:NSClassFromString(@"IDEGroupNavigableItem")]) {
+    return group;
+  }
+  return nil;
 }
 
 - (char)_testOrDeleteItems:(char)items useContextualMenuSelection:(char)selection
 {
-  id group = [self valueForKey:@"_itemFromContextualClickedRows"];
-  if (![group isKindOfClass:NSClassFromString(@"IDEGroupNavigableItem")]) {
+  id group = [self projectNavigatorSelectedGroup];
+  if (!group || ![XcodeCustomFileTemplates sharedPlugin].beginCreateTemplateFromGroup) {
+    if (!group) {
+      [XcodeCustomFileTemplates sharedPlugin].menuItemCreateTemplateFromGroup.action = nil;
+    }
     return dzlSuper(_testOrDeleteItems:items useContextualMenuSelection:selection);
   }
   
@@ -47,7 +69,7 @@
   }
   groupName = [groupName stringByAppendingString:@".xctemplate"];
   
-  NSString *targetPath = [[[XcodeCustomFileTemplates projectRootPath] stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory] stringByAppendingPathComponent:FileTemplatesDirectoryPath];
+  NSString *targetPath = [[[XcodeCustomFileTemplates sharedPlugin].projectRootPath stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory] stringByAppendingPathComponent:FileTemplatesDirectoryPath];
   targetPath = [targetPath stringByAppendingPathComponent:groupName];
   
   NSArray *groupFileRefs = [group valueForKey:@"childRepresentedObjects"];
@@ -85,7 +107,6 @@
   NSRange rangeOfDot = [filename rangeOfString:@"."];
   
   NSString *fileExtension = [filename substringFromIndex:rangeOfDot.location];
-  
   
   [[NSFileManager defaultManager] createDirectoryAtPath:targetPath withIntermediateDirectories:YES attributes:nil error:nil];
   filename = [@"___FILEBASENAME___" stringByAppendingString:fileExtension];

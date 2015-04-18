@@ -16,6 +16,7 @@
 + (void)_processChildrenOfFilePath:(id)path enumerator:(id)enumerator;
 @end
 
+
 @interface IDETemplateAdditions_Additions : NSObject
 @end
 
@@ -30,7 +31,7 @@
 {
   NSArray *templates = dzlSuper(availableTemplatesOfTemplateKind:kind);
   
-  if (![XcodeCustomFileTemplates sharedPlugin].shouldShowNewDocumentCustomTemplatesOnly) {
+  if (![XcodeCustomFileTemplates sharedPlugin].showCustomTemplatesOnly) {
     return templates;
   }
   
@@ -44,8 +45,8 @@
 
 + (void)_processChildrenOfFilePath:(id)path enumerator:(id)enumerator
 {
-  if ([XcodeCustomFileTemplates sharedPlugin].shouldShowNewDocumentCustomTemplatesOnly && [[path valueForKey:@"pathString"] containsString: @"Templates"]) {
-    NSString *pathString = [[XcodeCustomFileTemplates projectRootPath] stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory];
+  if ([XcodeCustomFileTemplates sharedPlugin].showCustomTemplatesOnly && [[path valueForKey:@"pathString"] containsString: @"Templates"]) {
+    NSString *pathString = [[XcodeCustomFileTemplates sharedPlugin].projectRootPath stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory];
     SEL factorySel = NSSelectorFromString(@"filePathForPathString:");
     path = objc_msgSend([path class], factorySel, pathString);
   }

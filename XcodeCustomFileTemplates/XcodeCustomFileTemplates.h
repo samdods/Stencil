@@ -13,19 +13,35 @@ FOUNDATION_EXPORT NSString *const MenuItemTitleFileFromCustomTemplate;
 FOUNDATION_EXPORT NSString *const PluginNameAndCorrespondingDirectory;
 FOUNDATION_EXPORT NSString *const FileTemplatesDirectoryPath;
 
-@interface XcodeCustomFileTemplates : NSObject
+
+@interface XcodeCustomFileTemplates : NSObject <NSMenuDelegate>
 
 + (instancetype)sharedPlugin;
 
-+ (BOOL)canCreateFromCustomTemplate;
+@property (nonatomic, readonly) BOOL canCreateFromCustomTemplate;
 
-+ (NSString *)projectRootPath;
+@property (nonatomic, readonly) NSString *projectRootPath;
 
 @property (nonatomic, strong, readonly) NSBundle *pluginBundle;
-
-@property (nonatomic, assign) BOOL shouldShowNewDocumentCustomTemplatesOnly;
 
 @property (nonatomic, weak) NSMenuItem *menuItemNewFile;
 @property (nonatomic, weak) NSMenuItem *menuItemNewFromCustomTemplate;
 
+@property (nonatomic, weak) NSMenuItem *menuItemDelete;
+@property (nonatomic, weak) NSMenuItem *menuItemCreateTemplateFromGroup;
+
+@property (nonatomic, readonly) BOOL showCustomTemplatesOnly;
+@property (nonatomic, readonly) BOOL beginCreateTemplateFromGroup;
+
+@end
+
+
+
+@interface XcodeCustomFileTemplates (IDEStructureNavigator)
++ (id)sharedNavigator;
+@end
+
+
+@interface NSObject (IDEStructureNavigator)
+- (id)projectNavigatorSelectedGroup;
 @end

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Sam Dods. All rights reserved.
 //
 
-#import "NSObject+Additions.h"
+#import "NSObject+StencilAdditions.h"
 #import <objc/runtime.h>
 
 @implementation NSObject (StencilAdditions)

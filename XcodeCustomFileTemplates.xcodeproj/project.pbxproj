@@ -11,13 +11,12 @@
 		EA31BC3B1AE1AFDE00167EFD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA31BC3A1AE1AFDE00167EFD /* Foundation.framework */; };
 		EA31BC401AE1AFDE00167EFD /* XcodeCustomFileTemplates.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = EA31BC3F1AE1AFDE00167EFD /* XcodeCustomFileTemplates.xcscheme */; };
 		EA31BC431AE1AFDE00167EFD /* XcodeCustomFileTemplates.m in Sources */ = {isa = PBXBuildFile; fileRef = EA31BC421AE1AFDE00167EFD /* XcodeCustomFileTemplates.m */; };
-		EA3EB1A81AE2D6F4009553F9 /* NSObject+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3EB1A71AE2D6F4009553F9 /* NSObject+Additions.m */; };
-		EA3EB1AB1AE2D78E009553F9 /* IDEApplicationCommandsAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3EB1AA1AE2D78E009553F9 /* IDEApplicationCommandsAdditions.m */; };
+		EA3EB1A81AE2D6F4009553F9 /* NSObject+StencilAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3EB1A71AE2D6F4009553F9 /* NSObject+StencilAdditions.m */; };
 		EA3EB1AE1AE2D861009553F9 /* IDETemplateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3EB1AD1AE2D861009553F9 /* IDETemplateAdditions.m */; };
 		EA3EB1B11AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3EB1B01AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m */; };
 		EA4D96BE1AE1D8C20078D395 /* NSObject+DZLObjcAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4D96BD1AE1D8C20078D395 /* NSObject+DZLObjcAdditions.m */; };
 		EA918CEC1AE2980300380453 /* TemplateInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA918CEB1AE2980300380453 /* TemplateInfo.plist */; };
-		EAB55BA41AE2D519001EBD12 /* NSMenuAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB55BA31AE2D519001EBD12 /* NSMenuAdditions.m */; };
+		EAB55BA41AE2D519001EBD12 /* NSMenu+StencilAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB55BA31AE2D519001EBD12 /* NSMenu+StencilAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,18 +27,18 @@
 		EA31BC3F1AE1AFDE00167EFD /* XcodeCustomFileTemplates.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = XcodeCustomFileTemplates.xcscheme; path = XcodeCustomFileTemplates.xcodeproj/xcshareddata/xcschemes/XcodeCustomFileTemplates.xcscheme; sourceTree = SOURCE_ROOT; };
 		EA31BC411AE1AFDE00167EFD /* XcodeCustomFileTemplates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XcodeCustomFileTemplates.h; sourceTree = "<group>"; };
 		EA31BC421AE1AFDE00167EFD /* XcodeCustomFileTemplates.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XcodeCustomFileTemplates.m; sourceTree = "<group>"; tabWidth = 2; wrapsLines = 1; };
-		EA3EB1A61AE2D6F4009553F9 /* NSObject+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Additions.h"; sourceTree = "<group>"; };
-		EA3EB1A71AE2D6F4009553F9 /* NSObject+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Additions.m"; sourceTree = "<group>"; };
-		EA3EB1AA1AE2D78E009553F9 /* IDEApplicationCommandsAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDEApplicationCommandsAdditions.m; sourceTree = "<group>"; };
+		EA3EB1A61AE2D6F4009553F9 /* NSObject+StencilAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+StencilAdditions.h"; sourceTree = "<group>"; };
+		EA3EB1A71AE2D6F4009553F9 /* NSObject+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+StencilAdditions.m"; sourceTree = "<group>"; };
 		EA3EB1AD1AE2D861009553F9 /* IDETemplateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDETemplateAdditions.m; sourceTree = "<group>"; };
 		EA3EB1B01AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDEStructureNavigatorAdditions.m; sourceTree = "<group>"; };
+		EA3EB1B21AE2DDB5009553F9 /* NSMenu+StencilAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+StencilAdditions.h"; sourceTree = "<group>"; };
 		EA4D96BC1AE1D8C20078D395 /* NSObject+DZLObjcAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DZLObjcAdditions.h"; sourceTree = "<group>"; };
 		EA4D96BD1AE1D8C20078D395 /* NSObject+DZLObjcAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DZLObjcAdditions.m"; sourceTree = "<group>"; };
 		EA4D96BF1AE1D9220078D395 /* DZLSuper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZLSuper.h; sourceTree = "<group>"; };
 		EA4D96C01AE1D94F0078D395 /* DZLSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZLSingleton.h; sourceTree = "<group>"; };
 		EA4D96C11AE1D9740078D395 /* DZLImplementationCombine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZLImplementationCombine.h; sourceTree = "<group>"; };
 		EA918CEB1AE2980300380453 /* TemplateInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		EAB55BA31AE2D519001EBD12 /* NSMenuAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMenuAdditions.m; sourceTree = "<group>"; };
+		EAB55BA31AE2D519001EBD12 /* NSMenu+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+StencilAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,10 +109,10 @@
 		EAB55BA11AE2D456001EBD12 /* Additions */ = {
 			isa = PBXGroup;
 			children = (
-				EAB55BA31AE2D519001EBD12 /* NSMenuAdditions.m */,
-				EA3EB1A61AE2D6F4009553F9 /* NSObject+Additions.h */,
-				EA3EB1A71AE2D6F4009553F9 /* NSObject+Additions.m */,
-				EA3EB1AA1AE2D78E009553F9 /* IDEApplicationCommandsAdditions.m */,
+				EA3EB1B21AE2DDB5009553F9 /* NSMenu+StencilAdditions.h */,
+				EAB55BA31AE2D519001EBD12 /* NSMenu+StencilAdditions.m */,
+				EA3EB1A61AE2D6F4009553F9 /* NSObject+StencilAdditions.h */,
+				EA3EB1A71AE2D6F4009553F9 /* NSObject+StencilAdditions.m */,
 				EA3EB1AD1AE2D861009553F9 /* IDETemplateAdditions.m */,
 				EA3EB1B01AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m */,
 			);
@@ -189,11 +188,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA4D96BE1AE1D8C20078D395 /* NSObject+DZLObjcAdditions.m in Sources */,
-				EA3EB1A81AE2D6F4009553F9 /* NSObject+Additions.m in Sources */,
-				EAB55BA41AE2D519001EBD12 /* NSMenuAdditions.m in Sources */,
+				EA3EB1A81AE2D6F4009553F9 /* NSObject+StencilAdditions.m in Sources */,
+				EAB55BA41AE2D519001EBD12 /* NSMenu+StencilAdditions.m in Sources */,
 				EA31BC431AE1AFDE00167EFD /* XcodeCustomFileTemplates.m in Sources */,
 				EA3EB1AE1AE2D861009553F9 /* IDETemplateAdditions.m in Sources */,
-				EA3EB1AB1AE2D78E009553F9 /* IDEApplicationCommandsAdditions.m in Sources */,
 				EA3EB1B11AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

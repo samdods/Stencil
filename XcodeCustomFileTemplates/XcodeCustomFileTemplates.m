@@ -8,7 +8,7 @@
 
 #import "XcodeCustomFileTemplates.h"
 #import "DZLImplementationCombine.h"
-#import <objc/message.h>
+#import "NSMenu+StencilAdditions.h"
 
 NSString *const MenuItemTitleNewFileFromCustomTemplate = @"New File from Custom Template…";
 NSString *const MenuItemTitleFileFromCustomTemplate = @"File from Custom Template…";
@@ -16,15 +16,25 @@ NSString *const PluginNameAndCorrespondingDirectory = @"Stencil";
 NSString *const FileTemplatesDirectoryPath = @"File Templates/Custom";
 
 static XcodeCustomFileTemplates *sharedPlugin;
+static BOOL ForceShowTemplatesOnly = NO;
 
 @interface NSObject (IDETemplate_Additions)
 + (id)availableTemplatesOfTemplateKind:(id)kind;
 @end
 
-@interface XcodeCustomFileTemplates()
+
+@interface XcodeCustomFileTemplates ()
+@property (nonatomic, assign) BOOL projectNavigatorContextualMenuIsOpened;
+@property (nonatomic, readwrite) BOOL showCustomTemplatesOnly;
+@property (nonatomic, readwrite) BOOL beginCreateTemplateFromGroup;
 @end
 
 @implementation XcodeCustomFileTemplates
+
++ (instancetype)sharedPlugin
+{
+  return sharedPlugin;
+}
 
 + (void)pluginDidLoad:(NSBundle *)plugin
 {
@@ -37,32 +47,27 @@ static XcodeCustomFileTemplates *sharedPlugin;
   }
 }
 
-+ (instancetype)sharedPlugin
-{
-  return sharedPlugin;
-}
-
 - (id)initWithBundle:(NSBundle *)pluginBundle
 {
   if (!(self = [super init])) {
     return nil;
   }
   _pluginBundle = pluginBundle;
-  
+  [self updateMainMenuItems];
+  return self;
+}
+
+- (void)updateMainMenuItems
+{
   NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"File"];
   [[menuItem submenu] itemWithTitle:@"New"];
   
   NSMenu *menuNew = [[[menuItem submenu] itemWithTitle:@"New"] submenu];
-  NSUInteger index = [menuNew indexOfItemWithTitle:@"File…"];
-  NSMenuItem *originalItem = [menuNew itemWithTitle:@"File…"];
-  
-  NSMenuItem *customNewMenuItem = [[NSMenuItem alloc] initWithTitle:@"File from Custom Template…" action:originalItem.action keyEquivalent:@""];
-  [menuNew insertItem:customNewMenuItem atIndex:index];
-  
-  return self;
+  menuNew.delegate = self;
+  [menuNew duplicateItemWithTitle:@"File…" duplicateTitle:@"File from Custom Template…"];
 }
 
-+ (BOOL)canCreateFromCustomTemplate
+- (BOOL)canCreateFromCustomTemplate
 {
   NSString *projectRootPath = [self projectRootPath];
   NSString *stencilDirectory = [projectRootPath stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory];
@@ -72,21 +77,27 @@ static XcodeCustomFileTemplates *sharedPlugin;
   for (NSString *fileOrDir in contents) {
     if ([fileOrDir hasSuffix:@".xctemplate"]) {
       NSString *path = [customTemplatesDirectory stringByAppendingPathComponent:fileOrDir];
-      BOOL isDir = NO;
-      if ([[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDir]) {
-        id kind = [NSClassFromString(@"IDETemplateKind") valueForKey:@"fileTemplateKind"];
-        [XcodeCustomFileTemplates sharedPlugin].shouldShowNewDocumentCustomTemplatesOnly = YES;
-        BOOL result = [[NSClassFromString(@"IDETemplate") availableTemplatesOfTemplateKind:kind] count] > 0;
-        [XcodeCustomFileTemplates sharedPlugin].shouldShowNewDocumentCustomTemplatesOnly = NO;
-        return result;
-      }
+      return [self hasAvailableTemplatesAtPath:path];
     }
   }
   
   return NO;
 }
 
-+ (NSString *)projectRootPath
+- (BOOL)hasAvailableTemplatesAtPath:(NSString *)path
+{
+  BOOL isDir = NO;
+  if ([[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDir]) {
+    id kind = [NSClassFromString(@"IDETemplateKind") valueForKey:@"fileTemplateKind"];
+    ForceShowTemplatesOnly = YES;
+    BOOL result = [[NSClassFromString(@"IDETemplate") availableTemplatesOfTemplateKind:kind] count] > 0;
+    ForceShowTemplatesOnly = NO;
+    return result;
+  }
+  return NO;
+}
+
+- (NSString *)projectRootPath
 {
   NSArray *workspaceWindowControllers = [NSClassFromString(@"IDEWorkspaceWindowController") valueForKey:@"workspaceWindowControllers"];
   
@@ -99,6 +110,20 @@ static XcodeCustomFileTemplates *sharedPlugin;
   }
   
   return [[[workSpace valueForKey:@"representingFilePath"] valueForKey:@"pathString"] stringByDeletingLastPathComponent];
+}
+
+
+#pragma mark - NSMenuDelegate
+
+- (void)menu:(NSMenu *)menu willHighlightItem:(NSMenuItem *)item
+{
+  self.showCustomTemplatesOnly = ([item.title isEqualToString:MenuItemTitleFileFromCustomTemplate] || [item.title isEqualToString:MenuItemTitleNewFileFromCustomTemplate]);
+  self.beginCreateTemplateFromGroup = (item == self.menuItemCreateTemplateFromGroup);
+}
+
+- (BOOL)showCustomTemplatesOnly
+{
+  return ForceShowTemplatesOnly || _showCustomTemplatesOnly;
 }
 
 @end
