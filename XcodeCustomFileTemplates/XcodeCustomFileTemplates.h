@@ -8,10 +8,24 @@
 
 #import <AppKit/AppKit.h>
 
+FOUNDATION_EXPORT NSString *const MenuItemTitleNewFileFromCustomTemplate;
+FOUNDATION_EXPORT NSString *const MenuItemTitleFileFromCustomTemplate;
+FOUNDATION_EXPORT NSString *const PluginNameAndCorrespondingDirectory;
+FOUNDATION_EXPORT NSString *const FileTemplatesDirectoryPath;
+
 @interface XcodeCustomFileTemplates : NSObject
 
 + (instancetype)sharedPlugin;
 
-@property (nonatomic, strong, readonly) NSBundle* bundle;
++ (BOOL)canCreateFromCustomTemplate;
+
++ (NSString *)projectRootPath;
+
+@property (nonatomic, strong, readonly) NSBundle *pluginBundle;
+
+@property (nonatomic, assign) BOOL shouldShowNewDocumentCustomTemplatesOnly;
+
+@property (nonatomic, weak) NSMenuItem *menuItemNewFile;
+@property (nonatomic, weak) NSMenuItem *menuItemNewFromCustomTemplate;
 
 @end
