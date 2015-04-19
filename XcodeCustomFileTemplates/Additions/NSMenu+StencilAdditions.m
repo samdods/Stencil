@@ -9,8 +9,9 @@
 #import "NSMenu+StencilAdditions.h"
 #import "DZLImplementationCombine.h"
 #import "Stencil.h"
+#import "NSWindow+StencilAdditions.h"
 
-static NSString *const ProjectNavigatorContextualMenu = @"Project navigator contextual menu";
+NSString *const ProjectNavigatorContextualMenu = @"Project navigator contextual menu";
 
 @implementation_combine(NSMenu, Additions)
 
@@ -22,7 +23,7 @@ static NSString *const ProjectNavigatorContextualMenu = @"Project navigator cont
     [Stencil sharedPlugin].menuItemNewFromCustomTemplate.action = nil;
   }
   
-  if ([[Stencil sharedNavigator] projectNavigatorSelectedGroup] != nil) {
+  if ([NSWindow mainWindow].projectStructureNavigator.selectedGroup != nil) {
     [Stencil sharedPlugin].menuItemCreateTemplateFromGroup.action = [Stencil sharedPlugin].menuItemDelete.action;
   } else {
     [Stencil sharedPlugin].menuItemCreateTemplateFromGroup.action = nil;

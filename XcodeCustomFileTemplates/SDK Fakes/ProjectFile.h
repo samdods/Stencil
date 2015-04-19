@@ -23,7 +23,7 @@ typedef NS_ENUM(NSInteger, ProjectFileType) {
 
 @property (nonatomic, readonly) NSString *extension;
 
-@property (nonatomic, readonly) NSString *path;
+@property (nonatomic, readonly) NSString *fullPath;
 
 @property (nonatomic, readonly) NSURL *fileURL;
 

@@ -10,21 +10,12 @@
 #import "DZLImplementationCombine.h"
 #import "Stencil.h"
 #import "ProjectGroup.h"
+#import "ProjectFile.h"
+#import "NSWindow+StencilAdditions.h"
 
 @interface NSObject (IDEAdditions)
 - (void)loadView;
 - (char)_testOrDeleteItems:(char)items useContextualMenuSelection:(char)selection;
-@end
-
-static __weak id sharedNavigator;
-
-@implementation Stencil (IDEStructureNavigator)
-
-+ (id)sharedNavigator
-{
-  return sharedNavigator;
-}
-
 @end
 
 
@@ -40,11 +31,11 @@ static __weak id sharedNavigator;
 
 - (void)loadView
 {
-  sharedNavigator = self;
+  [NSWindow mainWindow].projectStructureNavigator = (id)self;
   dzlSuper(loadView);
 }
 
-- (id)projectNavigatorSelectedGroup
+- (id)selectedGroup
 {
   id group = [self valueForKey:@"_itemFromContextualClickedRows"];
   if ([group isKindOfClass:NSClassFromString(@"IDEGroupNavigableItem")]) {
@@ -55,10 +46,16 @@ static __weak id sharedNavigator;
 
 - (char)_testOrDeleteItems:(char)items useContextualMenuSelection:(char)selection
 {
-  ProjectGroup *group = [self projectNavigatorSelectedGroup];
+  if ([NSWindow mainWindow].projectStructureNavigator == nil) {
+    [NSWindow mainWindow].projectStructureNavigator = (id)self;
+    return 0;
+  }
+  ProjectGroup *group = [self selectedGroup];
   if (!group || ![Stencil sharedPlugin].beginCreateTemplateFromGroup) {
     if (!group) {
       [Stencil sharedPlugin].menuItemCreateTemplateFromGroup.action = nil;
+    } else {
+      [Stencil sharedPlugin].menuItemCreateTemplateFromGroup.action = [Stencil sharedPlugin].menuItemDelete.action;
     }
     return dzlSuper(_testOrDeleteItems:items useContextualMenuSelection:selection);
   }
@@ -83,33 +80,58 @@ static __weak id sharedNavigator;
   targetPath = [targetPath stringByAppendingPathComponent:groupName];
   
   if ([[NSFileManager defaultManager] fileExistsAtPath:targetPath isDirectory:nil]) {
-    [self showAlertWithMessage:@"Template already exists with this name. Will no overwrite."];
+    [self showAlertWithMessage:@"Template already exists with this name. Will not overwrite."];
     return 0;
   }
   
-  NSArray *groupFileRefs = group.childRepresentedObjects;
-  NSMutableArray *filePaths = [NSMutableArray new];
-  for (id fileRef in groupFileRefs) {
-    NSString *newFilePath = [self makeTemplateFromFileRef:fileRef withGroupName:groupName targetPath:targetPath];
-    [filePaths addObject:newFilePath];
-  }
-  
+  [[NSFileManager defaultManager] createDirectoryAtPath:targetPath withIntermediateDirectories:YES attributes:nil error:nil];
   NSURL *sourceURL = [[Stencil sharedPlugin].pluginBundle URLForResource:@"TemplateInfo" withExtension:@"plist"];
   NSString *targetFilePath = [targetPath stringByAppendingPathComponent:@"TemplateInfo.plist"];
   NSURL *targetURL = [NSURL fileURLWithPath:targetFilePath];
-  [[NSFileManager defaultManager] copyItemAtURL:sourceURL toURL:targetURL error:nil];
   
-  NSArray *filesWithoutXIB = [filePaths filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSString *filePath, NSDictionary *bindings) {
-    return ![filePath hasSuffix:@".xib"];
-  }]];
-  NSArray *filesOnlyXIB = [filePaths filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSString *filePath, NSDictionary *bindings) {
-    return [filePath hasSuffix:@".xib"];
-  }]];
+  [[NSFileManager defaultManager] copyItemAtURL:sourceURL toURL:targetURL error:&error];
+  if (error) {
+    [self showAlertForError:error];
+    return 0;
+  }
   
-  [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFiles:filesWithoutXIB];
-  [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFiles:filesOnlyXIB];
+  NSDictionary *targetPathsByType = [self targetFileURLByType:fileRefsByType targetBasePath:targetPath];
+  NSMutableArray *sourceFilePaths = [NSMutableArray new];
   
-  return dzlSuper(_testOrDeleteItems:items useContextualMenuSelection:selection);
+  __block NSError *copyError = nil;
+  [targetPathsByType enumerateKeysAndObjectsUsingBlock:^(NSNumber *filetype, NSString *targetFilePath, BOOL *stop) {
+    if (filetype.integerValue == ProjectFileInterface || filetype.integerValue == ProjectFileImplementation) {
+      [sourceFilePaths addObject:targetFilePath];
+    }
+    NSURL *sourceURL = [fileRefsByType[filetype] fileURL];
+    NSURL *targetURL = [NSURL fileURLWithPath:targetFilePath];
+    [[NSFileManager defaultManager] copyItemAtURL:sourceURL toURL:targetURL error:&copyError];
+    if (copyError) {
+      *stop = YES;
+    }
+  }];
+  if (copyError) {
+    [self showAlertForError:copyError];
+  }
+  
+  [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFiles:sourceFilePaths];
+  
+  NSString *uiFilePath = targetPathsByType[@(ProjectFileUserInterface)];
+  if (uiFilePath) {
+    [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFile:uiFilePath];
+  }
+  
+  return 0;
+}
+
+- (NSDictionary *)targetFileURLByType:(NSDictionary *)fileRefsByType targetBasePath:(NSString *)targetPath
+{
+  NSMutableDictionary *targetPathsByType = [NSMutableDictionary new];
+  [fileRefsByType enumerateKeysAndObjectsUsingBlock:^(NSNumber *filetype, ProjectFile *fileRef, BOOL *stop) {
+    NSString *targetFileName = [@"___FILEBASENAME___" stringByAppendingString:fileRef.extension];
+    targetPathsByType[filetype] = [targetPath stringByAppendingPathComponent:targetFileName];
+  }];
+  return targetPathsByType;
 }
 
 - (NSString *)makeTemplateFromFileRef:(id)fileRef withGroupName:(NSString *)groupName targetPath:(NSString *)targetPath
@@ -122,7 +144,6 @@ static __weak id sharedNavigator;
   
   NSString *fileExtension = [filename substringFromIndex:rangeOfDot.location];
   
-  [[NSFileManager defaultManager] createDirectoryAtPath:targetPath withIntermediateDirectories:YES attributes:nil error:nil];
   filename = [@"___FILEBASENAME___" stringByAppendingString:fileExtension];
   targetPath = [targetPath stringByAppendingPathComponent:filename];
   NSURL *targetURL = [NSURL fileURLWithPath:targetPath];
@@ -161,12 +182,15 @@ static __weak id sharedNavigator;
 
 - (void)showAlertForError:(NSError *)error
 {
-  
+  [self showAlertWithMessage:error.userInfo[NSLocalizedDescriptionKey]];
 }
 
 - (void)showAlertWithMessage:(NSString *)message
 {
-  
+  NSAlert *alert = [NSAlert new];
+  alert.messageText = message;
+  [alert addButtonWithTitle:@"OK"];
+  [alert runModal];
 }
 
 @end

@@ -8,6 +8,8 @@
 
 #import <AppKit/AppKit.h>
 
+FOUNDATION_EXPORT NSString *const ProjectNavigatorContextualMenu;
+
 @interface NSMenu (StencilAdditions)
 
 - (void)duplicateItemWithTitle:(NSString *)existingTitle duplicateTitle:(NSString *)duplicateTitle;

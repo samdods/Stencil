@@ -16,19 +16,19 @@
   dzl_implementationSafe(NSClassFromString(@"Xcode3FileReference"), self);
 }
 
-- (NSString *)path
+- (NSString *)fullPath
 {
   return [self valueForKeyPath:@"reference.resolvedAbsolutePath"];
 }
 
 - (NSURL *)fileURL
 {
-  return [NSURL fileURLWithPath:self.path];
+  return [NSURL fileURLWithPath:self.fullPath];
 }
 
 - (NSString *)name
 {
-  return self.path.lastPathComponent;
+  return self.fullPath.lastPathComponent;
 }
 
 - (NSString *)extension

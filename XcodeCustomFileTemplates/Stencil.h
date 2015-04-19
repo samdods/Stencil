@@ -34,14 +34,3 @@ FOUNDATION_EXPORT NSString *const FileTemplatesDirectoryPath;
 @property (nonatomic, assign) BOOL beginCreateTemplateFromGroup;
 
 @end
-
-
-
-@interface Stencil (IDEStructureNavigator)
-+ (id)sharedNavigator;
-@end
-
-
-@interface NSObject (IDEStructureNavigator)
-- (id)projectNavigatorSelectedGroup;
-@end

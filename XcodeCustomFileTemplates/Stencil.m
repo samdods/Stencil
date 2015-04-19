@@ -114,6 +114,17 @@ static BOOL ForceShowTemplatesOnly = NO;
 
 #pragma mark - NSMenuDelegate
 
+- (void)menuWillOpen:(NSMenu *)menu
+{
+  BOOL isContextualMenu = [menu.title isEqualToString:ProjectNavigatorContextualMenu];
+  if (isContextualMenu) {
+    NSWindowController *result = [[NSApplication sharedApplication] keyWindow].windowController;
+    if ([result isKindOfClass:NSClassFromString(@"IDEWorkspaceWindowController")]) {
+
+    }
+  }
+}
+
 - (void)menu:(NSMenu *)menu willHighlightItem:(NSMenuItem *)item
 {
   self.showCustomTemplatesOnly = ([item.title isEqualToString:MenuItemTitleFileFromCustomTemplate] || [item.title isEqualToString:MenuItemTitleNewFileFromCustomTemplate]);
