@@ -8,7 +8,7 @@
 
 #import <AppKit/AppKit.h>
 #import "DZLImplementationCombine.h"
-#import "XcodeCustomFileTemplates.h"
+#import "Stencil.h"
 #import <objc/message.h>
 
 @interface NSObject ()
@@ -31,7 +31,7 @@
 {
   NSArray *templates = dzlSuper(availableTemplatesOfTemplateKind:kind);
   
-  if (![XcodeCustomFileTemplates sharedPlugin].showCustomTemplatesOnly) {
+  if (![Stencil sharedPlugin].showCustomTemplatesOnly) {
     return templates;
   }
   
@@ -45,8 +45,8 @@
 
 + (void)_processChildrenOfFilePath:(id)path enumerator:(id)enumerator
 {
-  if ([XcodeCustomFileTemplates sharedPlugin].showCustomTemplatesOnly && [[path valueForKey:@"pathString"] containsString: @"Templates"]) {
-    NSString *pathString = [[XcodeCustomFileTemplates sharedPlugin].projectRootPath stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory];
+  if ([Stencil sharedPlugin].showCustomTemplatesOnly && [[path valueForKey:@"pathString"] containsString: @"Templates"]) {
+    NSString *pathString = [[Stencil sharedPlugin].projectRootPath stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory];
     SEL factorySel = NSSelectorFromString(@"filePathForPathString:");
     path = objc_msgSend([path class], factorySel, pathString);
   }

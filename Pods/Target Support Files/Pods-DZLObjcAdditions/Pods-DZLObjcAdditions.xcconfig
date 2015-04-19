@@ -1,0 +1,1 @@
+PODS_DZLOBJCADDITIONS_OTHER_LDFLAGS = -framework "Foundation"

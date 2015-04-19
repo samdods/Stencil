@@ -1,0 +1,10 @@
+PODS:
+  - DZLObjcAdditions (2.4.0)
+
+DEPENDENCIES:
+  - DZLObjcAdditions (= 2.4.0)
+
+SPEC CHECKSUMS:
+  DZLObjcAdditions: 23b2111b99c67bb23bf16a3c90f768955d27c1c2
+
+COCOAPODS: 0.35.0

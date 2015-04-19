@@ -20,5 +20,5 @@ extern NSInteger const dzl_no_assert;
 #define implementation_combine(klass, name, args...) \
 interface DZLImplementationCombine_ ## klass ## name : klass @end \
 @implementation DZLImplementationCombine_ ## klass ## name \
-+ (void)load { dzl_implementationCombine([klass class], self, ##args); } @end \
++ (void)load { dzl_implementationCombine(klass.class, self, ##args); } @end \
 @implementation DZLImplementationCombine_ ## klass ## name (Additions)

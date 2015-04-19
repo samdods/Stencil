@@ -8,7 +8,8 @@
 
 #import <AppKit/AppKit.h>
 #import "DZLImplementationCombine.h"
-#import "XcodeCustomFileTemplates.h"
+#import "Stencil.h"
+#import "ProjectGroup.h"
 
 @interface NSObject (IDEAdditions)
 - (void)loadView;
@@ -17,7 +18,7 @@
 
 static __weak id sharedNavigator;
 
-@implementation XcodeCustomFileTemplates (IDEStructureNavigator)
+@implementation Stencil (IDEStructureNavigator)
 
 + (id)sharedNavigator
 {
@@ -54,33 +55,46 @@ static __weak id sharedNavigator;
 
 - (char)_testOrDeleteItems:(char)items useContextualMenuSelection:(char)selection
 {
-  id group = [self projectNavigatorSelectedGroup];
-  if (!group || ![XcodeCustomFileTemplates sharedPlugin].beginCreateTemplateFromGroup) {
+  ProjectGroup *group = [self projectNavigatorSelectedGroup];
+  if (!group || ![Stencil sharedPlugin].beginCreateTemplateFromGroup) {
     if (!group) {
-      [XcodeCustomFileTemplates sharedPlugin].menuItemCreateTemplateFromGroup.action = nil;
+      [Stencil sharedPlugin].menuItemCreateTemplateFromGroup.action = nil;
     }
     return dzlSuper(_testOrDeleteItems:items useContextualMenuSelection:selection);
   }
   
-  NSString *groupName = [group name];
-  groupName = [self input:@"Enter templte name" defaultValue:groupName];
+  [Stencil sharedPlugin].beginCreateTemplateFromGroup = NO;
+  
+  NSError *error = nil;
+  NSDictionary *fileRefsByType = [group validatedFileRefsByType:&error];
+  if (error) {
+    [self showAlertForError:error];
+    return 0;
+  }
+  
+  NSString *groupName = group.name;
+  groupName = [self input:@"Enter template name" defaultValue:groupName];
   if (!groupName) {
-    return dzlSuper(_testOrDeleteItems:items useContextualMenuSelection:selection);
+    return 0;
   }
   groupName = [groupName stringByAppendingString:@".xctemplate"];
   
-  NSString *targetPath = [[[XcodeCustomFileTemplates sharedPlugin].projectRootPath stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory] stringByAppendingPathComponent:FileTemplatesDirectoryPath];
+  NSString *targetPath = [[[Stencil sharedPlugin].projectRootPath stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory] stringByAppendingPathComponent:FileTemplatesDirectoryPath];
   targetPath = [targetPath stringByAppendingPathComponent:groupName];
   
-  NSArray *groupFileRefs = [group valueForKey:@"childRepresentedObjects"];
+  if ([[NSFileManager defaultManager] fileExistsAtPath:targetPath isDirectory:nil]) {
+    [self showAlertWithMessage:@"Template already exists with this name. Will no overwrite."];
+    return 0;
+  }
   
+  NSArray *groupFileRefs = group.childRepresentedObjects;
   NSMutableArray *filePaths = [NSMutableArray new];
   for (id fileRef in groupFileRefs) {
     NSString *newFilePath = [self makeTemplateFromFileRef:fileRef withGroupName:groupName targetPath:targetPath];
     [filePaths addObject:newFilePath];
   }
   
-  NSURL *sourceURL = [[XcodeCustomFileTemplates sharedPlugin].pluginBundle URLForResource:@"TemplateInfo" withExtension:@"plist"];
+  NSURL *sourceURL = [[Stencil sharedPlugin].pluginBundle URLForResource:@"TemplateInfo" withExtension:@"plist"];
   NSString *targetFilePath = [targetPath stringByAppendingPathComponent:@"TemplateInfo.plist"];
   NSURL *targetURL = [NSURL fileURLWithPath:targetFilePath];
   [[NSFileManager defaultManager] copyItemAtURL:sourceURL toURL:targetURL error:nil];
@@ -140,6 +154,19 @@ static __weak id sharedNavigator;
     NSAssert1(NO, @"Invalid input dialog button %zd", button);
     return nil;
   }
+}
+
+
+#pragma mark - alert
+
+- (void)showAlertForError:(NSError *)error
+{
+  
+}
+
+- (void)showAlertWithMessage:(NSString *)message
+{
+  
 }
 
 @end

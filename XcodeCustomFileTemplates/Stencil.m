@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Sam Dods. All rights reserved.
 //
 
-#import "XcodeCustomFileTemplates.h"
+#import "Stencil.h"
 #import "DZLImplementationCombine.h"
 #import "NSMenu+StencilAdditions.h"
 
@@ -15,7 +15,7 @@ NSString *const MenuItemTitleFileFromCustomTemplate = @"File from Custom Templat
 NSString *const PluginNameAndCorrespondingDirectory = @"Stencil";
 NSString *const FileTemplatesDirectoryPath = @"File Templates/Custom";
 
-static XcodeCustomFileTemplates *sharedPlugin;
+static Stencil *sharedPlugin;
 static BOOL ForceShowTemplatesOnly = NO;
 
 @interface NSObject (IDETemplate_Additions)
@@ -23,13 +23,12 @@ static BOOL ForceShowTemplatesOnly = NO;
 @end
 
 
-@interface XcodeCustomFileTemplates ()
+@interface Stencil ()
 @property (nonatomic, assign) BOOL projectNavigatorContextualMenuIsOpened;
 @property (nonatomic, readwrite) BOOL showCustomTemplatesOnly;
-@property (nonatomic, readwrite) BOOL beginCreateTemplateFromGroup;
 @end
 
-@implementation XcodeCustomFileTemplates
+@implementation Stencil
 
 + (instancetype)sharedPlugin
 {

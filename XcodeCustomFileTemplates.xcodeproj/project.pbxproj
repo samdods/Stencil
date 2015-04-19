@@ -10,34 +10,40 @@
 		EA31BC391AE1AFDE00167EFD /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA31BC381AE1AFDE00167EFD /* AppKit.framework */; };
 		EA31BC3B1AE1AFDE00167EFD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA31BC3A1AE1AFDE00167EFD /* Foundation.framework */; };
 		EA31BC401AE1AFDE00167EFD /* XcodeCustomFileTemplates.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = EA31BC3F1AE1AFDE00167EFD /* XcodeCustomFileTemplates.xcscheme */; };
-		EA31BC431AE1AFDE00167EFD /* XcodeCustomFileTemplates.m in Sources */ = {isa = PBXBuildFile; fileRef = EA31BC421AE1AFDE00167EFD /* XcodeCustomFileTemplates.m */; };
+		EA31BC431AE1AFDE00167EFD /* Stencil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA31BC421AE1AFDE00167EFD /* Stencil.m */; };
 		EA3EB1A81AE2D6F4009553F9 /* NSObject+StencilAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3EB1A71AE2D6F4009553F9 /* NSObject+StencilAdditions.m */; };
 		EA3EB1AE1AE2D861009553F9 /* IDETemplateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3EB1AD1AE2D861009553F9 /* IDETemplateAdditions.m */; };
 		EA3EB1B11AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3EB1B01AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m */; };
-		EA4D96BE1AE1D8C20078D395 /* NSObject+DZLObjcAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4D96BD1AE1D8C20078D395 /* NSObject+DZLObjcAdditions.m */; };
-		EA918CEC1AE2980300380453 /* TemplateInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA918CEB1AE2980300380453 /* TemplateInfo.plist */; };
+		EA3EB1B51AE39510009553F9 /* TemplateInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA3EB1B41AE39510009553F9 /* TemplateInfo.plist */; };
+		EA4FB6851AE398E5001EFB21 /* ProjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4FB6841AE398E5001EFB21 /* ProjectGroup.m */; };
+		EA4FB6881AE399A3001EFB21 /* ProjectFile.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4FB6871AE399A3001EFB21 /* ProjectFile.m */; };
 		EAB55BA41AE2D519001EBD12 /* NSMenu+StencilAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB55BA31AE2D519001EBD12 /* NSMenu+StencilAdditions.m */; };
+		F302472A1AAA8763C7FEBEFF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1A7095B005B6F4C3F7C8DFE /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		10C1169B0EF5D3E85F2D491E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		275C778DFA544CFD5FAB6F79 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		A1A7095B005B6F4C3F7C8DFE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA31BC351AE1AFDE00167EFD /* XcodeCustomFileTemplates.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XcodeCustomFileTemplates.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA31BC381AE1AFDE00167EFD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		EA31BC3A1AE1AFDE00167EFD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		EA31BC3E1AE1AFDE00167EFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA31BC3F1AE1AFDE00167EFD /* XcodeCustomFileTemplates.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = XcodeCustomFileTemplates.xcscheme; path = XcodeCustomFileTemplates.xcodeproj/xcshareddata/xcschemes/XcodeCustomFileTemplates.xcscheme; sourceTree = SOURCE_ROOT; };
-		EA31BC411AE1AFDE00167EFD /* XcodeCustomFileTemplates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XcodeCustomFileTemplates.h; sourceTree = "<group>"; };
-		EA31BC421AE1AFDE00167EFD /* XcodeCustomFileTemplates.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XcodeCustomFileTemplates.m; sourceTree = "<group>"; tabWidth = 2; wrapsLines = 1; };
+		EA31BC411AE1AFDE00167EFD /* Stencil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Stencil.h; sourceTree = "<group>"; };
+		EA31BC421AE1AFDE00167EFD /* Stencil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Stencil.m; sourceTree = "<group>"; tabWidth = 2; wrapsLines = 1; };
 		EA3EB1A61AE2D6F4009553F9 /* NSObject+StencilAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+StencilAdditions.h"; sourceTree = "<group>"; };
 		EA3EB1A71AE2D6F4009553F9 /* NSObject+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+StencilAdditions.m"; sourceTree = "<group>"; };
 		EA3EB1AD1AE2D861009553F9 /* IDETemplateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDETemplateAdditions.m; sourceTree = "<group>"; };
 		EA3EB1B01AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDEStructureNavigatorAdditions.m; sourceTree = "<group>"; };
 		EA3EB1B21AE2DDB5009553F9 /* NSMenu+StencilAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+StencilAdditions.h"; sourceTree = "<group>"; };
-		EA4D96BC1AE1D8C20078D395 /* NSObject+DZLObjcAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DZLObjcAdditions.h"; sourceTree = "<group>"; };
-		EA4D96BD1AE1D8C20078D395 /* NSObject+DZLObjcAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DZLObjcAdditions.m"; sourceTree = "<group>"; };
-		EA4D96BF1AE1D9220078D395 /* DZLSuper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZLSuper.h; sourceTree = "<group>"; };
-		EA4D96C01AE1D94F0078D395 /* DZLSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZLSingleton.h; sourceTree = "<group>"; };
-		EA4D96C11AE1D9740078D395 /* DZLImplementationCombine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZLImplementationCombine.h; sourceTree = "<group>"; };
-		EA918CEB1AE2980300380453 /* TemplateInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
+		EA3EB1B41AE39510009553F9 /* TemplateInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
+		EA4FB67F1AE39543001EFB21 /* HeaderComments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderComments.h; sourceTree = "<group>"; };
+		EA4FB6801AE39543001EFB21 /* HeaderComments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderComments.m; sourceTree = "<group>"; };
+		EA4FB6831AE398E5001EFB21 /* ProjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectGroup.h; sourceTree = "<group>"; };
+		EA4FB6841AE398E5001EFB21 /* ProjectGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectGroup.m; sourceTree = "<group>"; };
+		EA4FB6861AE399A3001EFB21 /* ProjectFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectFile.h; sourceTree = "<group>"; };
+		EA4FB6871AE399A3001EFB21 /* ProjectFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectFile.m; sourceTree = "<group>"; };
 		EAB55BA31AE2D519001EBD12 /* NSMenu+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+StencilAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -48,23 +54,29 @@
 			files = (
 				EA31BC391AE1AFDE00167EFD /* AppKit.framework in Frameworks */,
 				EA31BC3B1AE1AFDE00167EFD /* Foundation.framework in Frameworks */,
+				F302472A1AAA8763C7FEBEFF /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		851AC8D0C97F2C9797E01BFC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				275C778DFA544CFD5FAB6F79 /* Pods.debug.xcconfig */,
+				10C1169B0EF5D3E85F2D491E /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		EA31BC2C1AE1AFDE00167EFD = {
 			isa = PBXGroup;
 			children = (
-				EA4D96C01AE1D94F0078D395 /* DZLSingleton.h */,
-				EA4D96C11AE1D9740078D395 /* DZLImplementationCombine.h */,
-				EA4D96BF1AE1D9220078D395 /* DZLSuper.h */,
-				EA4D96BC1AE1D8C20078D395 /* NSObject+DZLObjcAdditions.h */,
-				EA4D96BD1AE1D8C20078D395 /* NSObject+DZLObjcAdditions.m */,
 				EA31BC3C1AE1AFDE00167EFD /* XcodeCustomFileTemplates */,
 				EA31BC371AE1AFDE00167EFD /* Frameworks */,
 				EA31BC361AE1AFDE00167EFD /* Products */,
+				851AC8D0C97F2C9797E01BFC /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,6 +93,7 @@
 			children = (
 				EA31BC381AE1AFDE00167EFD /* AppKit.framework */,
 				EA31BC3A1AE1AFDE00167EFD /* Foundation.framework */,
+				A1A7095B005B6F4C3F7C8DFE /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -88,10 +101,11 @@
 		EA31BC3C1AE1AFDE00167EFD /* XcodeCustomFileTemplates */ = {
 			isa = PBXGroup;
 			children = (
+				EA4FB6821AE398B2001EFB21 /* SDK Fakes */,
+				EA3EB1B31AE3909B009553F9 /* Resources */,
 				EAB55BA11AE2D456001EBD12 /* Additions */,
-				EA918CEB1AE2980300380453 /* TemplateInfo.plist */,
-				EA31BC411AE1AFDE00167EFD /* XcodeCustomFileTemplates.h */,
-				EA31BC421AE1AFDE00167EFD /* XcodeCustomFileTemplates.m */,
+				EA31BC411AE1AFDE00167EFD /* Stencil.h */,
+				EA31BC421AE1AFDE00167EFD /* Stencil.m */,
 				EA31BC3D1AE1AFDE00167EFD /* Supporting Files */,
 			);
 			path = XcodeCustomFileTemplates;
@@ -104,6 +118,27 @@
 				EA31BC3F1AE1AFDE00167EFD /* XcodeCustomFileTemplates.xcscheme */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EA3EB1B31AE3909B009553F9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EA3EB1B41AE39510009553F9 /* TemplateInfo.plist */,
+				EA4FB67F1AE39543001EFB21 /* HeaderComments.h */,
+				EA4FB6801AE39543001EFB21 /* HeaderComments.m */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		EA4FB6821AE398B2001EFB21 /* SDK Fakes */ = {
+			isa = PBXGroup;
+			children = (
+				EA4FB6831AE398E5001EFB21 /* ProjectGroup.h */,
+				EA4FB6841AE398E5001EFB21 /* ProjectGroup.m */,
+				EA4FB6861AE399A3001EFB21 /* ProjectFile.h */,
+				EA4FB6871AE399A3001EFB21 /* ProjectFile.m */,
+			);
+			path = "SDK Fakes";
 			sourceTree = "<group>";
 		};
 		EAB55BA11AE2D456001EBD12 /* Additions */ = {
@@ -126,9 +161,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA31BC461AE1AFDE00167EFD /* Build configuration list for PBXNativeTarget "XcodeCustomFileTemplates" */;
 			buildPhases = (
+				379C0FCF89680A5AE0E36829 /* Check Pods Manifest.lock */,
 				EA31BC311AE1AFDE00167EFD /* Sources */,
 				EA31BC321AE1AFDE00167EFD /* Resources */,
 				EA31BC331AE1AFDE00167EFD /* Frameworks */,
+				F27C888E22AD89BE020E865A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -175,24 +212,58 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA918CEC1AE2980300380453 /* TemplateInfo.plist in Resources */,
+				EA3EB1B51AE39510009553F9 /* TemplateInfo.plist in Resources */,
 				EA31BC401AE1AFDE00167EFD /* XcodeCustomFileTemplates.xcscheme in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		379C0FCF89680A5AE0E36829 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F27C888E22AD89BE020E865A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		EA31BC311AE1AFDE00167EFD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA4D96BE1AE1D8C20078D395 /* NSObject+DZLObjcAdditions.m in Sources */,
 				EA3EB1A81AE2D6F4009553F9 /* NSObject+StencilAdditions.m in Sources */,
+				EA4FB6881AE399A3001EFB21 /* ProjectFile.m in Sources */,
 				EAB55BA41AE2D519001EBD12 /* NSMenu+StencilAdditions.m in Sources */,
-				EA31BC431AE1AFDE00167EFD /* XcodeCustomFileTemplates.m in Sources */,
+				EA31BC431AE1AFDE00167EFD /* Stencil.m in Sources */,
 				EA3EB1AE1AE2D861009553F9 /* IDETemplateAdditions.m in Sources */,
 				EA3EB1B11AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m in Sources */,
+				EA4FB6851AE398E5001EFB21 /* ProjectGroup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +341,7 @@
 		};
 		EA31BC471AE1AFDE00167EFD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 275C778DFA544CFD5FAB6F79 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
@@ -284,6 +356,7 @@
 		};
 		EA31BC481AE1AFDE00167EFD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 10C1169B0EF5D3E85F2D491E /* Pods.release.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;

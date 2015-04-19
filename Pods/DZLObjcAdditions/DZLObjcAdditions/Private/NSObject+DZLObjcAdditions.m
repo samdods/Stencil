@@ -8,8 +8,8 @@
 
 #import <objc/runtime.h>
 #import "NSObject+DZLObjcAdditions.h"
-#import "DZLSingleton.h"
-#import "DZLSuper.h"
+#import "DZLClassSingleton.h"
+#import "DZLImplementationCombine.h"
 
 NSInteger const dzl_no_assert = 37834;
 static const void * const DZLObjcAdditionsSuperCountKey = &DZLObjcAdditionsSuperCountKey;

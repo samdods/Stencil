@@ -14,7 +14,7 @@ FOUNDATION_EXPORT NSString *const PluginNameAndCorrespondingDirectory;
 FOUNDATION_EXPORT NSString *const FileTemplatesDirectoryPath;
 
 
-@interface XcodeCustomFileTemplates : NSObject <NSMenuDelegate>
+@interface Stencil : NSObject <NSMenuDelegate>
 
 + (instancetype)sharedPlugin;
 
@@ -31,13 +31,13 @@ FOUNDATION_EXPORT NSString *const FileTemplatesDirectoryPath;
 @property (nonatomic, weak) NSMenuItem *menuItemCreateTemplateFromGroup;
 
 @property (nonatomic, readonly) BOOL showCustomTemplatesOnly;
-@property (nonatomic, readonly) BOOL beginCreateTemplateFromGroup;
+@property (nonatomic, assign) BOOL beginCreateTemplateFromGroup;
 
 @end
 
 
 
-@interface XcodeCustomFileTemplates (IDEStructureNavigator)
+@interface Stencil (IDEStructureNavigator)
 + (id)sharedNavigator;
 @end
 

@@ -1,6 +1,6 @@
 //
 //  NSMenu+StencilAdditions.m
-//  XcodeCustomFileTemplates
+//  Stencil
 //
 //  Created by Sam Dods on 18/04/2015.
 //  Copyright (c) 2015 Sam Dods. All rights reserved.
@@ -8,7 +8,7 @@
 
 #import "NSMenu+StencilAdditions.h"
 #import "DZLImplementationCombine.h"
-#import "XcodeCustomFileTemplates.h"
+#import "Stencil.h"
 
 static NSString *const ProjectNavigatorContextualMenu = @"Project navigator contextual menu";
 
@@ -16,26 +16,28 @@ static NSString *const ProjectNavigatorContextualMenu = @"Project navigator cont
 
 - (instancetype)initWithTitle:(NSString *)aTitle
 {
-  if ([XcodeCustomFileTemplates sharedPlugin].canCreateFromCustomTemplate) {
-    [XcodeCustomFileTemplates sharedPlugin].menuItemNewFromCustomTemplate.action = [XcodeCustomFileTemplates sharedPlugin].menuItemNewFile.action;
+  if ([Stencil sharedPlugin].canCreateFromCustomTemplate) {
+    [Stencil sharedPlugin].menuItemNewFromCustomTemplate.action = [Stencil sharedPlugin].menuItemNewFile.action;
   } else {
-    [XcodeCustomFileTemplates sharedPlugin].menuItemNewFromCustomTemplate.action = nil;
+    [Stencil sharedPlugin].menuItemNewFromCustomTemplate.action = nil;
   }
   
-  if ([[XcodeCustomFileTemplates sharedNavigator] projectNavigatorSelectedGroup] != nil) {
-    [XcodeCustomFileTemplates sharedPlugin].menuItemCreateTemplateFromGroup.action = [XcodeCustomFileTemplates sharedPlugin].menuItemDelete.action;
+  if ([[Stencil sharedNavigator] projectNavigatorSelectedGroup] != nil) {
+    [Stencil sharedPlugin].menuItemCreateTemplateFromGroup.action = [Stencil sharedPlugin].menuItemDelete.action;
   } else {
-    [XcodeCustomFileTemplates sharedPlugin].menuItemCreateTemplateFromGroup.action = nil;
+    [Stencil sharedPlugin].menuItemCreateTemplateFromGroup.action = nil;
   }
   
-  return dzlSuper(initWithTitle:aTitle);
+  typeof(self) menu = dzlSuper(initWithTitle:aTitle);
+  menu.delegate = [Stencil sharedPlugin];
+  return menu;
 }
 
 - (void)addItem:(NSMenuItem *)menuItemBeingAddedByXcode
 {
   BOOL isContextualMenu = [self.title isEqualToString:ProjectNavigatorContextualMenu];
   if (isContextualMenu) {
-    self.delegate = [XcodeCustomFileTemplates sharedPlugin];
+    self.delegate = [Stencil sharedPlugin];
   }
   
   BOOL addCustomFileItem = (isContextualMenu && [menuItemBeingAddedByXcode.title isEqualToString:@"New File…"]);
@@ -43,9 +45,9 @@ static NSString *const ProjectNavigatorContextualMenu = @"Project navigator cont
   if (addCustomFileItem) {
     NSMenuItem *customMenuItem = [[NSMenuItem alloc] initWithTitle:MenuItemTitleNewFileFromCustomTemplate action:menuItemBeingAddedByXcode.action keyEquivalent:@""];
     dzlSuper(addItem:customMenuItem);
-    [XcodeCustomFileTemplates sharedPlugin].menuItemNewFile = menuItemBeingAddedByXcode;
-    [XcodeCustomFileTemplates sharedPlugin].menuItemNewFromCustomTemplate = customMenuItem;
-    if (![XcodeCustomFileTemplates sharedPlugin].canCreateFromCustomTemplate) {
+    [Stencil sharedPlugin].menuItemNewFile = menuItemBeingAddedByXcode;
+    [Stencil sharedPlugin].menuItemNewFromCustomTemplate = customMenuItem;
+    if (![Stencil sharedPlugin].canCreateFromCustomTemplate) {
       customMenuItem.action = nil;
     }
   }
@@ -55,8 +57,8 @@ static NSString *const ProjectNavigatorContextualMenu = @"Project navigator cont
   if (addCreateTemplate) {
     NSMenuItem *customMenuItem = [[NSMenuItem alloc] initWithTitle:@"Create File Template from Group" action:menuItemBeingAddedByXcode.action keyEquivalent:@""];
     dzlSuper(addItem:customMenuItem);
-    [XcodeCustomFileTemplates sharedPlugin].menuItemDelete = menuItemBeingAddedByXcode;
-    [XcodeCustomFileTemplates sharedPlugin].menuItemCreateTemplateFromGroup = customMenuItem;
+    [Stencil sharedPlugin].menuItemDelete = menuItemBeingAddedByXcode;
+    [Stencil sharedPlugin].menuItemCreateTemplateFromGroup = customMenuItem;
     [self addItem:[NSMenuItem separatorItem]];
   }
   
