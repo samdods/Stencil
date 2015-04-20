@@ -11,6 +11,8 @@
 #import "Stencil.h"
 #import "ProjectGroup.h"
 #import "ProjectFile.h"
+#import "NSInputStream+StencilAdditions.h"
+#import "NSOutputStream+StencilAdditions.h"
 
 @interface NSObject (IDEAdditions)
 - (char)_testOrDeleteItems:(char)items useContextualMenuSelection:(char)selection;
@@ -100,9 +102,8 @@
     if (filetype.integerValue == ProjectFileInterface || filetype.integerValue == ProjectFileImplementation) {
       [sourceFilePaths addObject:targetFilePath];
     }
-    NSURL *sourceURL = [fileRefsByType[filetype] fileURL];
     NSURL *targetURL = [NSURL fileURLWithPath:targetFilePath];
-    [[NSFileManager defaultManager] copyItemAtURL:sourceURL toURL:targetURL error:&copyError];
+    copyError = [self createTemplateFromFile:fileRefsByType[filetype] targetURL:targetURL type:filetype.integerValue];
     if (copyError) {
       *stop = YES;
     }
@@ -131,26 +132,6 @@
   return targetPathsByType;
 }
 
-- (NSString *)makeTemplateFromFileRef:(id)fileRef withGroupName:(NSString *)groupName targetPath:(NSString *)targetPath
-{
-  NSString *sourcePath = [fileRef valueForKeyPath:@"reference.resolvedAbsolutePath"];
-  NSURL *sourceURL = [NSURL fileURLWithPath:sourcePath];
-  
-  NSString *filename = [sourceURL lastPathComponent];
-  NSRange rangeOfDot = [filename rangeOfString:@"."];
-  
-  NSString *fileExtension = [filename substringFromIndex:rangeOfDot.location];
-  
-  filename = [@"___FILEBASENAME___" stringByAppendingString:fileExtension];
-  targetPath = [targetPath stringByAppendingPathComponent:filename];
-  NSURL *targetURL = [NSURL fileURLWithPath:targetPath];
-  
-  NSError *error = nil;
-  [[NSFileManager defaultManager] copyItemAtURL:sourceURL toURL:targetURL error:&error];
-  
-  return targetPath;
-}
-
 - (NSString *)input:(NSString *)prompt defaultValue:(NSString *)defaultValue
 {
   NSAlert *alert = [NSAlert new];
@@ -174,6 +155,52 @@
   }
 }
 
+#pragma mark - copying
+
+- (NSError *)createTemplateFromFile:(id<ProjectFile>)file targetURL:(NSURL *)targetURL type:(ProjectFileType)filetype
+{
+  NSURL *sourceURL = file.fileURL;
+  NSInputStream *inputStream = [NSInputStream inputStreamWithURL:sourceURL];
+  [inputStream open];
+  
+  NSOutputStream *outputStream = [NSOutputStream outputStreamWithURL:targetURL append:NO];
+  [outputStream open];
+  
+  
+  
+  NSString *line = inputStream.stc_nextReadLine;
+  while (line) {
+    // substitute interface definition
+    NSString *pattern = [NSString stringWithFormat:@"@interface\\s%@\\s*:\\s*\\w+", file.nameWithoutExtension];
+    NSString *template = [NSString stringWithFormat:@"@interface ___FILEBASENAMEASIDENTIFIER___ : %@", file.nameWithoutExtension];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
+    NSString *outputLine = [regex stringByReplacingMatchesInString:line options:0 range:NSMakeRange(0, line.length) withTemplate:template];
+    
+    // substitute interface extension
+    pattern = [NSString stringWithFormat:@"@interface\\s%@\\s*\\((\\w*)\\)", file.nameWithoutExtension];
+    template = [NSString stringWithFormat:@"@interface ___FILEBASENAMEASIDENTIFIER___ ($1)"];
+    regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
+    outputLine = [regex stringByReplacingMatchesInString:outputLine options:0 range:NSMakeRange(0, line.length) withTemplate:template];
+    
+    // substitute implementation definition
+    pattern = [NSString stringWithFormat:@"@implementation\\s%@\\b", file.nameWithoutExtension];
+    template = [NSString stringWithFormat:@"@implementation ___FILEBASENAMEASIDENTIFIER___"];
+    regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
+    outputLine = [regex stringByReplacingMatchesInString:outputLine options:0 range:NSMakeRange(0, line.length) withTemplate:template];
+    
+    // write out
+    [outputStream stc_writeString:outputLine];
+    
+    // read next
+    line = inputStream.stc_nextReadLine;
+  }
+  
+  // close
+  [inputStream close];
+  [outputStream close];
+  
+  return nil;
+}
 
 #pragma mark - alert
 

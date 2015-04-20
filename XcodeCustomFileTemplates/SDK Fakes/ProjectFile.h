@@ -20,6 +20,8 @@ typedef NS_ENUM(NSInteger, ProjectFileType) {
 
 @property (nonatomic, readonly) NSString *name;
 
+@property (nonatomic, readonly) NSString *nameWithoutExtension;
+
 @property (nonatomic, readonly) ProjectFileType type;
 
 @property (nonatomic, readonly) NSString *extension;

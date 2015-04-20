@@ -34,6 +34,13 @@
   return self.fullPath.lastPathComponent;
 }
 
+- (NSString *)nameWithoutExtension
+{
+  NSString *name = self.name;
+  NSRange rangeOfDot = [name rangeOfString:@"."];
+  return [name substringToIndex:rangeOfDot.location];
+}
+
 - (NSString *)extension
 {
   NSString *name = self.name;

@@ -18,6 +18,8 @@
 		EA4FB6851AE398E5001EFB21 /* ProjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4FB6841AE398E5001EFB21 /* ProjectGroup.m */; };
 		EA4FB6881AE399A3001EFB21 /* ProjectFile.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4FB6871AE399A3001EFB21 /* ProjectFile.m */; };
 		EA4FB68F1AE3B364001EFB21 /* StencilWeakObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4FB68E1AE3B364001EFB21 /* StencilWeakObjectWrapper.m */; };
+		EA4FB6931AE4D44C001EFB21 /* NSInputStream+StencilAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4FB6921AE4D44C001EFB21 /* NSInputStream+StencilAdditions.m */; };
+		EA4FB6961AE4D768001EFB21 /* NSOutputStream+StencilAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4FB6951AE4D768001EFB21 /* NSOutputStream+StencilAdditions.m */; };
 		EAB55BA41AE2D519001EBD12 /* NSMenu+StencilAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB55BA31AE2D519001EBD12 /* NSMenu+StencilAdditions.m */; };
 		F302472A1AAA8763C7FEBEFF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1A7095B005B6F4C3F7C8DFE /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -47,6 +49,10 @@
 		EA4FB6871AE399A3001EFB21 /* ProjectFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectFile.m; sourceTree = "<group>"; };
 		EA4FB68D1AE3B364001EFB21 /* StencilWeakObjectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StencilWeakObjectWrapper.h; sourceTree = "<group>"; };
 		EA4FB68E1AE3B364001EFB21 /* StencilWeakObjectWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StencilWeakObjectWrapper.m; sourceTree = "<group>"; };
+		EA4FB6911AE4D44C001EFB21 /* NSInputStream+StencilAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInputStream+StencilAdditions.h"; sourceTree = "<group>"; };
+		EA4FB6921AE4D44C001EFB21 /* NSInputStream+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInputStream+StencilAdditions.m"; sourceTree = "<group>"; };
+		EA4FB6941AE4D768001EFB21 /* NSOutputStream+StencilAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOutputStream+StencilAdditions.h"; sourceTree = "<group>"; };
+		EA4FB6951AE4D768001EFB21 /* NSOutputStream+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutputStream+StencilAdditions.m"; sourceTree = "<group>"; };
 		EAB55BA31AE2D519001EBD12 /* NSMenu+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+StencilAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -154,9 +160,21 @@
 			path = "Weak Object Wrapper";
 			sourceTree = "<group>";
 		};
+		EA4FB6901AE4D429001EFB21 /* Parsing */ = {
+			isa = PBXGroup;
+			children = (
+				EA4FB6911AE4D44C001EFB21 /* NSInputStream+StencilAdditions.h */,
+				EA4FB6921AE4D44C001EFB21 /* NSInputStream+StencilAdditions.m */,
+				EA4FB6941AE4D768001EFB21 /* NSOutputStream+StencilAdditions.h */,
+				EA4FB6951AE4D768001EFB21 /* NSOutputStream+StencilAdditions.m */,
+			);
+			path = Parsing;
+			sourceTree = "<group>";
+		};
 		EAB55BA11AE2D456001EBD12 /* Additions */ = {
 			isa = PBXGroup;
 			children = (
+				EA4FB6901AE4D429001EFB21 /* Parsing */,
 				EA3EB1B21AE2DDB5009553F9 /* NSMenu+StencilAdditions.h */,
 				EAB55BA31AE2D519001EBD12 /* NSMenu+StencilAdditions.m */,
 				EA3EB1A61AE2D6F4009553F9 /* NSObject+StencilAdditions.h */,
@@ -270,11 +288,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA4FB6931AE4D44C001EFB21 /* NSInputStream+StencilAdditions.m in Sources */,
 				EA3EB1A81AE2D6F4009553F9 /* NSObject+StencilAdditions.m in Sources */,
 				EA4FB6881AE399A3001EFB21 /* ProjectFile.m in Sources */,
 				EAB55BA41AE2D519001EBD12 /* NSMenu+StencilAdditions.m in Sources */,
 				EA31BC431AE1AFDE00167EFD /* Stencil.m in Sources */,
 				EA3EB1AE1AE2D861009553F9 /* IDETemplateAdditions.m in Sources */,
+				EA4FB6961AE4D768001EFB21 /* NSOutputStream+StencilAdditions.m in Sources */,
 				EA3EB1B11AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m in Sources */,
 				EA4FB68F1AE3B364001EFB21 /* StencilWeakObjectWrapper.m in Sources */,
 				EA4FB6851AE398E5001EFB21 /* ProjectGroup.m in Sources */,
