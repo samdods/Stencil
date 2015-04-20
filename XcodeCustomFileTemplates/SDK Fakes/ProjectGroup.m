@@ -10,6 +10,9 @@
 #import "ProjectFile.h"
 #import "DZLImplementationSafe.h"
 
+@interface ProjectGroup : NSObject
+@end
+
 @implementation ProjectGroup
 
 + (void)load
@@ -21,7 +24,7 @@
 {
   NSArray *groupFileRefs = [self valueForKey:@"childRepresentedObjects"];
   NSMutableDictionary *validatedFileRefsByType = [NSMutableDictionary new];
-  for (ProjectFile *file in groupFileRefs) {
+  for (id<ProjectFile> file in groupFileRefs) {
     switch (file.type) {
       case ProjectFileInterface:
       case ProjectFileImplementation:

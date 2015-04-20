@@ -17,7 +17,6 @@
 		EA3EB1B51AE39510009553F9 /* TemplateInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA3EB1B41AE39510009553F9 /* TemplateInfo.plist */; };
 		EA4FB6851AE398E5001EFB21 /* ProjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4FB6841AE398E5001EFB21 /* ProjectGroup.m */; };
 		EA4FB6881AE399A3001EFB21 /* ProjectFile.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4FB6871AE399A3001EFB21 /* ProjectFile.m */; };
-		EA4FB68B1AE3B2E5001EFB21 /* NSWindow+StencilAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4FB68A1AE3B2E5001EFB21 /* NSWindow+StencilAdditions.m */; };
 		EA4FB68F1AE3B364001EFB21 /* StencilWeakObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4FB68E1AE3B364001EFB21 /* StencilWeakObjectWrapper.m */; };
 		EAB55BA41AE2D519001EBD12 /* NSMenu+StencilAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB55BA31AE2D519001EBD12 /* NSMenu+StencilAdditions.m */; };
 		F302472A1AAA8763C7FEBEFF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1A7095B005B6F4C3F7C8DFE /* libPods.a */; };
@@ -46,8 +45,6 @@
 		EA4FB6841AE398E5001EFB21 /* ProjectGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectGroup.m; sourceTree = "<group>"; };
 		EA4FB6861AE399A3001EFB21 /* ProjectFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectFile.h; sourceTree = "<group>"; };
 		EA4FB6871AE399A3001EFB21 /* ProjectFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectFile.m; sourceTree = "<group>"; };
-		EA4FB6891AE3B2E5001EFB21 /* NSWindow+StencilAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindow+StencilAdditions.h"; sourceTree = "<group>"; };
-		EA4FB68A1AE3B2E5001EFB21 /* NSWindow+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWindow+StencilAdditions.m"; sourceTree = "<group>"; };
 		EA4FB68D1AE3B364001EFB21 /* StencilWeakObjectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StencilWeakObjectWrapper.h; sourceTree = "<group>"; };
 		EA4FB68E1AE3B364001EFB21 /* StencilWeakObjectWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StencilWeakObjectWrapper.m; sourceTree = "<group>"; };
 		EAB55BA31AE2D519001EBD12 /* NSMenu+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+StencilAdditions.m"; sourceTree = "<group>"; };
@@ -166,8 +163,6 @@
 				EA3EB1A71AE2D6F4009553F9 /* NSObject+StencilAdditions.m */,
 				EA3EB1AD1AE2D861009553F9 /* IDETemplateAdditions.m */,
 				EA3EB1B01AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m */,
-				EA4FB6891AE3B2E5001EFB21 /* NSWindow+StencilAdditions.h */,
-				EA4FB68A1AE3B2E5001EFB21 /* NSWindow+StencilAdditions.m */,
 			);
 			path = Additions;
 			sourceTree = "<group>";
@@ -278,7 +273,6 @@
 				EA3EB1A81AE2D6F4009553F9 /* NSObject+StencilAdditions.m in Sources */,
 				EA4FB6881AE399A3001EFB21 /* ProjectFile.m in Sources */,
 				EAB55BA41AE2D519001EBD12 /* NSMenu+StencilAdditions.m in Sources */,
-				EA4FB68B1AE3B2E5001EFB21 /* NSWindow+StencilAdditions.m in Sources */,
 				EA31BC431AE1AFDE00167EFD /* Stencil.m in Sources */,
 				EA3EB1AE1AE2D861009553F9 /* IDETemplateAdditions.m in Sources */,
 				EA3EB1B11AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m in Sources */,

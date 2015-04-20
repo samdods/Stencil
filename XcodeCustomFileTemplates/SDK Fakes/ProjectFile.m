@@ -9,6 +9,9 @@
 #import "ProjectFile.h"
 #import "DZLImplementationSafe.h"
 
+@interface ProjectFile : NSObject
+@end
+
 @implementation ProjectFile
 
 + (void)load

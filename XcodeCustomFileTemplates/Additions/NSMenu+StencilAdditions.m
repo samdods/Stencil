@@ -9,7 +9,6 @@
 #import "NSMenu+StencilAdditions.h"
 #import "DZLImplementationCombine.h"
 #import "Stencil.h"
-#import "NSWindow+StencilAdditions.h"
 
 NSString *const ProjectNavigatorContextualMenu = @"Project navigator contextual menu";
 
@@ -21,12 +20,6 @@ NSString *const ProjectNavigatorContextualMenu = @"Project navigator contextual 
     [Stencil sharedPlugin].menuItemNewFromCustomTemplate.action = [Stencil sharedPlugin].menuItemNewFile.action;
   } else {
     [Stencil sharedPlugin].menuItemNewFromCustomTemplate.action = nil;
-  }
-  
-  if ([NSWindow mainWindow].projectStructureNavigator.selectedGroup != nil) {
-    [Stencil sharedPlugin].menuItemCreateTemplateFromGroup.action = [Stencil sharedPlugin].menuItemDelete.action;
-  } else {
-    [Stencil sharedPlugin].menuItemCreateTemplateFromGroup.action = nil;
   }
   
   typeof(self) menu = dzlSuper(initWithTitle:aTitle);

@@ -11,10 +11,8 @@
 #import "Stencil.h"
 #import "ProjectGroup.h"
 #import "ProjectFile.h"
-#import "NSWindow+StencilAdditions.h"
 
 @interface NSObject (IDEAdditions)
-- (void)loadView;
 - (char)_testOrDeleteItems:(char)items useContextualMenuSelection:(char)selection;
 @end
 
@@ -29,13 +27,7 @@
   dzl_implementationCombine(NSClassFromString(@"IDEStructureNavigator"), self, dzl_no_assert);
 }
 
-- (void)loadView
-{
-  [NSWindow mainWindow].projectStructureNavigator = (id)self;
-  dzlSuper(loadView);
-}
-
-- (id)selectedGroup
+- (id<ProjectGroup>)selectedGroup
 {
   id group = [self valueForKey:@"_itemFromContextualClickedRows"];
   if ([group isKindOfClass:NSClassFromString(@"IDEGroupNavigableItem")]) {
@@ -44,20 +36,25 @@
   return nil;
 }
 
+- (id<ProjectFile>)selectedFile
+{
+  id file = [self valueForKey:@"_itemFromContextualClickedRows"];
+  if ([file isKindOfClass:NSClassFromString(@"IDEFileReferenceNavigableItem")]) {
+    return file;
+  }
+  return nil;
+}
+
 - (char)_testOrDeleteItems:(char)items useContextualMenuSelection:(char)selection
 {
-  if ([NSWindow mainWindow].projectStructureNavigator == nil) {
-    [NSWindow mainWindow].projectStructureNavigator = (id)self;
-    return 0;
-  }
-  ProjectGroup *group = [self selectedGroup];
-  if (!group || ![Stencil sharedPlugin].beginCreateTemplateFromGroup) {
-    if (!group) {
-      [Stencil sharedPlugin].menuItemCreateTemplateFromGroup.action = nil;
-    } else {
-      [Stencil sharedPlugin].menuItemCreateTemplateFromGroup.action = [Stencil sharedPlugin].menuItemDelete.action;
-    }
+  if (![Stencil sharedPlugin].beginCreateTemplateFromGroup) {
     return dzlSuper(_testOrDeleteItems:items useContextualMenuSelection:selection);
+  }
+  
+  id<ProjectGroup> group = [self selectedGroup];
+  if (!group) {
+    id<ProjectFile> file = [self selectedFile];
+    group = file.parentItem;
   }
   
   [Stencil sharedPlugin].beginCreateTemplateFromGroup = NO;
@@ -127,7 +124,7 @@
 - (NSDictionary *)targetFileURLByType:(NSDictionary *)fileRefsByType targetBasePath:(NSString *)targetPath
 {
   NSMutableDictionary *targetPathsByType = [NSMutableDictionary new];
-  [fileRefsByType enumerateKeysAndObjectsUsingBlock:^(NSNumber *filetype, ProjectFile *fileRef, BOOL *stop) {
+  [fileRefsByType enumerateKeysAndObjectsUsingBlock:^(NSNumber *filetype, id<ProjectFile> fileRef, BOOL *stop) {
     NSString *targetFileName = [@"___FILEBASENAME___" stringByAppendingString:fileRef.extension];
     targetPathsByType[filetype] = [targetPath stringByAppendingPathComponent:targetFileName];
   }];

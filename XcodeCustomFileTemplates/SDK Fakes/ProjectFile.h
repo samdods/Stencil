@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ProjectGroup.h"
 
 typedef NS_ENUM(NSInteger, ProjectFileType) {
   ProjectFileUnknown,
@@ -15,7 +16,7 @@ typedef NS_ENUM(NSInteger, ProjectFileType) {
   ProjectFileUserInterface,
 };
 
-@interface ProjectFile : NSObject
+@protocol ProjectFile <NSObject>
 
 @property (nonatomic, readonly) NSString *name;
 
@@ -26,5 +27,7 @@ typedef NS_ENUM(NSInteger, ProjectFileType) {
 @property (nonatomic, readonly) NSString *fullPath;
 
 @property (nonatomic, readonly) NSURL *fileURL;
+
+@property (nonatomic, readonly) id<ProjectGroup> parentItem;
 
 @end

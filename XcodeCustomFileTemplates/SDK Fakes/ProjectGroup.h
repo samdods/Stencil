@@ -13,7 +13,7 @@ typedef NS_ENUM(NSInteger, ProjectGroupErrorCode) {
   ProjectGroupErrorCodeUnsupportedFileType = 33,
 };
 
-@interface ProjectGroup : NSObject
+@protocol ProjectGroup <NSObject>
 
 @property (nonatomic, readonly) NSString *name;
 
