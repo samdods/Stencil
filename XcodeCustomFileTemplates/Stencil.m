@@ -9,6 +9,7 @@
 #import "Stencil.h"
 #import "DZLImplementationCombine.h"
 #import "NSMenu+StencilAdditions.h"
+#import "TemplateOptionsWindow.h"
 
 NSString *const MenuItemTitleNewFileFromCustomTemplate = @"New File from Custom Template…";
 NSString *const MenuItemTitleFileFromCustomTemplate = @"File from Custom Template…";
@@ -23,7 +24,7 @@ static BOOL ForceShowTemplatesOnly = NO;
 @end
 
 
-@interface Stencil ()
+@interface Stencil () <TemplateOptionsWindowDelegate>
 @property (nonatomic, assign) BOOL projectNavigatorContextualMenuIsOpened;
 @property (nonatomic, readwrite) BOOL showCustomTemplatesOnly;
 @end
@@ -134,6 +135,34 @@ static BOOL ForceShowTemplatesOnly = NO;
 - (BOOL)showCustomTemplatesOnly
 {
   return ForceShowTemplatesOnly || _showCustomTemplatesOnly;
+}
+
+#pragma mark - displaying template options
+
+- (void)showTemplateOptionsInWindow:(NSWindow *)window
+{
+  NSArray *topLevelObjects = nil;
+  [self.pluginBundle loadNibNamed:@"STCTemplateOptionsWindow" owner:self topLevelObjects:&topLevelObjects];
+  TemplateOptionsWindow *templateOptionsWindow = topLevelObjects.firstObject;
+  BOOL isTemplateOptionsWindow = [templateOptionsWindow isKindOfClass:[TemplateOptionsWindow class]];
+  NSAssert(isTemplateOptionsWindow, @"Error loading from nib");
+  if (!isTemplateOptionsWindow) {
+    return;
+  }
+  
+  templateOptionsWindow.completionDelegate = self;
+  
+  [NSApp beginSheet:templateOptionsWindow modalForWindow:window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
+}
+
+- (void)templateOptionsWindowDidCancel:(TemplateOptionsWindow *)window
+{
+  [[NSApp mainWindow] endSheet:window];
+  [window orderOut:self];
+}
+
+- (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
 }
 
 @end

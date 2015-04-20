@@ -13,6 +13,7 @@
 #import "ProjectFile.h"
 #import "NSInputStream+StencilAdditions.h"
 #import "NSOutputStream+StencilAdditions.h"
+#import "NSString+StencilRegex.h"
 
 @interface NSObject (IDEAdditions)
 - (char)_testOrDeleteItems:(char)items useContextualMenuSelection:(char)selection;
@@ -67,6 +68,9 @@
     [self showAlertForError:error];
     return 0;
   }
+  
+  [[Stencil sharedPlugin] showTemplateOptionsInWindow:[NSApp mainWindow]];
+  return 0;
   
   NSString *groupName = group.name;
   groupName = [self input:@"Enter template name" defaultValue:groupName];
@@ -166,40 +170,38 @@
   NSOutputStream *outputStream = [NSOutputStream outputStreamWithURL:targetURL append:NO];
   [outputStream open];
   
-  
-  
   NSString *line = inputStream.stc_nextReadLine;
   while (line) {
-    // substitute interface definition
-    NSString *pattern = [NSString stringWithFormat:@"@interface\\s%@\\s*:\\s*\\w+", file.nameWithoutExtension];
-    NSString *template = [NSString stringWithFormat:@"@interface ___FILEBASENAMEASIDENTIFIER___ : %@", file.nameWithoutExtension];
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
-    NSString *outputLine = [regex stringByReplacingMatchesInString:line options:0 range:NSMakeRange(0, line.length) withTemplate:template];
-    
-    // substitute interface extension
-    pattern = [NSString stringWithFormat:@"@interface\\s%@\\s*\\((\\w*)\\)", file.nameWithoutExtension];
-    template = [NSString stringWithFormat:@"@interface ___FILEBASENAMEASIDENTIFIER___ ($1)"];
-    regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
-    outputLine = [regex stringByReplacingMatchesInString:outputLine options:0 range:NSMakeRange(0, line.length) withTemplate:template];
-    
-    // substitute implementation definition
-    pattern = [NSString stringWithFormat:@"@implementation\\s%@\\b", file.nameWithoutExtension];
-    template = [NSString stringWithFormat:@"@implementation ___FILEBASENAMEASIDENTIFIER___"];
-    regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
-    outputLine = [regex stringByReplacingMatchesInString:outputLine options:0 range:NSMakeRange(0, line.length) withTemplate:template];
-    
-    // write out
+    NSString *outputLine = [self stringByTemplatifying:line file:file];
     [outputStream stc_writeString:outputLine];
-    
-    // read next
     line = inputStream.stc_nextReadLine;
   }
-  
-  // close
+
   [inputStream close];
   [outputStream close];
   
   return nil;
+}
+
+- (NSString *)stringByTemplatifying:(NSString *)line file:(id<ProjectFile>)file
+{
+  NSMutableString *output = [line mutableCopy];
+  NSString *const className = file.nameWithoutExtension;
+  static NSString *const FileBaseNameAsID = @"___FILEBASENAMEASIDENTIFIER___";
+  
+  // substitute interface definition
+  [output matchPattern:[NSString stringWithFormat:@"@interface\\s%@\\s*:\\s*\\w+", className]
+           replaceWith:[NSString stringWithFormat:@"@interface %@ : %@", FileBaseNameAsID, className]];
+  
+  // substitute interface extension
+  [output matchPattern:[NSString stringWithFormat:@"@interface\\s%@\\s*\\((\\w*)\\)", className]
+           replaceWith:[NSString stringWithFormat:@"@interface %@ ($1)", FileBaseNameAsID]];
+  
+  // substitute implementation definition
+  [output matchPattern:[NSString stringWithFormat:@"@implementation\\s%@\\b", className]
+           replaceWith:[NSString stringWithFormat:@"@implementation %@", FileBaseNameAsID]];
+  
+  return output;
 }
 
 #pragma mark - alert
