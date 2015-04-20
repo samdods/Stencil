@@ -15,6 +15,7 @@
 		EA3D3DB41AE56BDC007BD36A /* TemplateOptionsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D3DB31AE56BDC007BD36A /* TemplateOptionsWindow.m */; };
 		EA3D3DB61AE56BF1007BD36A /* STCTemplateOptionsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA3D3DB51AE56BF1007BD36A /* STCTemplateOptionsWindow.xib */; };
 		EA3D3DBD1AE57D61007BD36A /* TemplateConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D3DBC1AE57D61007BD36A /* TemplateConfig.m */; };
+		EA3D3DC51AE5867F007BD36A /* TemplateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D3DC41AE5867F007BD36A /* TemplateFactory.m */; };
 		EA3EB1A81AE2D6F4009553F9 /* NSObject+StencilAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3EB1A71AE2D6F4009553F9 /* NSObject+StencilAdditions.m */; };
 		EA3EB1AE1AE2D861009553F9 /* IDETemplateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3EB1AD1AE2D861009553F9 /* IDETemplateAdditions.m */; };
 		EA3EB1B11AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3EB1B01AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m */; };
@@ -46,6 +47,8 @@
 		EA3D3DB51AE56BF1007BD36A /* STCTemplateOptionsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STCTemplateOptionsWindow.xib; sourceTree = "<group>"; };
 		EA3D3DBB1AE57D61007BD36A /* TemplateConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateConfig.h; sourceTree = "<group>"; };
 		EA3D3DBC1AE57D61007BD36A /* TemplateConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateConfig.m; sourceTree = "<group>"; };
+		EA3D3DC31AE5867F007BD36A /* TemplateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateFactory.h; sourceTree = "<group>"; };
+		EA3D3DC41AE5867F007BD36A /* TemplateFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateFactory.m; sourceTree = "<group>"; };
 		EA3EB1A61AE2D6F4009553F9 /* NSObject+StencilAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+StencilAdditions.h"; sourceTree = "<group>"; };
 		EA3EB1A71AE2D6F4009553F9 /* NSObject+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+StencilAdditions.m"; sourceTree = "<group>"; };
 		EA3EB1AD1AE2D861009553F9 /* IDETemplateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDETemplateAdditions.m; sourceTree = "<group>"; };
@@ -209,6 +212,8 @@
 				EA4FB6951AE4D768001EFB21 /* NSOutputStream+StencilAdditions.m */,
 				EA3D3DA91AE5638E007BD36A /* NSString+StencilRegex.h */,
 				EA3D3DAA1AE5638E007BD36A /* NSString+StencilRegex.m */,
+				EA3D3DC31AE5867F007BD36A /* TemplateFactory.h */,
+				EA3D3DC41AE5867F007BD36A /* TemplateFactory.m */,
 			);
 			path = Parsing;
 			sourceTree = "<group>";
@@ -335,6 +340,7 @@
 				EA3EB1A81AE2D6F4009553F9 /* NSObject+StencilAdditions.m in Sources */,
 				EA4FB6881AE399A3001EFB21 /* ProjectFile.m in Sources */,
 				EAB55BA41AE2D519001EBD12 /* NSMenu+StencilAdditions.m in Sources */,
+				EA3D3DC51AE5867F007BD36A /* TemplateFactory.m in Sources */,
 				EA31BC431AE1AFDE00167EFD /* Stencil.m in Sources */,
 				EA3D3DAB1AE5638E007BD36A /* NSString+StencilRegex.m in Sources */,
 				EA3EB1AE1AE2D861009553F9 /* IDETemplateAdditions.m in Sources */,

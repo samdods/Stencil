@@ -12,7 +12,8 @@
 
 @property (nonatomic, readonly) NSString *superclassName;
 @property (nonatomic, readonly) NSString *templateDescription;
+@property (nonatomic, readonly) NSDictionary *fileRefs;
 
-- (instancetype)initWithSuperclassName:(NSString *)name description:(NSString *)description;
+- (instancetype)initWithSuperclassName:(NSString *)name description:(NSString *)description fileRefs:(NSDictionary *)fileRefs;
 
 @end

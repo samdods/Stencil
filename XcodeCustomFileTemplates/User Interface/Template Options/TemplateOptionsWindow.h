@@ -23,5 +23,9 @@
 
 @property (nonatomic, weak) id<TemplateOptionsWindowDelegate> completionDelegate;
 
+@property (nonatomic, copy) NSString *defaultSuperclassName;
+
+@property (nonatomic, copy) NSDictionary *fileRefsByType;
+
 @end
 

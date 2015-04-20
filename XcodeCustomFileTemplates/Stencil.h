@@ -33,6 +33,6 @@ FOUNDATION_EXPORT NSString *const FileTemplatesDirectoryPath;
 @property (nonatomic, readonly) BOOL showCustomTemplatesOnly;
 @property (nonatomic, assign) BOOL beginCreateTemplateFromGroup;
 
-- (void)showTemplateOptionsInWindow:(NSWindow *)window;
+- (void)showTemplateOptionsInWindow:(NSWindow *)window defaultSuperclassName:(NSString *)superclassName fileRefs:(NSDictionary *)fileRefs;
 
 @end

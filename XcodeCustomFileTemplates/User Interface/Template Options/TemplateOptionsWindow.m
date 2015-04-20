@@ -23,9 +23,14 @@
   self.okButton.enabled = self.templateNameTextField.stringValue.length && self.descriptionTextField.stringValue.length;
 }
 
+- (void)setDefaultSuperclassName:(NSString *)defaultSuperclassName
+{
+  self.templateNameTextField.stringValue = defaultSuperclassName;
+}
+
 - (IBAction)didTapOK:(NSButton *)sender
 {
-  TemplateConfig *config = [[TemplateConfig alloc] initWithSuperclassName:self.templateNameTextField.stringValue description:self.descriptionTextField.stringValue];
+  TemplateConfig *config = [[TemplateConfig alloc] initWithSuperclassName:self.templateNameTextField.stringValue description:self.descriptionTextField.stringValue fileRefs:self.fileRefsByType];
   [self.completionDelegate templateOptionsWindow:self didCompleteWithConfig:config];
 }
 

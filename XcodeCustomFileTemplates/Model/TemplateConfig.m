@@ -10,7 +10,7 @@
 
 @implementation TemplateConfig
 
-- (instancetype)initWithSuperclassName:(NSString *)name description:(NSString *)description
+- (instancetype)initWithSuperclassName:(NSString *)name description:(NSString *)description fileRefs:(NSDictionary *)fileRefs
 {
   if (!(self = [super init])) {
     return nil;
@@ -18,6 +18,7 @@
   
   _superclassName = name;
   _templateDescription = description;
+  _fileRefs = fileRefs;
   
   return self;
 }

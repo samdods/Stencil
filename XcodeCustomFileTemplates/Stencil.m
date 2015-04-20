@@ -10,6 +10,7 @@
 #import "DZLImplementationCombine.h"
 #import "NSMenu+StencilAdditions.h"
 #import "TemplateOptionsWindow.h"
+#import "TemplateFactory.h"
 
 NSString *const MenuItemTitleNewFileFromCustomTemplate = @"New File from Custom Template…";
 NSString *const MenuItemTitleFileFromCustomTemplate = @"File from Custom Template…";
@@ -104,7 +105,7 @@ static BOOL ForceShowTemplatesOnly = NO;
   id workSpace;
   
   for (id controller in workspaceWindowControllers) {
-    if ([[controller valueForKey:@"window"] isEqual:[NSApp keyWindow]]) {
+    if ([[controller valueForKey:@"window"] isEqual:[NSApp mainWindow]]) {
       workSpace = [controller valueForKey:@"_workspace"];
     }
   }
@@ -114,17 +115,6 @@ static BOOL ForceShowTemplatesOnly = NO;
 
 
 #pragma mark - NSMenuDelegate
-
-- (void)menuWillOpen:(NSMenu *)menu
-{
-  BOOL isContextualMenu = [menu.title isEqualToString:ProjectNavigatorContextualMenu];
-  if (isContextualMenu) {
-    NSWindowController *result = [[NSApplication sharedApplication] keyWindow].windowController;
-    if ([result isKindOfClass:NSClassFromString(@"IDEWorkspaceWindowController")]) {
-
-    }
-  }
-}
 
 - (void)menu:(NSMenu *)menu willHighlightItem:(NSMenuItem *)item
 {
@@ -139,30 +129,41 @@ static BOOL ForceShowTemplatesOnly = NO;
 
 #pragma mark - displaying template options
 
-- (void)showTemplateOptionsInWindow:(NSWindow *)window
+- (void)showTemplateOptionsInWindow:(NSWindow *)window defaultSuperclassName:(NSString *)superclassName fileRefs:(NSDictionary *)fileRefs
 {
   NSArray *topLevelObjects = nil;
   [self.pluginBundle loadNibNamed:@"STCTemplateOptionsWindow" owner:self topLevelObjects:&topLevelObjects];
-  TemplateOptionsWindow *templateOptionsWindow = topLevelObjects.firstObject;
+  TemplateOptionsWindow *templateOptionsWindow = [[topLevelObjects filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+    return [evaluatedObject isKindOfClass:[TemplateOptionsWindow class]];
+  }]] firstObject];
+  
   BOOL isTemplateOptionsWindow = [templateOptionsWindow isKindOfClass:[TemplateOptionsWindow class]];
   NSAssert(isTemplateOptionsWindow, @"Error loading from nib");
   if (!isTemplateOptionsWindow) {
     return;
   }
   
+  templateOptionsWindow.defaultSuperclassName = superclassName;
   templateOptionsWindow.completionDelegate = self;
+  templateOptionsWindow.fileRefsByType = fileRefs;
   
   [NSApp beginSheet:templateOptionsWindow modalForWindow:window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
+}
+
+- (void)templateOptionsWindow:(TemplateOptionsWindow *)window didCompleteWithConfig:(TemplateConfig *)config
+{
+  [[TemplateFactory defaultFactory] generateTemplateFromConfig:config];
+  [[NSApp mainWindow] endSheet:window];
 }
 
 - (void)templateOptionsWindowDidCancel:(TemplateOptionsWindow *)window
 {
   [[NSApp mainWindow] endSheet:window];
-  [window orderOut:self];
 }
 
 - (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
+  [sheet orderOut:self];
 }
 
 @end

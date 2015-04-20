@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>__DESCRIPTION__</string>
+	<string>__STC_DESCRIPTION__</string>
 	<key>MainTemplateFile</key>
 	<string>___FILEBASENAME___</string>
 	<key>SortOrder</key>
