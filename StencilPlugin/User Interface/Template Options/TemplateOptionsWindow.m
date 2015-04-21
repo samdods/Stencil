@@ -10,7 +10,7 @@
 #import "TemplateConfig.h"
 
 @interface TemplateOptionsWindow () <NSTextFieldDelegate>
-@property (weak) IBOutlet NSTextField *templateNameTextField;
+@property (weak) IBOutlet NSPopUpButton *superclassNamePopupButton;
 @property (weak) IBOutlet NSTextField *descriptionTextField;
 @property (weak) IBOutlet NSButton *okButton;
 @end
@@ -20,18 +20,24 @@
 - (void)awakeFromNib
 {
   [super awakeFromNib];
-  self.okButton.enabled = self.templateNameTextField.stringValue.length && self.descriptionTextField.stringValue.length;
+  self.okButton.enabled = self.superclassNamePopupButton.selectedItem != nil && self.descriptionTextField.stringValue.length;
 }
 
-- (void)setDefaultSuperclassName:(NSString *)defaultSuperclassName
+- (void)setTemplateConfig:(TemplateConfig *)templateConfig
 {
-  self.templateNameTextField.stringValue = defaultSuperclassName;
+  _templateConfig = templateConfig;
+  NSMenu *menu = [NSMenu new];
+  for (NSString *className in templateConfig.availableSuperclassNames) {
+    [menu addItemWithTitle:className action:nil keyEquivalent:@""];
+  }
+  self.superclassNamePopupButton.menu = menu;
+  [self.superclassNamePopupButton selectItem:[menu itemAtIndex:templateConfig.selectedSuperclassNameIndex]];
 }
 
 - (IBAction)didTapOK:(NSButton *)sender
 {
-  TemplateConfig *config = [[TemplateConfig alloc] initWithSuperclassName:self.templateNameTextField.stringValue description:self.descriptionTextField.stringValue fileRefs:self.fileRefsByType];
-  [self.completionDelegate templateOptionsWindow:self didCompleteWithConfig:config];
+  self.templateConfig.selectedSuperclassNameIndex = self.superclassNamePopupButton.indexOfSelectedItem;
+  [self.completionDelegate templateOptionsWindowDidCompleteOK:self];
 }
 
 - (IBAction)didTapCancel:(id)sender
@@ -41,7 +47,7 @@
 
 - (void)controlTextDidChange:(NSNotification *)obj
 {
-  self.okButton.enabled = self.templateNameTextField.stringValue.length && self.descriptionTextField.stringValue.length;
+  self.okButton.enabled = self.superclassNamePopupButton.selectedItem != nil && self.descriptionTextField.stringValue.length;
 }
 
 @end

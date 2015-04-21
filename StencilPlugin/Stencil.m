@@ -129,7 +129,7 @@ static BOOL ForceShowTemplatesOnly = NO;
 
 #pragma mark - displaying template options
 
-- (void)showTemplateOptionsInWindow:(NSWindow *)window defaultSuperclassName:(NSString *)superclassName fileRefs:(NSDictionary *)fileRefs
+- (void)showTemplateOptionsInWindow:(NSWindow *)window defaultTemplateConfig:(TemplateConfig *)config
 {
   NSArray *topLevelObjects = nil;
   [self.pluginBundle loadNibNamed:@"STCTemplateOptionsWindow" owner:self topLevelObjects:&topLevelObjects];
@@ -143,16 +143,15 @@ static BOOL ForceShowTemplatesOnly = NO;
     return;
   }
   
-  templateOptionsWindow.defaultSuperclassName = superclassName;
+  templateOptionsWindow.templateConfig = config;
   templateOptionsWindow.completionDelegate = self;
-  templateOptionsWindow.fileRefsByType = fileRefs;
   
   [NSApp beginSheet:templateOptionsWindow modalForWindow:window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
 }
 
-- (void)templateOptionsWindow:(TemplateOptionsWindow *)window didCompleteWithConfig:(TemplateConfig *)config
+- (void)templateOptionsWindowDidCompleteOK:(TemplateOptionsWindow *)window
 {
-  [[TemplateFactory defaultFactory] generateTemplateFromConfig:config];
+  [[TemplateFactory defaultFactory] generateTemplateFromConfig:window.templateConfig];
   [[NSApp mainWindow] endSheet:window];
 }
 

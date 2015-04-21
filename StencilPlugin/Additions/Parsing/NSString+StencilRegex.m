@@ -8,12 +8,25 @@
 
 #import "NSString+StencilRegex.h"
 
+@implementation NSString (StencilRegex)
+
+- (NSString *)stringByMatching:(NSString *)pattern replaceWith:(NSString *)template
+{
+  NSMutableString *mutableSelf = self.mutableCopy;
+  NSUInteger matches = [mutableSelf matchPattern:pattern replaceWith:template];
+  return matches ? mutableSelf.copy : nil;
+}
+
+@end
+
+
+
 @implementation NSMutableString (StencilRegex)
 
-- (void)matchPattern:(NSString *)pattern replaceWith:(NSString *)template
+- (NSUInteger)matchPattern:(NSString *)pattern replaceWith:(NSString *)template
 {
   NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
-  [regex replaceMatchesInString:self options:0 range:NSMakeRange(0, self.length) withTemplate:template];
+  return [regex replaceMatchesInString:self options:0 range:NSMakeRange(0, self.length) withTemplate:template];
 }
 
 @end

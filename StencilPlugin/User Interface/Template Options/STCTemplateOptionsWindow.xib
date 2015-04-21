@@ -16,21 +16,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="493" height="162"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V6S-km-eL4">
-                        <rect key="frame" x="178" y="120" width="295" height="22"/>
-                        <string key="toolTip">The class from which newly created classes based on this template will inherit. This is also the name by which your template will be identified. If a template with this name already exists, creation will not continue. By default this is the name of the selected group.</string>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="295" id="jCA-lz-wQw"/>
-                        </constraints>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Template name" drawsBackground="YES" id="B0b-n2-RFe">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <connections>
-                            <outlet property="delegate" destination="QvC-M9-y7g" id="jXG-EY-geM"/>
-                        </connections>
-                    </textField>
                     <textField toolTip="The description displayed when this template is selected from the list of available templates." verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="WuP-Sb-tC0">
                         <rect key="frame" x="178" y="61" width="295" height="49"/>
                         <constraints>
@@ -91,31 +76,46 @@ Gw
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7CK-ql-Tny">
+                        <rect key="frame" x="176" y="116" width="300" height="26"/>
+                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Uy3-kN-cVY" id="UfT-tl-595">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" id="VcM-wH-447">
+                                <items>
+                                    <menuItem title="Item 1" state="on" id="Uy3-kN-cVY"/>
+                                    <menuItem title="Item 2" id="d7q-q6-q2W"/>
+                                    <menuItem title="Item 3" id="KdF-zN-kqQ"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                    </popUpButton>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="WuP-Sb-tC0" firstAttribute="top" secondItem="7CK-ql-Tny" secondAttribute="bottom" constant="9" id="1Ho-rA-xKU"/>
+                    <constraint firstItem="7CK-ql-Tny" firstAttribute="width" secondItem="WuP-Sb-tC0" secondAttribute="width" id="3Kq-is-cRg"/>
                     <constraint firstItem="Sar-aY-9WT" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="4um-8e-brx"/>
+                    <constraint firstAttribute="trailing" secondItem="7CK-ql-Tny" secondAttribute="trailing" constant="20" id="5yx-bv-cO5"/>
                     <constraint firstAttribute="trailing" secondItem="ILG-rO-xFM" secondAttribute="trailing" constant="20" id="APd-yK-qLx"/>
-                    <constraint firstItem="V6S-km-eL4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Sar-aY-9WT" secondAttribute="trailing" constant="6" id="BRP-To-RKS"/>
-                    <constraint firstItem="Sar-aY-9WT" firstAttribute="top" secondItem="V6S-km-eL4" secondAttribute="top" constant="3" id="Ksf-Dn-FLM"/>
+                    <constraint firstItem="7CK-ql-Tny" firstAttribute="top" secondItem="Sar-aY-9WT" secondAttribute="top" constant="-1" id="FZf-C1-WdA"/>
                     <constraint firstItem="SCM-fO-ner" firstAttribute="top" secondItem="WuP-Sb-tC0" secondAttribute="top" constant="3" id="Lnw-PT-ac5"/>
                     <constraint firstAttribute="trailing" secondItem="WuP-Sb-tC0" secondAttribute="trailing" constant="20" id="Nx9-7R-f4J"/>
                     <constraint firstItem="ILG-rO-xFM" firstAttribute="leading" secondItem="X22-u2-OwY" secondAttribute="trailing" constant="12" id="P3l-rh-urm"/>
                     <constraint firstItem="X22-u2-OwY" firstAttribute="centerY" secondItem="ILG-rO-xFM" secondAttribute="centerY" id="S79-So-PFW"/>
                     <constraint firstItem="X22-u2-OwY" firstAttribute="width" secondItem="ILG-rO-xFM" secondAttribute="width" id="V2Q-Vp-1x0"/>
-                    <constraint firstItem="V6S-km-eL4" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" id="aWx-hw-3VD"/>
+                    <constraint firstItem="7CK-ql-Tny" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="22" id="YgZ-xw-xVG"/>
                     <constraint firstItem="WuP-Sb-tC0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SCM-fO-ner" secondAttribute="trailing" constant="7" id="dvF-tm-KfR"/>
                     <constraint firstItem="ILG-rO-xFM" firstAttribute="top" secondItem="WuP-Sb-tC0" secondAttribute="bottom" constant="20" id="f9d-PW-PtF"/>
                     <constraint firstAttribute="bottom" secondItem="ILG-rO-xFM" secondAttribute="bottom" constant="20" id="ig4-nf-1uU"/>
+                    <constraint firstItem="7CK-ql-Tny" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Sar-aY-9WT" secondAttribute="trailing" constant="6" id="kZH-sn-fah"/>
                     <constraint firstItem="SCM-fO-ner" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="q93-vR-7eo"/>
-                    <constraint firstAttribute="trailing" secondItem="V6S-km-eL4" secondAttribute="trailing" constant="20" id="tZK-0W-Nmi"/>
                     <constraint firstItem="X22-u2-OwY" firstAttribute="bottom" secondItem="ILG-rO-xFM" secondAttribute="bottom" id="vat-Qv-myA"/>
-                    <constraint firstItem="WuP-Sb-tC0" firstAttribute="top" secondItem="V6S-km-eL4" secondAttribute="bottom" constant="10" id="zEr-4L-IbB"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="descriptionTextField" destination="WuP-Sb-tC0" id="9d8-Hz-jBJ"/>
                 <outlet property="okButton" destination="ILG-rO-xFM" id="z3R-KI-D3E"/>
-                <outlet property="templateNameTextField" destination="V6S-km-eL4" id="TZw-Zu-6YU"/>
+                <outlet property="superclassNamePopupButton" destination="7CK-ql-Tny" id="jtt-rK-ozm"/>
             </connections>
             <point key="canvasLocation" x="-446.5" y="196"/>
         </window>

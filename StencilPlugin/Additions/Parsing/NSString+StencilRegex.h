@@ -8,8 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+@interface NSString (StencilRegex)
+
+- (NSString *)stringByMatching:(NSString *)pattern replaceWith:(NSString *)templ;
+
+@end
+
+
 @interface NSMutableString (StencilRegex)
 
-- (void)matchPattern:(NSString *)pattern replaceWith:(NSString *)templ;
+- (NSUInteger)matchPattern:(NSString *)pattern replaceWith:(NSString *)templ;
 
 @end

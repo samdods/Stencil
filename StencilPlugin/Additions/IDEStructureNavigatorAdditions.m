@@ -12,6 +12,7 @@
 #import "ProjectGroup.h"
 #import "ProjectFile.h"
 #import "TemplateFactory.h"
+#import "TemplateConfig.h"
 
 @interface NSObject (IDEAdditions)
 - (char)_testOrDeleteItems:(char)items useContextualMenuSelection:(char)selection;
@@ -61,13 +62,13 @@
   [Stencil sharedPlugin].beginCreateTemplateFromGroup = NO;
   
   NSError *error = nil;
-  NSDictionary *fileRefs = [group validatedFileRefsByType:&error];
+  TemplateConfig *config = [TemplateConfig defaultConfigForGroup:group error:&error];
   if (error) {
     [[TemplateFactory defaultFactory] showAlertForError:error];
     return 0;
   }
   
-  [[Stencil sharedPlugin] showTemplateOptionsInWindow:[NSApp mainWindow] defaultSuperclassName:group.name fileRefs:fileRefs];
+  [[Stencil sharedPlugin] showTemplateOptionsInWindow:[NSApp mainWindow] defaultTemplateConfig:config];
   return 0;
 }
 

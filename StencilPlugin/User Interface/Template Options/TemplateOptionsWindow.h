@@ -13,7 +13,7 @@
 
 @protocol TemplateOptionsWindowDelegate <NSWindowDelegate>
 
-- (void)templateOptionsWindow:(TemplateOptionsWindow *)window didCompleteWithConfig:(TemplateConfig *)config;
+- (void)templateOptionsWindowDidCompleteOK:(TemplateOptionsWindow *)window;
 - (void)templateOptionsWindowDidCancel:(TemplateOptionsWindow *)window;
 
 @end
@@ -23,9 +23,7 @@
 
 @property (nonatomic, weak) id<TemplateOptionsWindowDelegate> completionDelegate;
 
-@property (nonatomic, copy) NSString *defaultSuperclassName;
-
-@property (nonatomic, copy) NSDictionary *fileRefsByType;
+@property (nonatomic, strong) TemplateConfig *templateConfig;
 
 @end
 

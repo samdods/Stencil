@@ -7,13 +7,25 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ProjectGroup.h"
 
 @interface TemplateConfig : NSObject
 
-@property (nonatomic, readonly) NSString *superclassName;
-@property (nonatomic, readonly) NSString *templateDescription;
+/**
+ *  Generates the defaults for the given group. Use this method to instantiate a template config and then
+ *  change the properties as needed, usually based on user input.
+ *
+ *  @param group  The group on which the template config will be based.
+ *  @param error  On return, this error will be set if something went wrong. Otherwise this will be unchanged from input.
+ *
+ *  @return A new template config instance, with default properties based on the specified group, or nil if something went wrong.
+ */
++ (instancetype)defaultConfigForGroup:(id<ProjectGroup>)group error:(NSError **)error;
+
+@property (nonatomic, readonly) NSArray *availableSuperclassNames;
 @property (nonatomic, readonly) NSDictionary *fileRefs;
 
-- (instancetype)initWithSuperclassName:(NSString *)name description:(NSString *)description fileRefs:(NSDictionary *)fileRefs;
+@property (nonatomic, assign) NSUInteger selectedSuperclassNameIndex;
+@property (nonatomic, copy) NSString *templateDescription;
 
 @end

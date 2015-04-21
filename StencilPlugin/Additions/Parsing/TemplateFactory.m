@@ -29,7 +29,8 @@
 
 - (void)generateTemplateFromConfig:(TemplateConfig *)config
 {
-  NSString *templateName = [config.superclassName stringByAppendingString:@".xctemplate"];
+  NSString *superclassName = [config.availableSuperclassNames[config.selectedSuperclassNameIndex] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+  NSString *templateName = [superclassName stringByAppendingString:@".xctemplate"];
   
   NSString *targetPath = [[[Stencil sharedPlugin].projectRootPath stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory] stringByAppendingPathComponent:FileTemplatesDirectoryPath];
   targetPath = [targetPath stringByAppendingPathComponent:templateName];
@@ -140,15 +141,15 @@
   static NSString *const FileBaseNameAsID = @"___FILEBASENAMEASIDENTIFIER___";
   
   // substitute interface definition
-  [output matchPattern:[NSString stringWithFormat:@"@interface\\s%@\\s*:\\s*\\w+", className]
+  [output matchPattern:[NSString stringWithFormat:@"@interface\\s+%@\\s*:\\s*\\w+", className]
            replaceWith:[NSString stringWithFormat:@"@interface %@ : %@", FileBaseNameAsID, className]];
   
   // substitute interface extension
-  [output matchPattern:[NSString stringWithFormat:@"@interface\\s%@\\s*\\((\\w*)\\)", className]
+  [output matchPattern:[NSString stringWithFormat:@"@interface\\s+%@\\s*\\((\\w*)\\)", className]
            replaceWith:[NSString stringWithFormat:@"@interface %@ ($1)", FileBaseNameAsID]];
   
   // substitute implementation definition
-  [output matchPattern:[NSString stringWithFormat:@"@implementation\\s%@\\b", className]
+  [output matchPattern:[NSString stringWithFormat:@"@implementation\\s+%@\\b", className]
            replaceWith:[NSString stringWithFormat:@"@implementation %@", FileBaseNameAsID]];
   
   return output;

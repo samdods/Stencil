@@ -13,6 +13,7 @@ FOUNDATION_EXPORT NSString *const MenuItemTitleFileFromCustomTemplate;
 FOUNDATION_EXPORT NSString *const PluginNameAndCorrespondingDirectory;
 FOUNDATION_EXPORT NSString *const FileTemplatesDirectoryPath;
 
+@class TemplateConfig;
 
 @interface Stencil : NSObject <NSMenuDelegate>
 
@@ -33,6 +34,6 @@ FOUNDATION_EXPORT NSString *const FileTemplatesDirectoryPath;
 @property (nonatomic, readonly) BOOL showCustomTemplatesOnly;
 @property (nonatomic, assign) BOOL beginCreateTemplateFromGroup;
 
-- (void)showTemplateOptionsInWindow:(NSWindow *)window defaultSuperclassName:(NSString *)superclassName fileRefs:(NSDictionary *)fileRefs;
+- (void)showTemplateOptionsInWindow:(NSWindow *)window defaultTemplateConfig:(TemplateConfig *)config;
 
 @end
