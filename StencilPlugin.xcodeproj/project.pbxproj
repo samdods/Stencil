@@ -97,7 +97,7 @@
 		EA31BC2C1AE1AFDE00167EFD = {
 			isa = PBXGroup;
 			children = (
-				EA31BC3C1AE1AFDE00167EFD /* XcodeCustomFileTemplates */,
+				EA31BC3C1AE1AFDE00167EFD /* StencilPlugin */,
 				EA31BC371AE1AFDE00167EFD /* Frameworks */,
 				EA31BC361AE1AFDE00167EFD /* Products */,
 				851AC8D0C97F2C9797E01BFC /* Pods */,
@@ -122,7 +122,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		EA31BC3C1AE1AFDE00167EFD /* XcodeCustomFileTemplates */ = {
+		EA31BC3C1AE1AFDE00167EFD /* StencilPlugin */ = {
 			isa = PBXGroup;
 			children = (
 				EA3D3DBA1AE57D44007BD36A /* Model */,
@@ -135,7 +135,6 @@
 				EA31BC421AE1AFDE00167EFD /* Stencil.m */,
 				EA31BC3D1AE1AFDE00167EFD /* Supporting Files */,
 			);
-			name = XcodeCustomFileTemplates;
 			path = StencilPlugin;
 			sourceTree = "<group>";
 		};
@@ -252,7 +251,7 @@
 			dependencies = (
 			);
 			name = StencilPlugin;
-			productName = XcodeCustomFileTemplates;
+			productName = StencilPlugin;
 			productReference = EA31BC351AE1AFDE00167EFD /* StencilPlugin.xcplugin */;
 			productType = "com.apple.product-type.bundle";
 		};

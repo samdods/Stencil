@@ -1,6 +1,6 @@
 //
-//  XcodeCustomFileTemplates.h
-//  XcodeCustomFileTemplates
+//  StencilPlugin.h
+//  StencilPlugin
 //
 //  Created by Sam Dods on 17/04/2015.
 //  Copyright (c) 2015 Sam Dods. All rights reserved.
