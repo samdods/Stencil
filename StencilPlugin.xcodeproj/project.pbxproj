@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		EA0000CD1AE6C89F00E85807 /* HeaderComments.m.sctemplate in Resources */ = {isa = PBXBuildFile; fileRef = EA4FB6801AE39543001EFB21 /* HeaderComments.m.sctemplate */; };
+		EA0000D01AE7A56800E85807 /* ThingTypeToClassNamesMap.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0000CF1AE7A56800E85807 /* ThingTypeToClassNamesMap.m */; };
 		EA31BC391AE1AFDE00167EFD /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA31BC381AE1AFDE00167EFD /* AppKit.framework */; };
 		EA31BC3B1AE1AFDE00167EFD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA31BC3A1AE1AFDE00167EFD /* Foundation.framework */; };
-		EA3D3DB61AE56BF1007BD36A /* STCTemplateOptionsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA3D3DB51AE56BF1007BD36A /* STCTemplateOptionsWindow.xib */; };
 		EA3EB1B51AE39510009553F9 /* TemplateInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA3EB1B41AE39510009553F9 /* TemplateInfo.plist */; };
 		EACD8A4C1AE6C5B500706E6B /* TemplateConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D3DBC1AE57D61007BD36A /* TemplateConfig.m */; };
 		EACD8A4D1AE6C5B900706E6B /* TemplateOptionsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D3DB31AE56BDC007BD36A /* TemplateOptionsWindow.m */; };
@@ -27,6 +27,7 @@
 		EACD8A591AE6C5DF00706E6B /* IDEStructureNavigatorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3EB1B01AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m */; };
 		EACD8A5A1AE6C5E300706E6B /* Stencil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA31BC421AE1AFDE00167EFD /* Stencil.m */; };
 		EACD8A5B1AE6C63F00706E6B /* HeaderComments.h.sctemplate in Resources */ = {isa = PBXBuildFile; fileRef = EA4FB67F1AE39543001EFB21 /* HeaderComments.h.sctemplate */; };
+		EAF198261AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAF198251AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib */; };
 		F302472A1AAA8763C7FEBEFF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1A7095B005B6F4C3F7C8DFE /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +35,8 @@
 		10C1169B0EF5D3E85F2D491E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		275C778DFA544CFD5FAB6F79 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A1A7095B005B6F4C3F7C8DFE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA0000CE1AE7A56800E85807 /* ThingTypeToClassNamesMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThingTypeToClassNamesMap.h; sourceTree = "<group>"; };
+		EA0000CF1AE7A56800E85807 /* ThingTypeToClassNamesMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThingTypeToClassNamesMap.m; sourceTree = "<group>"; };
 		EA31BC351AE1AFDE00167EFD /* StencilPlugin.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StencilPlugin.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA31BC381AE1AFDE00167EFD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		EA31BC3A1AE1AFDE00167EFD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -45,7 +48,6 @@
 		EA3D3DAA1AE5638E007BD36A /* NSString+StencilRegex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+StencilRegex.m"; sourceTree = "<group>"; };
 		EA3D3DB21AE56BDC007BD36A /* TemplateOptionsWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateOptionsWindow.h; sourceTree = "<group>"; };
 		EA3D3DB31AE56BDC007BD36A /* TemplateOptionsWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateOptionsWindow.m; sourceTree = "<group>"; };
-		EA3D3DB51AE56BF1007BD36A /* STCTemplateOptionsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STCTemplateOptionsWindow.xib; sourceTree = "<group>"; };
 		EA3D3DBB1AE57D61007BD36A /* TemplateConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateConfig.h; sourceTree = "<group>"; };
 		EA3D3DBC1AE57D61007BD36A /* TemplateConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateConfig.m; sourceTree = "<group>"; };
 		EA3D3DC31AE5867F007BD36A /* TemplateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateFactory.h; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 		EA4FB6941AE4D768001EFB21 /* NSOutputStream+StencilAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOutputStream+StencilAdditions.h"; sourceTree = "<group>"; };
 		EA4FB6951AE4D768001EFB21 /* NSOutputStream+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutputStream+StencilAdditions.m"; sourceTree = "<group>"; };
 		EAB55BA31AE2D519001EBD12 /* NSMenu+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+StencilAdditions.m"; sourceTree = "<group>"; };
+		EAF198251AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STCTemplateOptionsWindow.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,7 +163,7 @@
 			children = (
 				EA3D3DB21AE56BDC007BD36A /* TemplateOptionsWindow.h */,
 				EA3D3DB31AE56BDC007BD36A /* TemplateOptionsWindow.m */,
-				EA3D3DB51AE56BF1007BD36A /* STCTemplateOptionsWindow.xib */,
+				EAF198251AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib */,
 			);
 			path = "Template Options";
 			sourceTree = "<group>";
@@ -170,6 +173,8 @@
 			children = (
 				EA3D3DBB1AE57D61007BD36A /* TemplateConfig.h */,
 				EA3D3DBC1AE57D61007BD36A /* TemplateConfig.m */,
+				EA0000CE1AE7A56800E85807 /* ThingTypeToClassNamesMap.h */,
+				EA0000CF1AE7A56800E85807 /* ThingTypeToClassNamesMap.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -294,7 +299,7 @@
 				EACD8A5B1AE6C63F00706E6B /* HeaderComments.h.sctemplate in Resources */,
 				EA0000CD1AE6C89F00E85807 /* HeaderComments.m.sctemplate in Resources */,
 				EA3EB1B51AE39510009553F9 /* TemplateInfo.plist in Resources */,
-				EA3D3DB61AE56BF1007BD36A /* STCTemplateOptionsWindow.xib in Resources */,
+				EAF198261AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +355,7 @@
 				EACD8A4E1AE6C5BB00706E6B /* StencilWeakObjectWrapper.m in Sources */,
 				EACD8A551AE6C5D300706E6B /* TemplateFactory.m in Sources */,
 				EACD8A4C1AE6C5B500706E6B /* TemplateConfig.m in Sources */,
+				EA0000D01AE7A56800E85807 /* ThingTypeToClassNamesMap.m in Sources */,
 				EACD8A581AE6C5DC00706E6B /* IDETemplateAdditions.m in Sources */,
 				EACD8A501AE6C5C100706E6B /* ProjectFile.m in Sources */,
 			);

@@ -29,7 +29,7 @@
 
 - (void)generateTemplateFromConfig:(TemplateConfig *)config
 {
-  NSString *superclassName = [config.availableSuperclassNames[config.selectedSuperclassNameIndex] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+  NSString *superclassName = [config.thingNameToReplace stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
   NSString *templateName = [superclassName stringByAppendingString:@".xctemplate"];
   
   NSString *targetPath = [[[Stencil sharedPlugin].projectRootPath stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory] stringByAppendingPathComponent:FileTemplatesDirectoryPath];
@@ -57,8 +57,7 @@
     if (filetype.integerValue == ProjectFileInterface || filetype.integerValue == ProjectFileImplementation) {
       [sourceFilePaths addObject:targetFilePath];
     }
-    NSURL *targetURL = [NSURL fileURLWithPath:targetFilePath];
-    copyError = [self createTemplateFromFile:config.fileRefs[filetype] targetURL:targetURL type:filetype.integerValue];
+    copyError = [self createTemplateFromFile:config.fileRefs[filetype] targetPath:targetFilePath type:filetype.integerValue];
     if (copyError) {
       *stop = YES;
     }
@@ -75,30 +74,6 @@
   }
 }
 
-- (void)copyTemplateInfoPlistToPath:(NSString *)targetPath config:(TemplateConfig *)config error:(NSError **)error
-{
-  NSURL *sourceURL = [[Stencil sharedPlugin].pluginBundle URLForResource:@"TemplateInfo" withExtension:@"plist"];
-  NSString *targetFilePath = [targetPath stringByAppendingPathComponent:@"TemplateInfo.plist"];
-  NSURL *targetURL = [NSURL fileURLWithPath:targetFilePath];
-    
-  NSInputStream *inputStream = [NSInputStream inputStreamWithURL:sourceURL];
-  [inputStream open];
-  
-  NSOutputStream *outputStream = [NSOutputStream outputStreamWithURL:targetURL append:NO];
-  [outputStream open];
-  
-  NSString *line = inputStream.stc_nextReadLine;
-  while (line) {
-    NSMutableString *outputLine = [line mutableCopy];
-    [outputLine matchPattern:@"__STC_DESCRIPTION__" replaceWith:config.templateDescription];
-    [outputStream stc_writeString:outputLine];
-    line = inputStream.stc_nextReadLine;
-  }
-  
-  [inputStream close];
-  [outputStream close];
-}
-
 - (NSDictionary *)targetFileURLByType:(NSDictionary *)fileRefsByType targetBasePath:(NSString *)targetPath
 {
   NSMutableDictionary *targetPathsByType = [NSMutableDictionary new];
@@ -112,26 +87,44 @@
 
 #pragma mark - copying
 
-- (NSError *)createTemplateFromFile:(id<ProjectFile>)file targetURL:(NSURL *)targetURL type:(ProjectFileType)filetype
+- (void)copyTemplateInfoPlistToPath:(NSString *)targetPath config:(TemplateConfig *)config error:(NSError **)error
 {
-  NSURL *sourceURL = file.fileURL;
-  NSInputStream *inputStream = [NSInputStream inputStreamWithURL:sourceURL];
+  NSString *sourcePath = [[Stencil sharedPlugin].pluginBundle pathForResource:@"TemplateInfo" ofType:@"plist"];
+  NSString *targetFilePath = [targetPath stringByAppendingPathComponent:@"TemplateInfo.plist"];
+  
+  [self copySourceFileAtPath:sourcePath toPath:targetFilePath through:^NSString *(NSString *line) {
+    NSMutableString *mutableLine = [line mutableCopy];
+    [mutableLine matchPattern:@"__STC_DESCRIPTION__" replaceWith:config.templateDescription];
+    return [mutableLine copy];
+  }];
+}
+
+- (NSError *)createTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype
+{
+  [self copySourceFileAtPath:file.fullPath toPath:targetPath through:^NSString *(NSString *line) {
+    return [self stringByTemplatifying:line file:file];
+  }];
+  
+  return nil;
+}
+
+- (void)copySourceFileAtPath:(NSString *)sourcePath toPath:(NSString *)targetPath through:(NSString *(^)(NSString *line))modifiedStringBlock
+{
+  NSInputStream *inputStream = [NSInputStream inputStreamWithFileAtPath:sourcePath];
   [inputStream open];
   
-  NSOutputStream *outputStream = [NSOutputStream outputStreamWithURL:targetURL append:NO];
+  NSOutputStream *outputStream = [NSOutputStream outputStreamToFileAtPath:targetPath append:NO];
   [outputStream open];
   
   NSString *line = inputStream.stc_nextReadLine;
   while (line) {
-    NSString *outputLine = [self stringByTemplatifying:line file:file];
-    [outputStream stc_writeString:outputLine];
+    NSString *output = modifiedStringBlock(line);
+    [outputStream stc_writeString:output];
     line = inputStream.stc_nextReadLine;
   }
   
   [inputStream close];
   [outputStream close];
-  
-  return nil;
 }
 
 - (NSString *)stringByTemplatifying:(NSString *)line file:(id<ProjectFile>)file
@@ -152,7 +145,7 @@
   [output matchPattern:[NSString stringWithFormat:@"@implementation\\s+%@\\b", className]
            replaceWith:[NSString stringWithFormat:@"@implementation %@", FileBaseNameAsID]];
   
-  return output;
+  return [output copy];
 }
 
 #pragma mark - alert

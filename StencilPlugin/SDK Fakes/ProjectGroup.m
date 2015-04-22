@@ -22,7 +22,9 @@
 
 - (NSDictionary *)validatedFileRefsByType:(NSError **)error
 {
-  NSArray *groupFileRefs = [self valueForKey:@"childRepresentedObjects"];
+  NSArray *groupFileRefs = [[self valueForKey:@"childRepresentedObjects"] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+    return [evaluatedObject isKindOfClass:NSClassFromString(@"Xcode3FileReference")];
+  }]];
   NSMutableDictionary *validatedFileRefsByType = [NSMutableDictionary new];
   for (id<ProjectFile> file in groupFileRefs) {
     switch (file.type) {

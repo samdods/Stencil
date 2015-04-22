@@ -22,10 +22,10 @@
  */
 + (instancetype)defaultConfigForGroup:(id<ProjectGroup>)group error:(NSError **)error;
 
-@property (nonatomic, readonly) NSArray *availableSuperclassNames;
+@property (nonatomic, readonly) NSArray *thingTypeToNamesMaps;
 @property (nonatomic, readonly) NSDictionary *fileRefs;
 
-@property (nonatomic, assign) NSUInteger selectedSuperclassNameIndex;
+@property (nonatomic, copy) NSString *thingNameToReplace;
 @property (nonatomic, copy) NSString *templateDescription;
 
 @end

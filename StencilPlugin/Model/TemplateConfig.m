@@ -10,6 +10,7 @@
 #import "ProjectFile.h"
 #import "NSInputStream+StencilAdditions.h"
 #import "NSString+StencilRegex.h"
+#import "ThingTypeToClassNamesMap.h"
 
 @implementation TemplateConfig
 
@@ -24,47 +25,77 @@
     return nil;
   }
   
-  NSMutableArray *classNames = [NSMutableArray new];
+  NSArray *maps = nil;
   
   id<ProjectFile> headerFile = fileRefsByType[@(ProjectFileInterface)];
   if (headerFile) {
-    NSArray *parsedClassNames = [self parsedClassNamesFromFileAtPath:headerFile.fullPath];
-    [classNames addObjectsFromArray:parsedClassNames];
+    maps = [self mapsFromFileAtPath:headerFile.fullPath];
+  } else {
+    id<ProjectFile> implementationFile = fileRefsByType[@(ProjectFileImplementation)];
+    if (implementationFile) {
+      maps = [self mapsFromFileAtPath:headerFile.fullPath];
+    }
   }
   
-  id<ProjectFile> implementationFile = fileRefsByType[@(ProjectFileImplementation)];
-  if (implementationFile) {
-    NSArray *parsedClassNames = [self parsedClassNamesFromFileAtPath:implementationFile.fullPath];
-    [classNames addObjectsFromArray:parsedClassNames];
-  }
-  
-  return [[self alloc] initWithAvailableSuperclassNames:classNames.copy fileRefsByType:fileRefsByType];
+  return [[self alloc] initWithThingTypeToNamesMaps:maps fileRefsByType:fileRefsByType];
 }
 
-+ (NSArray *)parsedClassNamesFromFileAtPath:(NSString *)path
++ (NSArray *)mapsFromFileAtPath:(NSString *)filePath
+{
+  NSMutableArray *maps = [NSMutableArray new];
+  [self enumerateInterfaceDefinitionsFromFileAtPath:filePath block:^(NSArray *classNames) {
+    if (classNames) {
+      ThingTypeToClassNamesMap *map = [[ThingTypeToClassNamesMap alloc] initWithThingType:STCThingTypeInterface names:classNames];
+      [maps addObject:map];
+    }
+  }];
+  [self enumerateProtocolDefinitionsFromFileAtPath:filePath block:^(NSArray *protocolNames) {
+    if (protocolNames) {
+      ThingTypeToClassNamesMap *map = [[ThingTypeToClassNamesMap alloc] initWithThingType:STCThingTypeProtocol names:protocolNames];
+      [maps addObject:map];
+    }
+  }];
+  return maps.copy;
+}
+
++ (void)enumerateInterfaceDefinitionsFromFileAtPath:(NSString *)path block:(void(^)(NSArray *classNames))block
 {
   NSInputStream *inputStream = [NSInputStream inputStreamWithFileAtPath:path];
   [inputStream open];
   
-  NSMutableArray *classes = [NSMutableArray new];
+  NSString *line = inputStream.stc_nextReadLine;
+  while (line) {
+    NSString *output = [line stringByMatching:@"^@interface\\s+(\\w+)\\s*:\\s*(\\w+).*" replaceWith:@"$1:$2"];
+    NSArray *interfaceNames = [output componentsSeparatedByString:@":"];
+    block(interfaceNames);
+    line = inputStream.stc_nextReadLine;
+  }
+  
+  [inputStream close];
+}
+
++ (void)enumerateProtocolDefinitionsFromFileAtPath:(NSString *)path block:(void(^)(NSArray *protocolNames))block
+{
+  NSInputStream *inputStream = [NSInputStream inputStreamWithFileAtPath:path];
+  [inputStream open];
   
   NSString *line = inputStream.stc_nextReadLine;
   while (line) {
-    NSString *output = [line stringByMatching:@".*@interface\\s+(\\w+)\\s*:\\s*\\w+.*" replaceWith:@"$1"];
-    if (output) {
-      [classes addObject:output];
-    }
+    NSString *output = [line stringByMatching:@"^@protocol\\s+(\\w+)\\s*<(\\w+)>.*" replaceWith:@"$1:$2"];
+    NSArray *protocolNames = [output componentsSeparatedByString:@":"];
+    block(protocolNames);
     line = inputStream.stc_nextReadLine;
   }
-  return classes.copy;
+  
+  [inputStream close];
 }
 
-- (instancetype)initWithAvailableSuperclassNames:(NSArray *)superclassNames fileRefsByType:(NSDictionary *)fileRefsByType
+- (instancetype)initWithThingTypeToNamesMaps:(NSArray *)maps fileRefsByType:(NSDictionary *)fileRefsByType
 {
   if (!(self = [super init])) {
     return nil;
   }
-  _availableSuperclassNames = superclassNames;
+  _thingTypeToNamesMaps = maps;
   _fileRefs = fileRefsByType;
   return self;
 }

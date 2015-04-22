@@ -9,34 +9,16 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g" customClass="TemplateOptionsWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
-            <windowPositionMask key="initialPositionMask" topStrut="YES"/>
-            <rect key="contentRect" x="736" y="907" width="493" height="162"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="480" height="270"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="493" height="162"/>
+                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField toolTip="The description displayed when this template is selected from the list of available templates." verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="WuP-Sb-tC0">
-                        <rect key="frame" x="178" y="61" width="295" height="49"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="49" id="GRQ-dU-Ni9"/>
-                            <constraint firstAttribute="width" constant="295" id="zQu-xE-9V1"/>
-                        </constraints>
-                        <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Description" drawsBackground="YES" id="MAK-gW-RCS">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <connections>
-                            <outlet property="delegate" destination="QvC-M9-y7g" id="U7y-ak-arB"/>
-                        </connections>
-                    </textField>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ILG-rO-xFM">
-                        <rect key="frame" x="371" y="13" width="108" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="96" id="2T4-4Y-cAp"/>
-                        </constraints>
-                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Iqy-2Z-L07">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="le0-u4-dNq">
+                        <rect key="frame" x="406" y="13" width="60" height="32"/>
+                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PRY-Iw-1T8">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -44,20 +26,12 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="didTapOK:" target="QvC-M9-y7g" id="bri-AF-juT"/>
+                            <action selector="didTapOK:" target="QvC-M9-y7g" id="bPZ-xb-z4F"/>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SCM-fO-ner">
-                        <rect key="frame" x="18" y="90" width="75" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Description" id="4av-qQ-O42">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="X22-u2-OwY">
-                        <rect key="frame" x="263" y="13" width="108" height="32"/>
-                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PZE-gt-Vl0">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D06-1b-kKd">
+                        <rect key="frame" x="302" y="13" width="83" height="32"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bf1-GB-L8p">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -65,59 +39,73 @@ Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="didTapCancel:" target="QvC-M9-y7g" id="qm1-6g-bvW"/>
+                            <action selector="didTapCancel:" target="QvC-M9-y7g" id="M5w-L8-JUw"/>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sar-aY-9WT">
-                        <rect key="frame" x="18" y="122" width="156" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="New classes inherit from" id="SUj-Lc-Gwf">
+                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="whW-lV-GBo" userLabel="template-from popup">
+                        <rect key="frame" x="163" y="226" width="300" height="26"/>
+                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="vdS-7U-upD" id="w9q-de-tVs">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" id="8SG-de-Pft">
+                                <items>
+                                    <menuItem title="Item 1" state="on" id="vdS-7U-upD"/>
+                                    <menuItem title="Item 2" id="b6J-sW-lQe"/>
+                                    <menuItem title="Item 3" id="MWT-er-3am"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                        <connections>
+                            <action selector="templateChoiceChanged:" target="QvC-M9-y7g" id="biY-7t-jka"/>
+                        </connections>
+                    </popUpButton>
+                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WHi-35-e1o" userLabel="inherit-from popup">
+                        <rect key="frame" x="163" y="179" width="300" height="26"/>
+                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="adq-qf-7iX" id="PvZ-CW-BcC">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" id="UN3-Jm-w09">
+                                <items>
+                                    <menuItem title="Item 1" state="on" id="adq-qf-7iX"/>
+                                    <menuItem title="Item 2" id="Jh0-l3-FHj"/>
+                                    <menuItem title="Item 3" id="vM2-zs-ogO"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                    </popUpButton>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nEE-tm-aVz">
+                        <rect key="frame" x="165" y="97" width="295" height="65"/>
+                        <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="cRB-Di-AXB">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="20p-08-9Vi">
+                        <rect key="frame" x="29" y="232" width="130" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Interface or protocol" id="Vyo-fj-34L">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7CK-ql-Tny">
-                        <rect key="frame" x="176" y="116" width="300" height="26"/>
-                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Uy3-kN-cVY" id="UfT-tl-595">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="VcM-wH-447">
-                                <items>
-                                    <menuItem title="Item 1" state="on" id="Uy3-kN-cVY"/>
-                                    <menuItem title="Item 2" id="d7q-q6-q2W"/>
-                                    <menuItem title="Item 3" id="KdF-zN-kqQ"/>
-                                </items>
-                            </menu>
-                        </popUpButtonCell>
-                    </popUpButton>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aHM-jq-vla">
+                        <rect key="frame" x="29" y="185" width="130" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="New will inherit from" id="DX2-s2-LXM">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
-                <constraints>
-                    <constraint firstItem="WuP-Sb-tC0" firstAttribute="top" secondItem="7CK-ql-Tny" secondAttribute="bottom" constant="9" id="1Ho-rA-xKU"/>
-                    <constraint firstItem="7CK-ql-Tny" firstAttribute="width" secondItem="WuP-Sb-tC0" secondAttribute="width" id="3Kq-is-cRg"/>
-                    <constraint firstItem="Sar-aY-9WT" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="4um-8e-brx"/>
-                    <constraint firstAttribute="trailing" secondItem="7CK-ql-Tny" secondAttribute="trailing" constant="20" id="5yx-bv-cO5"/>
-                    <constraint firstAttribute="trailing" secondItem="ILG-rO-xFM" secondAttribute="trailing" constant="20" id="APd-yK-qLx"/>
-                    <constraint firstItem="7CK-ql-Tny" firstAttribute="top" secondItem="Sar-aY-9WT" secondAttribute="top" constant="-1" id="FZf-C1-WdA"/>
-                    <constraint firstItem="SCM-fO-ner" firstAttribute="top" secondItem="WuP-Sb-tC0" secondAttribute="top" constant="3" id="Lnw-PT-ac5"/>
-                    <constraint firstAttribute="trailing" secondItem="WuP-Sb-tC0" secondAttribute="trailing" constant="20" id="Nx9-7R-f4J"/>
-                    <constraint firstItem="ILG-rO-xFM" firstAttribute="leading" secondItem="X22-u2-OwY" secondAttribute="trailing" constant="12" id="P3l-rh-urm"/>
-                    <constraint firstItem="X22-u2-OwY" firstAttribute="centerY" secondItem="ILG-rO-xFM" secondAttribute="centerY" id="S79-So-PFW"/>
-                    <constraint firstItem="X22-u2-OwY" firstAttribute="width" secondItem="ILG-rO-xFM" secondAttribute="width" id="V2Q-Vp-1x0"/>
-                    <constraint firstItem="7CK-ql-Tny" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="22" id="YgZ-xw-xVG"/>
-                    <constraint firstItem="WuP-Sb-tC0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SCM-fO-ner" secondAttribute="trailing" constant="7" id="dvF-tm-KfR"/>
-                    <constraint firstItem="ILG-rO-xFM" firstAttribute="top" secondItem="WuP-Sb-tC0" secondAttribute="bottom" constant="20" id="f9d-PW-PtF"/>
-                    <constraint firstAttribute="bottom" secondItem="ILG-rO-xFM" secondAttribute="bottom" constant="20" id="ig4-nf-1uU"/>
-                    <constraint firstItem="7CK-ql-Tny" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Sar-aY-9WT" secondAttribute="trailing" constant="6" id="kZH-sn-fah"/>
-                    <constraint firstItem="SCM-fO-ner" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="q93-vR-7eo"/>
-                    <constraint firstItem="X22-u2-OwY" firstAttribute="bottom" secondItem="ILG-rO-xFM" secondAttribute="bottom" id="vat-Qv-myA"/>
-                </constraints>
             </view>
             <connections>
-                <outlet property="descriptionTextField" destination="WuP-Sb-tC0" id="9d8-Hz-jBJ"/>
-                <outlet property="okButton" destination="ILG-rO-xFM" id="z3R-KI-D3E"/>
-                <outlet property="superclassNamePopupButton" destination="7CK-ql-Tny" id="jtt-rK-ozm"/>
+                <outlet property="descriptionTextField" destination="nEE-tm-aVz" id="TDC-8h-BE9"/>
+                <outlet property="inheritFromPopUpButton" destination="WHi-35-e1o" id="4Ui-at-vKD"/>
+                <outlet property="okButton" destination="le0-u4-dNq" id="eT4-aH-XDw"/>
+                <outlet property="templateFromPopUpButton" destination="whW-lV-GBo" id="4Nr-mC-pE3"/>
             </connections>
-            <point key="canvasLocation" x="-446.5" y="196"/>
+            <point key="canvasLocation" x="187" y="266"/>
         </window>
     </objects>
 </document>

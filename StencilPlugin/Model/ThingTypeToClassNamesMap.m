@@ -1,0 +1,33 @@
+//
+//  ThingTypeToClassNamesMap.m
+//  StencilPlugin
+//
+//  Created by Sam Dods on 22/04/2015.
+//  Copyright (c) 2015 Sam Dods. All rights reserved.
+//
+
+#import "ThingTypeToClassNamesMap.h"
+
+@implementation ThingTypeToClassNamesMap
+
+- (instancetype)initWithThingType:(STCThingType)thingType names:(NSArray *)names
+{
+  if (!(self = [super init])) {
+    return nil;
+  }
+  _thingType = thingType;
+  _names = names;
+  return self;
+}
+
+- (NSString *)thingTypeString
+{
+  switch (self.thingType) {
+    case STCThingTypeInterface:
+      return @"interface";
+    case STCThingTypeProtocol:
+      return @"protocol";
+  }
+}
+
+@end

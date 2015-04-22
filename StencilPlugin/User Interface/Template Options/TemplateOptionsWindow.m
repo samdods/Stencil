@@ -8,9 +8,11 @@
 
 #import "TemplateOptionsWindow.h"
 #import "TemplateConfig.h"
+#import "ThingTypeToClassNamesMap.h"
 
 @interface TemplateOptionsWindow () <NSTextFieldDelegate>
-@property (weak) IBOutlet NSPopUpButton *superclassNamePopupButton;
+@property (weak) IBOutlet NSPopUpButton *templateFromPopUpButton;
+@property (weak) IBOutlet NSPopUpButton *inheritFromPopUpButton;
 @property (weak) IBOutlet NSTextField *descriptionTextField;
 @property (weak) IBOutlet NSButton *okButton;
 @end
@@ -20,23 +22,45 @@
 - (void)awakeFromNib
 {
   [super awakeFromNib];
-  self.okButton.enabled = self.superclassNamePopupButton.selectedItem != nil && self.descriptionTextField.stringValue.length;
+  [self enableOrDisableOKButton];
 }
 
 - (void)setTemplateConfig:(TemplateConfig *)templateConfig
 {
   _templateConfig = templateConfig;
-  NSMenu *menu = [NSMenu new];
-  for (NSString *className in templateConfig.availableSuperclassNames) {
-    [menu addItemWithTitle:className action:nil keyEquivalent:@""];
-  }
-  self.superclassNamePopupButton.menu = menu;
-  [self.superclassNamePopupButton selectItem:[menu itemAtIndex:templateConfig.selectedSuperclassNameIndex]];
+  [self createTemplateChoicePopUpMenu];
+  [self updateInheritChoicePopUp];
 }
+
+#pragma mark - menu creation
+
+- (void)createTemplateChoicePopUpMenu
+{
+  NSMenu *menu = [NSMenu new];
+  for (ThingTypeToClassNamesMap *map in self.templateConfig.thingTypeToNamesMaps) {
+    NSString *title = [NSString stringWithFormat:@"%@ %@", map.thingTypeString, map.names.firstObject];
+    [menu addItemWithTitle:title action:nil keyEquivalent:@""];
+  }
+  self.templateFromPopUpButton.menu = menu;
+  [self.templateFromPopUpButton selectItemAtIndex:0];
+}
+
+- (void)createInheritChoicePopUpMenuFromMap:(ThingTypeToClassNamesMap *)map
+{
+  NSMenu *menu = [NSMenu new];
+  for (NSString *title in map.names) {
+    [menu addItemWithTitle:title action:nil keyEquivalent:@""];
+  }
+  self.inheritFromPopUpButton.menu = menu;
+  [self.inheritFromPopUpButton selectItemAtIndex:0];
+}
+
+#pragma mark - actions
 
 - (IBAction)didTapOK:(NSButton *)sender
 {
-  self.templateConfig.selectedSuperclassNameIndex = self.superclassNamePopupButton.indexOfSelectedItem;
+  ThingTypeToClassNamesMap *map = self.templateConfig.thingTypeToNamesMaps[self.templateFromPopUpButton.indexOfSelectedItem];
+  self.templateConfig.thingNameToReplace = map.names.firstObject;
   self.templateConfig.templateDescription = self.descriptionTextField.stringValue;
   [self.completionDelegate templateOptionsWindowDidCompleteOK:self];
 }
@@ -46,9 +70,27 @@
   [self.completionDelegate templateOptionsWindowDidCancel:self];
 }
 
+#pragma mark - handling changes
+
+- (IBAction)templateChoiceChanged:(NSPopUpButton *)popUpButton
+{
+  [self updateInheritChoicePopUp];
+}
+
+- (void)updateInheritChoicePopUp
+{
+  ThingTypeToClassNamesMap *map = self.templateConfig.thingTypeToNamesMaps[self.templateFromPopUpButton.indexOfSelectedItem];
+  [self createInheritChoicePopUpMenuFromMap:map];
+}
+
 - (void)controlTextDidChange:(NSNotification *)obj
 {
-  self.okButton.enabled = self.superclassNamePopupButton.selectedItem != nil && self.descriptionTextField.stringValue.length;
+  [self enableOrDisableOKButton];
+}
+
+- (void)enableOrDisableOKButton
+{
+  self.okButton.enabled = self.templateFromPopUpButton.selectedItem != nil && self.inheritFromPopUpButton.selectedItem != nil && self.descriptionTextField.stringValue.length;
 }
 
 @end
