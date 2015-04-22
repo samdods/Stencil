@@ -132,7 +132,7 @@ static BOOL ForceShowTemplatesOnly = NO;
 - (void)showTemplateOptionsInWindow:(NSWindow *)window defaultTemplateConfig:(TemplateConfig *)config
 {
   NSArray *topLevelObjects = nil;
-  [self.pluginBundle loadNibNamed:@"STCTemplateOptionsWindow" owner:self topLevelObjects:&topLevelObjects];
+  [self.pluginBundle loadNibNamed:@"StencilTemplateWindow" owner:self topLevelObjects:&topLevelObjects];
   TemplateOptionsWindow *templateOptionsWindow = [[topLevelObjects filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
     return [evaluatedObject isKindOfClass:[TemplateOptionsWindow class]];
   }]] firstObject];

@@ -111,11 +111,12 @@
 
 @implementation TemplateProperties
 
-- (instancetype)initWithThingType:(STCThingType)thingType nameToReplace:(NSString *)replace inheritFrom:(NSString *)inherit description:(NSString *)description
+- (instancetype)initWithName:(NSString *)name thingType:(STCThingType)thingType nameToReplace:(NSString *)replace inheritFrom:(NSString *)inherit description:(NSString *)description
 {
   if (!(self = [super init])) {
     return nil;
   }
+  _templateName = name;
   _thingType = thingType;
   _thingNameToReplace = replace;
   _thingNameToInheritFrom = inherit;

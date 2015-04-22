@@ -13,12 +13,13 @@
 
 @interface TemplateProperties : NSObject
 
+@property (nonatomic, readonly) NSString *templateName;
 @property (nonatomic, readonly) STCThingType thingType;
 @property (nonatomic, readonly) NSString *thingNameToReplace;
 @property (nonatomic, readonly) NSString *thingNameToInheritFrom;
 @property (nonatomic, readonly) NSString *templateDescription;
 
-- (instancetype)initWithThingType:(STCThingType)thingType nameToReplace:(NSString *)replace inheritFrom:(NSString *)inherit description:(NSString *)description;
+- (instancetype)initWithName:(NSString *)name thingType:(STCThingType)thingType nameToReplace:(NSString *)replace inheritFrom:(NSString *)inherit description:(NSString *)description;
 
 @end
 

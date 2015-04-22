@@ -20,6 +20,7 @@
 @property (weak) IBOutlet NSPopUpButton *templateFromPopUpButton;
 @property (weak) IBOutlet NSPopUpButton *inheritFromPopUpButton;
 @property (weak) IBOutlet NSTextField *descriptionTextField;
+@property (weak) IBOutlet NSTextField *templateNameTextField;
 @property (weak) IBOutlet NSButton *okButton;
 @end
 
@@ -36,6 +37,7 @@
   _templateConfig = templateConfig;
   [self createTemplateChoicePopUpMenu];
   [self updateInheritChoicePopUp];
+  self.templateNameTextField.stringValue = self.inheritFromPopUpButton.title;
 }
 
 #pragma mark - menu creation
@@ -67,7 +69,7 @@
 {
   ThingTypeToClassNamesMap *map = self.templateConfig.thingTypeToNamesMaps[self.templateFromPopUpButton.indexOfSelectedItem];
   NSString *inheritFrom = self.inheritFromPopUpButton.selectedItem.title;
-  self.templateConfig.properties = [[TemplateProperties alloc] initWithThingType:map.thingType nameToReplace:map.names.firstObject inheritFrom:inheritFrom  description:self.descriptionTextField.stringValue];
+  self.templateConfig.properties = [[TemplateProperties alloc] initWithName:self.templateNameTextField.stringValue thingType:map.thingType nameToReplace:map.names.firstObject inheritFrom:inheritFrom  description:self.descriptionTextField.stringValue];
   [self.completionDelegate templateOptionsWindowDidCompleteOK:self];
 }
 
@@ -83,6 +85,12 @@
   [self updateInheritChoicePopUp];
 }
 
+- (IBAction)inheritChoiceChanged:(NSPopUpButton *)sender
+{
+  self.templateNameTextField.stringValue = sender.title;
+}
+
+
 - (void)updateInheritChoicePopUp
 {
   ThingTypeToClassNamesMap *map = self.templateConfig.thingTypeToNamesMaps[self.templateFromPopUpButton.indexOfSelectedItem];
@@ -96,7 +104,7 @@
 
 - (void)enableOrDisableOKButton
 {
-  self.okButton.enabled = self.templateFromPopUpButton.selectedItem != nil && self.inheritFromPopUpButton.selectedItem != nil && self.descriptionTextField.stringValue.length;
+  self.okButton.enabled = self.templateNameTextField.stringValue.length && self.templateFromPopUpButton.selectedItem != nil && self.inheritFromPopUpButton.selectedItem != nil && self.descriptionTextField.stringValue.length;
 }
 
 @end

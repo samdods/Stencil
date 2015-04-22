@@ -29,7 +29,7 @@
 
 - (void)generateTemplateFromConfig:(TemplateConfig *)config
 {
-  NSString *templateName = [config.properties.thingNameToInheritFrom stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+  NSString *templateName = [config.properties.templateName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
   templateName = [templateName stringByAppendingString:@".xctemplate"];
   
   NSString *targetPath = [[[Stencil sharedPlugin].projectRootPath stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory] stringByAppendingPathComponent:FileTemplatesDirectoryPath];

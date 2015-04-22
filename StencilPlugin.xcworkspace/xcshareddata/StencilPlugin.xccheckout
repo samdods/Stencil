@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E4A96203-EE37-472D-8B1E-C6DFA8E6E50C</string>
+	<key>IDESourceControlProjectName</key>
+	<string>StencilPlugin</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>69C0E36E0F1F24628C4B9AD1F13911D7A6D25C2A</key>
+		<string>bitbucket.org:sdods3782/stencilplugin.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>StencilPlugin.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>69C0E36E0F1F24628C4B9AD1F13911D7A6D25C2A</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>bitbucket.org:sdods3782/stencilplugin.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>69C0E36E0F1F24628C4B9AD1F13911D7A6D25C2A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>69C0E36E0F1F24628C4B9AD1F13911D7A6D25C2A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>StencilPlugin</string>
+		</dict>
+	</array>
+</dict>
+</plist>
