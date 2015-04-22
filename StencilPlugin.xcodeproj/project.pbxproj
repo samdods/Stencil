@@ -28,6 +28,7 @@
 		EACD8A5A1AE6C5E300706E6B /* Stencil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA31BC421AE1AFDE00167EFD /* Stencil.m */; };
 		EACD8A5B1AE6C63F00706E6B /* HeaderComments.h.sctemplate in Resources */ = {isa = PBXBuildFile; fileRef = EA4FB67F1AE39543001EFB21 /* HeaderComments.h.sctemplate */; };
 		EAF198261AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAF198251AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib */; };
+		EAF198331AE82B8A005A5BC0 /* StencilREADME in Resources */ = {isa = PBXBuildFile; fileRef = EAF198321AE82B8A005A5BC0 /* StencilREADME */; };
 		F302472A1AAA8763C7FEBEFF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1A7095B005B6F4C3F7C8DFE /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +73,7 @@
 		EA4FB6951AE4D768001EFB21 /* NSOutputStream+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutputStream+StencilAdditions.m"; sourceTree = "<group>"; };
 		EAB55BA31AE2D519001EBD12 /* NSMenu+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+StencilAdditions.m"; sourceTree = "<group>"; };
 		EAF198251AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STCTemplateOptionsWindow.xib; sourceTree = "<group>"; };
+		EAF198321AE82B8A005A5BC0 /* StencilREADME */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = StencilREADME; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 				EA3EB1B41AE39510009553F9 /* TemplateInfo.plist */,
 				EA4FB67F1AE39543001EFB21 /* HeaderComments.h.sctemplate */,
 				EA4FB6801AE39543001EFB21 /* HeaderComments.m.sctemplate */,
+				EAF198321AE82B8A005A5BC0 /* StencilREADME */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 			files = (
 				EACD8A5B1AE6C63F00706E6B /* HeaderComments.h.sctemplate in Resources */,
 				EA0000CD1AE6C89F00E85807 /* HeaderComments.m.sctemplate in Resources */,
+				EAF198331AE82B8A005A5BC0 /* StencilREADME in Resources */,
 				EA3EB1B51AE39510009553F9 /* TemplateInfo.plist in Resources */,
 				EAF198261AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib in Resources */,
 			);

@@ -1,0 +1,75 @@
+
+# Thanks for using Stencil to create a file template!
+
+
+## Follow these instructions to continue creating your template
+
+The ___FILEBASENAME___ files have been opened for you to edit.
+These are your template files and they have been saved within your
+project directory.
+
+See "$SRC_ROOT/Stencil/File Templates/Custom/"
+
+After editing these files, simply close the window and you're done.
+
+You will then be able to use your new file template by selecting
+"New File from Custom Template..." from the contextual menu in the
+project navigator.
+
+
+## Editing
+
+Remove any code that is specific to the superclass or copied class.
+Ensure you leave any ___FILEBASENAME___ or ___FILEBASENAMEASID___
+references in the template files. These will be replaced when you
+use your template to create a new file.
+
+Things that you might want to remove are constant declarations,
+properties and methods in the header, which are not needed, because
+the new subclass will inherit.
+
+You will probably want to completely clear out the implementation,
+but it is all left there for you to decide. You may want to comment
+out some of the methods that you expect to be overridden, and leave
+the empty method definitions with a comment highlighting anything
+special that should be done when overriding.
+
+Remember to remove any unnecessary import statements from your
+template files.
+
+If you want to change the template files again later, you can
+open them just like any other file and make changes. The changes
+will be immediately visible to Xcode, without having to restart.
+
+Look in "$SRC_ROOT/Stencil/File Templates/Custom/" to find your
+template. Each template is in its own subdirectory with the
+extension ".xctemplate", i.e. "MyCoolView.xctemplate".
+
+
+## Using your new template
+
+To use your new template, simply right click in the location of
+the project navigator where you want to create a new file, or
+select File->New from the main menu, as you would to create any
+other file.
+
+From the project navigator's contextual menu, select
+"New File from Custom Template..."
+
+Select the custom template you wish to use and continue as usual.
+
+
+## Enjoy
+
+This plugin (like all plugins) is intended to make your life
+easier and avoid repetitive tasks.
+
+If you want to contribute, fork the repo and make a pull request.
+I'm happy for it to be extended in any beneficial way!
+
+If you have questions or concerns, please speak to me on Twitter
+@dodsios
+
+
+Stencil is maintained by Sam Dods.
+Copyright (c) 2015 Sam Dods. All rights reserved.

@@ -29,8 +29,8 @@
 
 - (void)generateTemplateFromConfig:(TemplateConfig *)config
 {
-  NSString *superclassName = [config.properties.thingNameToReplace stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-  NSString *templateName = [superclassName stringByAppendingString:@".xctemplate"];
+  NSString *templateName = [config.properties.thingNameToInheritFrom stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+  templateName = [templateName stringByAppendingString:@".xctemplate"];
   
   NSString *targetPath = [[[Stencil sharedPlugin].projectRootPath stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory] stringByAppendingPathComponent:FileTemplatesDirectoryPath];
   targetPath = [targetPath stringByAppendingPathComponent:templateName];
@@ -73,6 +73,7 @@
       [codeFilePaths addObject:filePath];
     }
   }];
+  [codeFilePaths addObject:@"/tmp/StencilREADME"];
   [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFiles:codeFilePaths];
   
   NSString *xibFilePath = filePathsByType[@(ProjectFileUserInterface)];
@@ -99,10 +100,14 @@
 
 - (void)copyTemplateInfoPlistToPath:(NSString *)targetPath config:(TemplateConfig *)config error:(NSError **)error
 {
+  NSString *readmeSourcePath = [[Stencil sharedPlugin].pluginBundle pathForResource:@"StencilREADME" ofType:@""];
+  NSString *readmeTargetPath = @"/tmp/StencilREADME";
+  [[NSFileManager defaultManager] copyItemAtPath:readmeSourcePath toPath:readmeTargetPath error:nil];
+  
   NSString *sourcePath = [[Stencil sharedPlugin].pluginBundle pathForResource:@"TemplateInfo" ofType:@"plist"];
   NSString *targetFilePath = [targetPath stringByAppendingPathComponent:@"TemplateInfo.plist"];
   
-  [self copySourceFileAtPath:sourcePath toPath:targetFilePath through:^NSString *(NSString *line) {
+  [self copySourceFileAtPath:sourcePath toPath:targetFilePath withTopComment:nil through:^NSString *(NSString *line) {
     NSMutableString *mutableLine = [line mutableCopy];
     [mutableLine matchPattern:@"__STC_DESCRIPTION__" replaceWith:config.properties.templateDescription];
     return [mutableLine copy];
@@ -111,9 +116,10 @@
 
 - (void)createInterfaceTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype configProperties:(TemplateProperties *)templateProperties
 {
-  [self copySourceFileAtPath:file.fullPath toPath:targetPath through:^NSString *(NSString *line) {
+  NSString *topComment = [self topCommentForFileType:filetype];
+  [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment through:^NSString *(NSString *line) {
     if (filetype == ProjectFileUserInterface) {
-      return [self stringByTemplatifyingXIB:line file:file];
+      return [self stringByTemplatifyingXIB:line configProperties:templateProperties];
     }
     NSString *output = [self stringByTemplatifyingInterface:line configProperties:templateProperties];
     if (filetype == ProjectFileImplementation) {
@@ -127,7 +133,8 @@
 
 - (void)createProtocolTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype properties:(TemplateProperties *)templateProperties
 {
-  [self copySourceFileAtPath:file.fullPath toPath:targetPath through:^NSString *(NSString *line) {
+  NSString *topComment = [self topCommentForFileType:filetype];
+  [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment through:^NSString *(NSString *line) {
     if (filetype != ProjectFileUserInterface) {
       return [self stringByTemplatifyingProtocol:line configProperties:templateProperties];
     }
@@ -138,7 +145,28 @@
   }
 }
 
-- (void)copySourceFileAtPath:(NSString *)sourcePath toPath:(NSString *)targetPath through:(NSString *(^)(NSString *line))modifiedStringBlock
+- (NSString *)topCommentForFileType:(ProjectFileType)filetype
+{
+  NSURL *url = nil;
+  switch (filetype) {
+    case ProjectFileInterface:
+      url = [[Stencil sharedPlugin].pluginBundle URLForResource:@"HeaderComments.h" withExtension:@"sctemplate"];
+      break;
+    case ProjectFileImplementation:
+      url = [[Stencil sharedPlugin].pluginBundle URLForResource:@"HeaderComments.m" withExtension:@"sctemplate"];
+      break;
+    default:
+      break;
+  }
+  if (!url) {
+    return nil;
+  }
+  
+  NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+  return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+}
+
+- (void)copySourceFileAtPath:(NSString *)sourcePath toPath:(NSString *)targetPath withTopComment:(NSString *)topComment through:(NSString *(^)(NSString *line))modifiedStringBlock
 {
   NSInputStream *inputStream = [NSInputStream inputStreamWithFileAtPath:sourcePath];
   [inputStream open];
@@ -146,8 +174,21 @@
   NSOutputStream *outputStream = [NSOutputStream outputStreamToFileAtPath:targetPath append:NO];
   [outputStream open];
   
+  if (topComment) {
+    [outputStream stc_writeString:topComment];
+  }
+  
+  BOOL hasReachedFirstNonComment = (topComment == nil);
+  
   NSString *line = inputStream.stc_nextReadLine;
   while (line) {
+    if (!hasReachedFirstNonComment && ![line hasPrefix:@"//"]) {
+      hasReachedFirstNonComment = YES;
+    }
+    if (!hasReachedFirstNonComment) {
+      line = inputStream.stc_nextReadLine;
+      continue;
+    }
     NSString *output = modifiedStringBlock(line);
     [outputStream stc_writeString:output];
     line = inputStream.stc_nextReadLine;
@@ -179,9 +220,16 @@
   return [output copy];
 }
 
-- (NSString *)stringByTemplatifyingXIB:(NSString *)line file:(id<ProjectFile>)file
+- (NSString *)stringByTemplatifyingXIB:(NSString *)line configProperties:(TemplateProperties *)templateProperties
 {
-  return line;
+  NSMutableString *output = [line mutableCopy];
+  NSString *const nameToReplace = templateProperties.thingNameToReplace;
+  static NSString *const FileBaseNameAsID = @"___FILEBASENAMEASIDENTIFIER___";
+  
+  [output matchPattern:[NSString stringWithFormat:@"customClass=\"%@\"", nameToReplace]
+           replaceWith:[NSString stringWithFormat:@"customClass=\"%@\"", FileBaseNameAsID]];
+  
+  return [output copy];
 }
 
 - (NSString *)stringByTemplatifyingProtocol:(NSString *)line configProperties:(TemplateProperties *)templateProperties
