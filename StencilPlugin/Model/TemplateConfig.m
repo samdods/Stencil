@@ -12,6 +12,11 @@
 #import "NSString+StencilRegex.h"
 #import "ThingTypeToClassNamesMap.h"
 
+@interface TemplateConfig ()
+@property (nonatomic, readwrite) TemplateProperties *properties;
+@end
+
+
 @implementation TemplateConfig
 
 + (instancetype)defaultConfigForGroup:(id<ProjectGroup>)group error:(NSError **)error
@@ -97,6 +102,24 @@
   }
   _thingTypeToNamesMaps = maps;
   _fileRefs = fileRefsByType;
+  return self;
+}
+
+@end
+
+
+
+@implementation TemplateProperties
+
+- (instancetype)initWithThingType:(STCThingType)thingType nameToReplace:(NSString *)replace inheritFrom:(NSString *)inherit description:(NSString *)description
+{
+  if (!(self = [super init])) {
+    return nil;
+  }
+  _thingType = thingType;
+  _thingNameToReplace = replace;
+  _thingNameToInheritFrom = inherit;
+  _templateDescription = description;
   return self;
 }
 

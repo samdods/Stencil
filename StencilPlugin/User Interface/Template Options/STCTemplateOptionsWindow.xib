@@ -89,6 +89,9 @@ Gw
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <connections>
+                            <outlet property="delegate" destination="QvC-M9-y7g" id="PAU-Fw-7rh"/>
+                        </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="20p-08-9Vi">
                         <rect key="frame" x="18" y="237" width="130" height="17"/>

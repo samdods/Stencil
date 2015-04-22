@@ -10,6 +10,12 @@
 #import "TemplateConfig.h"
 #import "ThingTypeToClassNamesMap.h"
 
+@interface TemplateConfig ()
+@property (nonatomic, readwrite) TemplateProperties *properties;
+@end
+
+
+
 @interface TemplateOptionsWindow () <NSTextFieldDelegate>
 @property (weak) IBOutlet NSPopUpButton *templateFromPopUpButton;
 @property (weak) IBOutlet NSPopUpButton *inheritFromPopUpButton;
@@ -60,8 +66,8 @@
 - (IBAction)didTapOK:(NSButton *)sender
 {
   ThingTypeToClassNamesMap *map = self.templateConfig.thingTypeToNamesMaps[self.templateFromPopUpButton.indexOfSelectedItem];
-  self.templateConfig.thingNameToReplace = map.names.firstObject;
-  self.templateConfig.templateDescription = self.descriptionTextField.stringValue;
+  NSString *inheritFrom = self.inheritFromPopUpButton.selectedItem.title;
+  self.templateConfig.properties = [[TemplateProperties alloc] initWithThingType:map.thingType nameToReplace:map.names.firstObject inheritFrom:inheritFrom  description:self.descriptionTextField.stringValue];
   [self.completionDelegate templateOptionsWindowDidCompleteOK:self];
 }
 

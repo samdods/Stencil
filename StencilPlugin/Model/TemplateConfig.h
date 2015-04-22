@@ -8,6 +8,21 @@
 
 #import <Foundation/Foundation.h>
 #import "ProjectGroup.h"
+#import "ThingTypeToClassNamesMap.h"
+
+
+@interface TemplateProperties : NSObject
+
+@property (nonatomic, readonly) STCThingType thingType;
+@property (nonatomic, readonly) NSString *thingNameToReplace;
+@property (nonatomic, readonly) NSString *thingNameToInheritFrom;
+@property (nonatomic, readonly) NSString *templateDescription;
+
+- (instancetype)initWithThingType:(STCThingType)thingType nameToReplace:(NSString *)replace inheritFrom:(NSString *)inherit description:(NSString *)description;
+
+@end
+
+
 
 @interface TemplateConfig : NSObject
 
@@ -25,7 +40,6 @@
 @property (nonatomic, readonly) NSArray *thingTypeToNamesMaps;
 @property (nonatomic, readonly) NSDictionary *fileRefs;
 
-@property (nonatomic, copy) NSString *thingNameToReplace;
-@property (nonatomic, copy) NSString *templateDescription;
+@property (nonatomic, readonly) TemplateProperties *properties;
 
 @end

@@ -29,7 +29,7 @@
 
 - (void)generateTemplateFromConfig:(TemplateConfig *)config
 {
-  NSString *superclassName = [config.thingNameToReplace stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+  NSString *superclassName = [config.properties.thingNameToReplace stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
   NSString *templateName = [superclassName stringByAppendingString:@".xctemplate"];
   
   NSString *targetPath = [[[Stencil sharedPlugin].projectRootPath stringByAppendingPathComponent:PluginNameAndCorrespondingDirectory] stringByAppendingPathComponent:FileTemplatesDirectoryPath];
@@ -50,28 +50,9 @@
   }
   
   NSDictionary *targetPathsByType = [self targetFileURLByType:config.fileRefs targetBasePath:targetPath];
-  NSMutableArray *sourceFilePaths = [NSMutableArray new];
   
-  __block NSError *copyError = nil;
-  [targetPathsByType enumerateKeysAndObjectsUsingBlock:^(NSNumber *filetype, NSString *targetFilePath, BOOL *stop) {
-    if (filetype.integerValue == ProjectFileInterface || filetype.integerValue == ProjectFileImplementation) {
-      [sourceFilePaths addObject:targetFilePath];
-    }
-    copyError = [self createTemplateFromFile:config.fileRefs[filetype] targetPath:targetFilePath type:filetype.integerValue];
-    if (copyError) {
-      *stop = YES;
-    }
-  }];
-  if (copyError) {
-    [self showAlertForError:copyError];
-  }
-  
-  [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFiles:sourceFilePaths];
-  
-  NSString *uiFilePath = targetPathsByType[@(ProjectFileUserInterface)];
-  if (uiFilePath) {
-    [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFile:uiFilePath];
-  }
+  [self processTargetPathsByType:targetPathsByType withConfig:config];
+  [self openFilePathsByType:targetPathsByType];
 }
 
 - (NSDictionary *)targetFileURLByType:(NSDictionary *)fileRefsByType targetBasePath:(NSString *)targetPath
@@ -84,6 +65,35 @@
   return targetPathsByType;
 }
 
+- (void)openFilePathsByType:(NSDictionary *)filePathsByType
+{
+  NSMutableArray *codeFilePaths = [NSMutableArray new];
+  [filePathsByType enumerateKeysAndObjectsUsingBlock:^(NSNumber *fileType, NSString *filePath, BOOL *stop) {
+    if (fileType.integerValue == ProjectFileInterface || fileType.integerValue == ProjectFileImplementation) {
+      [codeFilePaths addObject:filePath];
+    }
+  }];
+  [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFiles:codeFilePaths];
+  
+  NSString *xibFilePath = filePathsByType[@(ProjectFileUserInterface)];
+  if (xibFilePath) {
+    [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFile:xibFilePath];
+  }
+}
+
+#pragma mark - processing
+
+- (void)processTargetPathsByType:(NSDictionary *)targetPathsByType withConfig:(TemplateConfig *)config
+{
+  [targetPathsByType enumerateKeysAndObjectsUsingBlock:^(NSNumber *filetype, NSString *targetFilePath, BOOL *stop) {
+    id<ProjectFile> file = config.fileRefs[filetype];
+    if (config.properties.thingType == STCThingTypeInterface) {
+      [self createInterfaceTemplateFromFile:file targetPath:targetFilePath type:filetype.integerValue properties:config.properties];
+    } else if (config.properties.thingType == STCThingTypeProtocol) {
+      [self createProtocolTemplateFromFile:file targetPath:targetFilePath type:filetype.integerValue properties:config.properties];
+    }
+  }];
+}
 
 #pragma mark - copying
 
@@ -94,18 +104,29 @@
   
   [self copySourceFileAtPath:sourcePath toPath:targetFilePath through:^NSString *(NSString *line) {
     NSMutableString *mutableLine = [line mutableCopy];
-    [mutableLine matchPattern:@"__STC_DESCRIPTION__" replaceWith:config.templateDescription];
+    [mutableLine matchPattern:@"__STC_DESCRIPTION__" replaceWith:config.properties.templateDescription];
     return [mutableLine copy];
   }];
 }
 
-- (NSError *)createTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype
+- (void)createInterfaceTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype properties:(TemplateProperties *)templateProperties
 {
   [self copySourceFileAtPath:file.fullPath toPath:targetPath through:^NSString *(NSString *line) {
-    return [self stringByTemplatifying:line file:file];
+    if (filetype == ProjectFileUserInterface) {
+      return [self stringByTemplatifyingXIB:line file:file];
+    }
+    return [self stringByTemplatifyingInterface:line configProperties:templateProperties];
   }];
-  
-  return nil;
+}
+
+- (void)createProtocolTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype properties:(TemplateProperties *)templateProperties
+{
+  [self copySourceFileAtPath:file.fullPath toPath:targetPath through:^NSString *(NSString *line) {
+    if (filetype != ProjectFileUserInterface) {
+      return [self stringByTemplatifyingProtocol:line configProperties:templateProperties];
+    }
+    return line;
+  }];
 }
 
 - (void)copySourceFileAtPath:(NSString *)sourcePath toPath:(NSString *)targetPath through:(NSString *(^)(NSString *line))modifiedStringBlock
@@ -127,23 +148,43 @@
   [outputStream close];
 }
 
-- (NSString *)stringByTemplatifying:(NSString *)line file:(id<ProjectFile>)file
+- (NSString *)stringByTemplatifyingInterface:(NSString *)line configProperties:(TemplateProperties *)templateProperties
 {
   NSMutableString *output = [line mutableCopy];
-  NSString *const className = file.nameWithoutExtension;
+  NSString *const nameToReplace = templateProperties.thingNameToReplace;
+  NSString *const newInherit = templateProperties.thingNameToInheritFrom;
   static NSString *const FileBaseNameAsID = @"___FILEBASENAMEASIDENTIFIER___";
   
   // substitute interface definition
-  [output matchPattern:[NSString stringWithFormat:@"@interface\\s+%@\\s*:\\s*\\w+", className]
-           replaceWith:[NSString stringWithFormat:@"@interface %@ : %@", FileBaseNameAsID, className]];
+  [output matchPattern:[NSString stringWithFormat:@"@interface\\s+%@\\s*:\\s*\\w+", nameToReplace]
+           replaceWith:[NSString stringWithFormat:@"@interface %@ : %@", FileBaseNameAsID, newInherit]];
   
   // substitute interface extension
-  [output matchPattern:[NSString stringWithFormat:@"@interface\\s+%@\\s*\\((\\w*)\\)", className]
+  [output matchPattern:[NSString stringWithFormat:@"@interface\\s+%@\\s*\\((\\w*)\\)", nameToReplace]
            replaceWith:[NSString stringWithFormat:@"@interface %@ ($1)", FileBaseNameAsID]];
   
   // substitute implementation definition
-  [output matchPattern:[NSString stringWithFormat:@"@implementation\\s+%@\\b", className]
+  [output matchPattern:[NSString stringWithFormat:@"@implementation\\s+%@\\b", nameToReplace]
            replaceWith:[NSString stringWithFormat:@"@implementation %@", FileBaseNameAsID]];
+  
+  return [output copy];
+}
+
+- (NSString *)stringByTemplatifyingXIB:(NSString *)line file:(id<ProjectFile>)file
+{
+  return line;
+}
+
+- (NSString *)stringByTemplatifyingProtocol:(NSString *)line configProperties:(TemplateProperties *)templateProperties
+{
+  NSMutableString *output = [line mutableCopy];
+  NSString *const nameToReplace = templateProperties.thingNameToReplace;
+  NSString *const newInherit = templateProperties.thingNameToInheritFrom;
+  static NSString *const FileBaseNameAsID = @"___FILEBASENAMEASIDENTIFIER___";
+  
+  // sub protocol definition
+  [output matchPattern:[NSString stringWithFormat:@"@protocol\\s+%@\\s*<\\w+>", nameToReplace]
+           replaceWith:[NSString stringWithFormat:@"@protocol %@ <%@>", FileBaseNameAsID, newInherit]];
   
   return [output copy];
 }
