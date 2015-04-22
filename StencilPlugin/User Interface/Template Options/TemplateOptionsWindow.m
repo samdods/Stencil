@@ -37,6 +37,7 @@
 - (IBAction)didTapOK:(NSButton *)sender
 {
   self.templateConfig.selectedSuperclassNameIndex = self.superclassNamePopupButton.indexOfSelectedItem;
+  self.templateConfig.templateDescription = self.descriptionTextField.stringValue;
   [self.completionDelegate templateOptionsWindowDidCompleteOK:self];
 }
 
