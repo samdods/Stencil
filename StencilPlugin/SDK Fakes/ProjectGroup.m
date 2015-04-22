@@ -45,7 +45,20 @@
       } break;
     }
   }
-  return validatedFileRefsByType.copy;
+  
+  NSDictionary *fileRefs = validatedFileRefsByType.copy;
+  BOOL isValid = [self areHeaderAndImplementationSameName:fileRefs];
+  return isValid ? fileRefs : nil;
+}
+
+- (BOOL)areHeaderAndImplementationSameName:(NSDictionary *)fileRefsByType
+{
+  id<ProjectFile> header = fileRefsByType[@(ProjectFileInterface)];
+  id<ProjectFile> implem = fileRefsByType[@(ProjectFileImplementation)];
+  if (header && implem) {
+    return [header.nameWithoutExtension isEqualToString:implem.nameWithoutExtension];
+  }
+  return YES;
 }
 
 - (void)setError:(NSError **)error code:(NSInteger)code message:(NSString *)message

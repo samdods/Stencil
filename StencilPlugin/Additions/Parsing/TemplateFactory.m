@@ -88,7 +88,7 @@
   [targetPathsByType enumerateKeysAndObjectsUsingBlock:^(NSNumber *filetype, NSString *targetFilePath, BOOL *stop) {
     id<ProjectFile> file = config.fileRefs[filetype];
     if (config.properties.thingType == STCThingTypeInterface) {
-      [self createInterfaceTemplateFromFile:file targetPath:targetFilePath type:filetype.integerValue properties:config.properties];
+      [self createInterfaceTemplateFromFile:file targetPath:targetFilePath type:filetype.integerValue configProperties:config.properties];
     } else if (config.properties.thingType == STCThingTypeProtocol) {
       [self createProtocolTemplateFromFile:file targetPath:targetFilePath type:filetype.integerValue properties:config.properties];
     }
@@ -109,13 +109,19 @@
   }];
 }
 
-- (void)createInterfaceTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype properties:(TemplateProperties *)templateProperties
+- (void)createInterfaceTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype configProperties:(TemplateProperties *)templateProperties
 {
   [self copySourceFileAtPath:file.fullPath toPath:targetPath through:^NSString *(NSString *line) {
     if (filetype == ProjectFileUserInterface) {
       return [self stringByTemplatifyingXIB:line file:file];
     }
-    return [self stringByTemplatifyingInterface:line configProperties:templateProperties];
+    NSString *output = [self stringByTemplatifyingInterface:line configProperties:templateProperties];
+    if (filetype == ProjectFileImplementation) {
+      NSMutableString *mutableOutput = [output mutableCopy];
+      [mutableOutput matchPattern:[NSString stringWithFormat:@"#import \"%@.h\"", file.nameWithoutExtension] replaceWith:@"#import \"___FILEBASENAME___.h\""];
+      return [mutableOutput copy];
+    }
+    return output;
   }];
 }
 
@@ -127,6 +133,9 @@
     }
     return line;
   }];
+  if (filetype == ProjectFileImplementation) {
+    [self showAlertWithMessage:@"Warning: you have created a protocol template which includes an implementation file (.m). This is flagged as a warning, because it is mostly unexpected, but it is allowed."];
+  }
 }
 
 - (void)copySourceFileAtPath:(NSString *)sourcePath toPath:(NSString *)targetPath through:(NSString *(^)(NSString *line))modifiedStringBlock
