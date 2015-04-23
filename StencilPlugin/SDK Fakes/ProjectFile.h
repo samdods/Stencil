@@ -11,8 +11,9 @@
 
 typedef NS_ENUM(NSInteger, ProjectFileType) {
   ProjectFileUnknown,
-  ProjectFileInterface,
-  ProjectFileImplementation,
+  ProjectFileObjcInterface,
+  ProjectFileObjcImplementation,
+  ProjectFileSwift,
   ProjectFileUserInterface,
 };
 

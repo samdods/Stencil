@@ -9,8 +9,10 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, STCThingType) {
-  STCThingTypeInterface,
-  STCThingTypeProtocol,
+  STCThingTypeObjcInterface,
+  STCThingTypeObjcProtocol,
+  STCThingTypeSwiftClass,
+  STCThingTypeSwiftProtocol,
 };
 
 @interface ThingTypeToClassNamesMap : NSObject

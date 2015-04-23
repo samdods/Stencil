@@ -28,9 +28,10 @@
   NSMutableDictionary *validatedFileRefsByType = [NSMutableDictionary new];
   for (id<ProjectFile> file in groupFileRefs) {
     switch (file.type) {
-      case ProjectFileInterface:
-      case ProjectFileImplementation:
+      case ProjectFileObjcInterface:
+      case ProjectFileObjcImplementation:
       case ProjectFileUserInterface:
+      case ProjectFileSwift:
         if (validatedFileRefsByType[@(file.type)]) {
           NSString *message = [NSString stringWithFormat:@"Multiple of the same filetype (%@)", file.extension];
           [self setError:error code:ProjectGroupErrorCodeMultipleOfSameFileType message:message];
@@ -48,17 +49,29 @@
   
   NSDictionary *fileRefs = validatedFileRefsByType.copy;
   BOOL isValid = [self areHeaderAndImplementationSameName:fileRefs];
+  isValid = isValid && [self isNotMixingSwiftWithObjc:fileRefs];
   return isValid ? fileRefs : nil;
 }
 
 - (BOOL)areHeaderAndImplementationSameName:(NSDictionary *)fileRefsByType
 {
-  id<ProjectFile> header = fileRefsByType[@(ProjectFileInterface)];
-  id<ProjectFile> implem = fileRefsByType[@(ProjectFileImplementation)];
+  id<ProjectFile> header = fileRefsByType[@(ProjectFileObjcInterface)];
+  id<ProjectFile> implem = fileRefsByType[@(ProjectFileObjcImplementation)];
   if (header && implem) {
     return [header.nameWithoutExtension isEqualToString:implem.nameWithoutExtension];
   }
   return YES;
+}
+
+- (BOOL)isNotMixingSwiftWithObjc:(NSDictionary *)fileRefsByType
+{
+  id<ProjectFile> swiftFile = fileRefsByType[@(ProjectFileSwift)];
+  if (!swiftFile) {
+    return YES;
+  }
+  id<ProjectFile> header = fileRefsByType[@(ProjectFileObjcInterface)];
+  id<ProjectFile> implem = fileRefsByType[@(ProjectFileObjcImplementation)];
+  return (!header && !implem);
 }
 
 - (void)setError:(NSError **)error code:(NSInteger)code message:(NSString *)message

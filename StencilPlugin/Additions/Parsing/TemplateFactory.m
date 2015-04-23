@@ -65,38 +65,25 @@
   return targetPathsByType;
 }
 
-- (void)openFilePathsByType:(NSDictionary *)filePathsByType
-{
-  NSMutableArray *codeFilePaths = [NSMutableArray new];
-  [filePathsByType enumerateKeysAndObjectsUsingBlock:^(NSNumber *fileType, NSString *filePath, BOOL *stop) {
-    if (fileType.integerValue == ProjectFileInterface || fileType.integerValue == ProjectFileImplementation) {
-      [codeFilePaths addObject:filePath];
-    }
-  }];
-  [codeFilePaths addObject:@"/tmp/StencilREADME"];
-  [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFiles:codeFilePaths];
-  
-  NSString *xibFilePath = filePathsByType[@(ProjectFileUserInterface)];
-  if (xibFilePath) {
-    [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFile:xibFilePath];
-  }
-}
-
 #pragma mark - processing
 
 - (void)processTargetPathsByType:(NSDictionary *)targetPathsByType withConfig:(TemplateConfig *)config
 {
   [targetPathsByType enumerateKeysAndObjectsUsingBlock:^(NSNumber *filetype, NSString *targetFilePath, BOOL *stop) {
     id<ProjectFile> file = config.fileRefs[filetype];
-    if (config.properties.thingType == STCThingTypeInterface) {
-      [self createInterfaceTemplateFromFile:file targetPath:targetFilePath type:filetype.integerValue configProperties:config.properties];
-    } else if (config.properties.thingType == STCThingTypeProtocol) {
-      [self createProtocolTemplateFromFile:file targetPath:targetFilePath type:filetype.integerValue properties:config.properties];
+    if (config.properties.thingType == STCThingTypeObjcInterface) {
+      [self createObjcInterfaceTemplateFromFile:file targetPath:targetFilePath type:filetype.integerValue configProperties:config.properties];
+    } else if (config.properties.thingType == STCThingTypeObjcProtocol) {
+      [self createObjcProtocolTemplateFromFile:file targetPath:targetFilePath type:filetype.integerValue configProperties:config.properties];
+    } else if (config.properties.thingType == STCThingTypeSwiftClass) {
+      [self createSwiftClassTemplateFromFile:file targetPath:targetFilePath type:filetype.integerValue configProperties:config.properties];
+    } else if (config.properties.thingType == STCThingTypeSwiftProtocol) {
+      [self createSwiftProtocolTemplateFromFile:file targetPath:targetFilePath type:filetype.integerValue configProperties:config.properties];
     }
   }];
 }
 
-#pragma mark - copying
+#pragma mark - copying template
 
 - (void)copyTemplateInfoPlistToPath:(NSString *)targetPath config:(TemplateConfig *)config error:(NSError **)error
 {
@@ -114,7 +101,9 @@
   }];
 }
 
-- (void)createInterfaceTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype configProperties:(TemplateProperties *)templateProperties
+#pragma mark - copying objective-c
+
+- (void)createObjcInterfaceTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype configProperties:(TemplateProperties *)templateProperties
 {
   NSString *topComment = [self topCommentForFileType:filetype];
   [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment through:^NSString *(NSString *line) {
@@ -122,7 +111,7 @@
       return [self stringByTemplatifyingXIB:line configProperties:templateProperties];
     }
     NSString *output = [self stringByTemplatifyingInterface:line configProperties:templateProperties];
-    if (filetype == ProjectFileImplementation) {
+    if (filetype == ProjectFileObjcImplementation) {
       NSMutableString *mutableOutput = [output mutableCopy];
       [mutableOutput matchPattern:[NSString stringWithFormat:@"#import \"%@.h\"", file.nameWithoutExtension] replaceWith:@"#import \"___FILEBASENAME___.h\""];
       return [mutableOutput copy];
@@ -131,40 +120,62 @@
   }];
 }
 
-- (void)createProtocolTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype properties:(TemplateProperties *)templateProperties
+- (void)createObjcProtocolTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype configProperties:(TemplateProperties *)templateProperties
 {
   NSString *topComment = [self topCommentForFileType:filetype];
   [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment through:^NSString *(NSString *line) {
     if (filetype != ProjectFileUserInterface) {
-      return [self stringByTemplatifyingProtocol:line configProperties:templateProperties];
+      return [self stringByTemplatifyingObjcProtocol:line configProperties:templateProperties];
     }
     return line;
   }];
-  if (filetype == ProjectFileImplementation) {
+  if (filetype == ProjectFileObjcImplementation) {
     [self showAlertWithMessage:@"Warning: you have created a protocol template which includes an implementation file (.m). This is flagged as a warning, because it is mostly unexpected, but it is allowed."];
   }
 }
 
+#pragma mark - copying swift
+
+- (void)createSwiftClassTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype configProperties:(TemplateProperties *)templateProperties
+{
+  NSString *topComment = [self topCommentForFileType:filetype];
+  [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment through:^NSString *(NSString *line) {
+    if (filetype == ProjectFileUserInterface) {
+      return [self stringByTemplatifyingXIB:line configProperties:templateProperties];
+    }
+    return [self stringByTemplatifyingSwift:line configProperties:templateProperties];
+  }];
+}
+
+- (void)createSwiftProtocolTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype configProperties:(TemplateProperties *)templateProperties
+{
+  NSString *topComment = [self topCommentForFileType:filetype];
+  [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment through:^NSString *(NSString *line) {
+    if (filetype != ProjectFileUserInterface) {
+      return [self stringByTemplatifyingSwift:line configProperties:templateProperties];
+    }
+    return line;
+  }];
+}
+
+#pragma mark - top comment
+
 - (NSString *)topCommentForFileType:(ProjectFileType)filetype
 {
-  NSURL *url = nil;
   switch (filetype) {
-    case ProjectFileInterface:
-      url = [[Stencil sharedPlugin].pluginBundle URLForResource:@"HeaderComments.h" withExtension:@"sctemplate"];
-      break;
-    case ProjectFileImplementation:
-      url = [[Stencil sharedPlugin].pluginBundle URLForResource:@"HeaderComments.m" withExtension:@"sctemplate"];
-      break;
+    case ProjectFileObjcInterface:
+    case ProjectFileObjcImplementation:
+    case ProjectFileSwift: {
+      NSURL *url = [[Stencil sharedPlugin].pluginBundle URLForResource:@"HeaderComments" withExtension:@"sctemplate"];
+      NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+      return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    } break;
     default:
-      break;
+      return nil;
   }
-  if (!url) {
-    return nil;
-  }
-  
-  NSData *data = [[NSData alloc] initWithContentsOfURL:url];
-  return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
+
+#pragma mark - generic copying
 
 - (void)copySourceFileAtPath:(NSString *)sourcePath toPath:(NSString *)targetPath withTopComment:(NSString *)topComment through:(NSString *(^)(NSString *line))modifiedStringBlock
 {
@@ -198,6 +209,8 @@
   [outputStream close];
 }
 
+#pragma mark - templates: objective-c
+
 - (NSString *)stringByTemplatifyingInterface:(NSString *)line configProperties:(TemplateProperties *)templateProperties
 {
   NSMutableString *output = [line mutableCopy];
@@ -206,19 +219,51 @@
   static NSString *const FileBaseNameAsID = @"___FILEBASENAMEASIDENTIFIER___";
   
   // substitute interface definition
-  [output matchPattern:[NSString stringWithFormat:@"@interface\\s+%@\\s*:\\s*\\w+", nameToReplace]
+  [output matchPattern:[NSString stringWithFormat:@"^@interface\\s+%@\\s*:\\s*\\w+", nameToReplace]
            replaceWith:[NSString stringWithFormat:@"@interface %@ : %@", FileBaseNameAsID, newInherit]];
   
   // substitute interface extension
-  [output matchPattern:[NSString stringWithFormat:@"@interface\\s+%@\\s*\\((\\w*)\\)", nameToReplace]
+  [output matchPattern:[NSString stringWithFormat:@"^@interface\\s+%@\\s*\\((\\w*)\\)", nameToReplace]
            replaceWith:[NSString stringWithFormat:@"@interface %@ ($1)", FileBaseNameAsID]];
   
   // substitute implementation definition
-  [output matchPattern:[NSString stringWithFormat:@"@implementation\\s+%@\\b", nameToReplace]
+  [output matchPattern:[NSString stringWithFormat:@"^@implementation\\s+%@\\b", nameToReplace]
            replaceWith:[NSString stringWithFormat:@"@implementation %@", FileBaseNameAsID]];
   
   return [output copy];
 }
+
+- (NSString *)stringByTemplatifyingObjcProtocol:(NSString *)line configProperties:(TemplateProperties *)templateProperties
+{
+  NSMutableString *output = [line mutableCopy];
+  NSString *const nameToReplace = templateProperties.thingNameToReplace;
+  NSString *const newInherit = templateProperties.thingNameToInheritFrom;
+  static NSString *const FileBaseNameAsID = @"___FILEBASENAMEASIDENTIFIER___";
+  
+  // sub protocol definition
+  [output matchPattern:[NSString stringWithFormat:@"@protocol\\s+%@\\s*<\\w+>", nameToReplace]
+           replaceWith:[NSString stringWithFormat:@"@protocol %@ <%@>", FileBaseNameAsID, newInherit]];
+  
+  return [output copy];
+}
+
+#pragma mark - templates: swift
+
+- (NSString *)stringByTemplatifyingSwift:(NSString *)line configProperties:(TemplateProperties *)templateProperties
+{
+  NSMutableString *output = [line mutableCopy];
+  NSString *const nameToReplace = templateProperties.thingNameToReplace;
+  NSString *const newInherit = templateProperties.thingNameToInheritFrom;
+  static NSString *const FileBaseNameAsID = @"___FILEBASENAMEASIDENTIFIER___";
+  
+  // substitute class/protocol definition
+  [output matchPattern:[NSString stringWithFormat:@"^\\s*(class|protocol)\\s+%@\\s*:\\s*\\w+", nameToReplace]
+           replaceWith:[NSString stringWithFormat:@"$1 %@ : %@", FileBaseNameAsID, newInherit]];
+  
+  return [output copy];
+}
+
+#pragma mark - templates: xib & storyboard
 
 - (NSString *)stringByTemplatifyingXIB:(NSString *)line configProperties:(TemplateProperties *)templateProperties
 {
@@ -232,18 +277,23 @@
   return [output copy];
 }
 
-- (NSString *)stringByTemplatifyingProtocol:(NSString *)line configProperties:(TemplateProperties *)templateProperties
+#pragma mark - opening
+
+- (void)openFilePathsByType:(NSDictionary *)filePathsByType
 {
-  NSMutableString *output = [line mutableCopy];
-  NSString *const nameToReplace = templateProperties.thingNameToReplace;
-  NSString *const newInherit = templateProperties.thingNameToInheritFrom;
-  static NSString *const FileBaseNameAsID = @"___FILEBASENAMEASIDENTIFIER___";
+  NSMutableArray *codeFilePaths = [NSMutableArray new];
+  [filePathsByType enumerateKeysAndObjectsUsingBlock:^(NSNumber *fileType, NSString *filePath, BOOL *stop) {
+    if (fileType.integerValue != ProjectFileUserInterface) {
+      [codeFilePaths addObject:filePath];
+    }
+  }];
+  [codeFilePaths addObject:@"/tmp/StencilREADME"];
+  [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFiles:codeFilePaths];
   
-  // sub protocol definition
-  [output matchPattern:[NSString stringWithFormat:@"@protocol\\s+%@\\s*<\\w+>", nameToReplace]
-           replaceWith:[NSString stringWithFormat:@"@protocol %@ <%@>", FileBaseNameAsID, newInherit]];
-  
-  return [output copy];
+  NSString *xibFilePath = filePathsByType[@(ProjectFileUserInterface)];
+  if (xibFilePath) {
+    [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFile:xibFilePath];
+  }
 }
 
 #pragma mark - alert

@@ -16,6 +16,7 @@ NSString *const ProjectNavigatorContextualMenu = @"Project navigator contextual 
 
 - (instancetype)initWithTitle:(NSString *)aTitle
 {
+  [Stencil sharedPlugin].beginCreateTemplateFromGroup = NO;
   if ([Stencil sharedPlugin].canCreateFromCustomTemplate) {
     [Stencil sharedPlugin].menuItemNewFromCustomTemplate.action = [Stencil sharedPlugin].menuItemNewFile.action;
   } else {

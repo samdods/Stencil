@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EA0000CD1AE6C89F00E85807 /* HeaderComments.m.sctemplate in Resources */ = {isa = PBXBuildFile; fileRef = EA4FB6801AE39543001EFB21 /* HeaderComments.m.sctemplate */; };
 		EA0000D01AE7A56800E85807 /* ThingTypeToClassNamesMap.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0000CF1AE7A56800E85807 /* ThingTypeToClassNamesMap.m */; };
 		EA31BC391AE1AFDE00167EFD /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA31BC381AE1AFDE00167EFD /* AppKit.framework */; };
 		EA31BC3B1AE1AFDE00167EFD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA31BC3A1AE1AFDE00167EFD /* Foundation.framework */; };
@@ -26,7 +25,7 @@
 		EACD8A581AE6C5DC00706E6B /* IDETemplateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3EB1AD1AE2D861009553F9 /* IDETemplateAdditions.m */; };
 		EACD8A591AE6C5DF00706E6B /* IDEStructureNavigatorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3EB1B01AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m */; };
 		EACD8A5A1AE6C5E300706E6B /* Stencil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA31BC421AE1AFDE00167EFD /* Stencil.m */; };
-		EACD8A5B1AE6C63F00706E6B /* HeaderComments.h.sctemplate in Resources */ = {isa = PBXBuildFile; fileRef = EA4FB67F1AE39543001EFB21 /* HeaderComments.h.sctemplate */; };
+		EACD8A5B1AE6C63F00706E6B /* HeaderComments.sctemplate in Resources */ = {isa = PBXBuildFile; fileRef = EA4FB67F1AE39543001EFB21 /* HeaderComments.sctemplate */; };
 		EAD6226B1AE83563002723B6 /* StencilTemplateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAD6226A1AE83563002723B6 /* StencilTemplateWindow.xib */; };
 		EAF198261AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAF198251AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib */; };
 		EAF198331AE82B8A005A5BC0 /* StencilREADME in Resources */ = {isa = PBXBuildFile; fileRef = EAF198321AE82B8A005A5BC0 /* StencilREADME */; };
@@ -60,8 +59,7 @@
 		EA3EB1B01AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDEStructureNavigatorAdditions.m; sourceTree = "<group>"; };
 		EA3EB1B21AE2DDB5009553F9 /* NSMenu+StencilAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+StencilAdditions.h"; sourceTree = "<group>"; };
 		EA3EB1B41AE39510009553F9 /* TemplateInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		EA4FB67F1AE39543001EFB21 /* HeaderComments.h.sctemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HeaderComments.h.sctemplate; sourceTree = "<group>"; };
-		EA4FB6801AE39543001EFB21 /* HeaderComments.m.sctemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HeaderComments.m.sctemplate; sourceTree = "<group>"; };
+		EA4FB67F1AE39543001EFB21 /* HeaderComments.sctemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HeaderComments.sctemplate; sourceTree = "<group>"; };
 		EA4FB6831AE398E5001EFB21 /* ProjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectGroup.h; sourceTree = "<group>"; };
 		EA4FB6841AE398E5001EFB21 /* ProjectGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectGroup.m; sourceTree = "<group>"; };
 		EA4FB6861AE399A3001EFB21 /* ProjectFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectFile.h; sourceTree = "<group>"; };
@@ -188,8 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				EA3EB1B41AE39510009553F9 /* TemplateInfo.plist */,
-				EA4FB67F1AE39543001EFB21 /* HeaderComments.h.sctemplate */,
-				EA4FB6801AE39543001EFB21 /* HeaderComments.m.sctemplate */,
+				EA4FB67F1AE39543001EFB21 /* HeaderComments.sctemplate */,
 				EAF198321AE82B8A005A5BC0 /* StencilREADME */,
 			);
 			path = Resources;
@@ -303,8 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAD6226B1AE83563002723B6 /* StencilTemplateWindow.xib in Resources */,
-				EACD8A5B1AE6C63F00706E6B /* HeaderComments.h.sctemplate in Resources */,
-				EA0000CD1AE6C89F00E85807 /* HeaderComments.m.sctemplate in Resources */,
+				EACD8A5B1AE6C63F00706E6B /* HeaderComments.sctemplate in Resources */,
 				EAF198331AE82B8A005A5BC0 /* StencilREADME in Resources */,
 				EA3EB1B51AE39510009553F9 /* TemplateInfo.plist in Resources */,
 				EAF198261AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib in Resources */,

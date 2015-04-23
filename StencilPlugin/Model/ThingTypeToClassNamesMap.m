@@ -23,9 +23,12 @@
 - (NSString *)thingTypeString
 {
   switch (self.thingType) {
-    case STCThingTypeInterface:
+    case STCThingTypeObjcInterface:
       return @"interface";
-    case STCThingTypeProtocol:
+    case STCThingTypeSwiftClass:
+      return @"class";
+    case STCThingTypeObjcProtocol:
+    case STCThingTypeSwiftProtocol:
       return @"protocol";
   }
 }

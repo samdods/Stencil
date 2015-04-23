@@ -32,68 +32,73 @@
   
   NSArray *maps = nil;
   
-  id<ProjectFile> headerFile = fileRefsByType[@(ProjectFileInterface)];
+  id<ProjectFile> headerFile = fileRefsByType[@(ProjectFileObjcInterface)];
   if (headerFile) {
-    maps = [self mapsFromFileAtPath:headerFile.fullPath];
+    maps = [self objcMapsFromFileAtPath:headerFile.fullPath];
   } else {
-    id<ProjectFile> implementationFile = fileRefsByType[@(ProjectFileImplementation)];
+    id<ProjectFile> implementationFile = fileRefsByType[@(ProjectFileObjcImplementation)];
     if (implementationFile) {
-      maps = [self mapsFromFileAtPath:headerFile.fullPath];
+      maps = [self objcMapsFromFileAtPath:headerFile.fullPath];
     }
+  }
+  
+  id<ProjectFile> swiftFile = fileRefsByType[@(ProjectFileSwift)];
+  if (swiftFile) {
+    maps = [self swiftMapsFromFileAtPath:swiftFile.fullPath];
   }
   
   return [[self alloc] initWithThingTypeToNamesMaps:maps fileRefsByType:fileRefsByType];
 }
 
-+ (NSArray *)mapsFromFileAtPath:(NSString *)filePath
+#pragma mark - objective-c
+
++ (NSArray *)objcMapsFromFileAtPath:(NSString *)filePath
 {
   NSMutableArray *maps = [NSMutableArray new];
-  [self enumerateInterfaceDefinitionsFromFileAtPath:filePath block:^(NSArray *classNames) {
-    if (classNames) {
-      ThingTypeToClassNamesMap *map = [[ThingTypeToClassNamesMap alloc] initWithThingType:STCThingTypeInterface names:classNames];
-      [maps addObject:map];
-    }
-  }];
-  [self enumerateProtocolDefinitionsFromFileAtPath:filePath block:^(NSArray *protocolNames) {
-    if (protocolNames) {
-      ThingTypeToClassNamesMap *map = [[ThingTypeToClassNamesMap alloc] initWithThingType:STCThingTypeProtocol names:protocolNames];
-      [maps addObject:map];
-    }
-  }];
+  [self processFileAtPath:filePath matching:@"^@interface\\s+(\\w+)\\s*:\\s*(\\w+).*" thingType:STCThingTypeObjcInterface maps:maps];
+  [self processFileAtPath:filePath matching:@"^@protocol\\s+(\\w+)\\s*<(\\w+)>.*" thingType:STCThingTypeObjcProtocol maps:maps];
   return maps.copy;
 }
 
-+ (void)enumerateInterfaceDefinitionsFromFileAtPath:(NSString *)path block:(void(^)(NSArray *classNames))block
+#pragma mark - swift
+
++ (NSArray *)swiftMapsFromFileAtPath:(NSString *)filePath
 {
-  NSInputStream *inputStream = [NSInputStream inputStreamWithFileAtPath:path];
+  NSMutableArray *maps = [NSMutableArray new];
+  [self processFileAtPath:filePath matching:@"^\\s*class\\s+(\\w+)\\s*:\\s*(\\w+).*" thingType:STCThingTypeSwiftClass maps:maps];
+  [self processFileAtPath:filePath matching:@"^\\s*protocol\\s+(\\w+)\\s*:\\s*(\\w+).*" thingType:STCThingTypeSwiftProtocol maps:maps];
+  return maps.copy;
+}
+
+#pragma mark - generic
+
++ (void)processFileAtPath:(NSString *)filePath matching:(NSString *)pattern thingType:(STCThingType)thingType maps:(NSMutableArray *)maps
+{
+  [self enumerateFileAtPath:filePath thingsMatching:pattern block:^(NSArray *protocolNames) {
+    ThingTypeToClassNamesMap *map = [[ThingTypeToClassNamesMap alloc] initWithThingType:thingType names:protocolNames];
+    [maps addObject:map];
+  }];
+}
+
++ (void)enumerateFileAtPath:(NSString *)filePath thingsMatching:(NSString *)pattern block:(void(^)(NSArray *thingNames))block
+{
+  NSInputStream *inputStream = [NSInputStream inputStreamWithFileAtPath:filePath];
   [inputStream open];
   
   NSString *line = inputStream.stc_nextReadLine;
   while (line) {
-    NSString *output = [line stringByMatching:@"^@interface\\s+(\\w+)\\s*:\\s*(\\w+).*" replaceWith:@"$1:$2"];
-    NSArray *interfaceNames = [output componentsSeparatedByString:@":"];
-    block(interfaceNames);
+    NSString *output = [line stringByMatching:pattern replaceWith:@"$1:$2"];
+    NSArray *protocolNames = [output componentsSeparatedByString:@":"];
+    if (protocolNames) {
+      block(protocolNames);
+    }
     line = inputStream.stc_nextReadLine;
   }
   
   [inputStream close];
 }
 
-+ (void)enumerateProtocolDefinitionsFromFileAtPath:(NSString *)path block:(void(^)(NSArray *protocolNames))block
-{
-  NSInputStream *inputStream = [NSInputStream inputStreamWithFileAtPath:path];
-  [inputStream open];
-  
-  NSString *line = inputStream.stc_nextReadLine;
-  while (line) {
-    NSString *output = [line stringByMatching:@"^@protocol\\s+(\\w+)\\s*<(\\w+)>.*" replaceWith:@"$1:$2"];
-    NSArray *protocolNames = [output componentsSeparatedByString:@":"];
-    block(protocolNames);
-    line = inputStream.stc_nextReadLine;
-  }
-  
-  [inputStream close];
-}
+#pragma mark - init
 
 - (instancetype)initWithThingTypeToNamesMaps:(NSArray *)maps fileRefsByType:(NSDictionary *)fileRefsByType
 {

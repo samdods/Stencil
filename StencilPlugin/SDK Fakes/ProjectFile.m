@@ -52,9 +52,11 @@
 {
   NSString *extension = self.extension;
   if ([extension isEqualToString:@".h"]) {
-    return ProjectFileInterface;
+    return ProjectFileObjcInterface;
   } else if ([extension isEqualToString:@".m"]) {
-    return ProjectFileImplementation;
+    return ProjectFileObjcImplementation;
+  } else if ([extension isEqualTo:@".swift"]) {
+    return ProjectFileSwift;
   } else if ([extension isEqualToString:@".xib"] || [extension isEqualToString:@".storyboard"]) {
     return ProjectFileUserInterface;
   }
