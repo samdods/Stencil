@@ -55,6 +55,7 @@ static BOOL ForceShowTemplatesOnly = NO;
   }
   _pluginBundle = pluginBundle;
   [self updateMainMenuItems];
+  [self copyBuiltInTemplates];
   return self;
 }
 
@@ -113,6 +114,11 @@ static BOOL ForceShowTemplatesOnly = NO;
   return [[[workSpace valueForKey:@"representingFilePath"] valueForKey:@"pathString"] stringByDeletingLastPathComponent];
 }
 
+#pragma mark - copying built-in templates
+
+- (void)copyBuiltInTemplates
+{
+}
 
 #pragma mark - NSMenuDelegate
 

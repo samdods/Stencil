@@ -27,6 +27,7 @@
 		EACD8A5A1AE6C5E300706E6B /* Stencil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA31BC421AE1AFDE00167EFD /* Stencil.m */; };
 		EACD8A5B1AE6C63F00706E6B /* HeaderComments.sctemplate in Resources */ = {isa = PBXBuildFile; fileRef = EA4FB67F1AE39543001EFB21 /* HeaderComments.sctemplate */; };
 		EAD6226B1AE83563002723B6 /* StencilTemplateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAD6226A1AE83563002723B6 /* StencilTemplateWindow.xib */; };
+		EAD85AD51AEEBBBC00415E84 /* Stencil in Resources */ = {isa = PBXBuildFile; fileRef = EAD85AD41AEEBBBC00415E84 /* Stencil */; };
 		EAF198261AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAF198251AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib */; };
 		EAF198331AE82B8A005A5BC0 /* StencilREADME in Resources */ = {isa = PBXBuildFile; fileRef = EAF198321AE82B8A005A5BC0 /* StencilREADME */; };
 		F302472A1AAA8763C7FEBEFF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1A7095B005B6F4C3F7C8DFE /* libPods.a */; };
@@ -72,6 +73,7 @@
 		EA4FB6951AE4D768001EFB21 /* NSOutputStream+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutputStream+StencilAdditions.m"; sourceTree = "<group>"; };
 		EAB55BA31AE2D519001EBD12 /* NSMenu+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+StencilAdditions.m"; sourceTree = "<group>"; };
 		EAD6226A1AE83563002723B6 /* StencilTemplateWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StencilTemplateWindow.xib; sourceTree = "<group>"; };
+		EAD85AD41AEEBBBC00415E84 /* Stencil */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Stencil; sourceTree = "<group>"; };
 		EAF198251AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STCTemplateOptionsWindow.xib; sourceTree = "<group>"; };
 		EAF198321AE82B8A005A5BC0 /* StencilREADME */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = StencilREADME; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -185,6 +187,7 @@
 		EA3EB1B31AE3909B009553F9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EAD85A971AEEA86000415E84 /* Built-in Templates */,
 				EA3EB1B41AE39510009553F9 /* TemplateInfo.plist */,
 				EA4FB67F1AE39543001EFB21 /* HeaderComments.sctemplate */,
 				EAF198321AE82B8A005A5BC0 /* StencilREADME */,
@@ -239,6 +242,14 @@
 				EA3EB1B01AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m */,
 			);
 			path = Additions;
+			sourceTree = "<group>";
+		};
+		EAD85A971AEEA86000415E84 /* Built-in Templates */ = {
+			isa = PBXGroup;
+			children = (
+				EAD85AD41AEEBBBC00415E84 /* Stencil */,
+			);
+			path = "Built-in Templates";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,6 +313,7 @@
 				EAD6226B1AE83563002723B6 /* StencilTemplateWindow.xib in Resources */,
 				EACD8A5B1AE6C63F00706E6B /* HeaderComments.sctemplate in Resources */,
 				EAF198331AE82B8A005A5BC0 /* StencilREADME in Resources */,
+				EAD85AD51AEEBBBC00415E84 /* Stencil in Resources */,
 				EA3EB1B51AE39510009553F9 /* TemplateInfo.plist in Resources */,
 				EAF198261AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib in Resources */,
 			);
