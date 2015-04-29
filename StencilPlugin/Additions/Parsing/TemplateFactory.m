@@ -105,7 +105,7 @@
 
 - (void)createObjcInterfaceTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype configProperties:(TemplateProperties *)templateProperties
 {
-  NSString *topComment = [self topCommentForFileType:filetype];
+  NSString *topComment = [self topCommentForFileType:filetype configProperties:templateProperties];
   [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment through:^NSString *(NSString *line) {
     if (filetype == ProjectFileUserInterface) {
       return [self stringByTemplatifyingXIB:line configProperties:templateProperties];
@@ -122,7 +122,7 @@
 
 - (void)createObjcProtocolTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype configProperties:(TemplateProperties *)templateProperties
 {
-  NSString *topComment = [self topCommentForFileType:filetype];
+  NSString *topComment = [self topCommentForFileType:filetype configProperties:templateProperties];
   [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment through:^NSString *(NSString *line) {
     if (filetype != ProjectFileUserInterface) {
       return [self stringByTemplatifyingObjcProtocol:line configProperties:templateProperties];
@@ -138,7 +138,7 @@
 
 - (void)createSwiftClassTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype configProperties:(TemplateProperties *)templateProperties
 {
-  NSString *topComment = [self topCommentForFileType:filetype];
+  NSString *topComment = [self topCommentForFileType:filetype configProperties:templateProperties];
   [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment through:^NSString *(NSString *line) {
     if (filetype == ProjectFileUserInterface) {
       return [self stringByTemplatifyingXIB:line configProperties:templateProperties];
@@ -149,7 +149,7 @@
 
 - (void)createSwiftProtocolTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype configProperties:(TemplateProperties *)templateProperties
 {
-  NSString *topComment = [self topCommentForFileType:filetype];
+  NSString *topComment = [self topCommentForFileType:filetype configProperties:templateProperties];
   [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment through:^NSString *(NSString *line) {
     if (filetype != ProjectFileUserInterface) {
       return [self stringByTemplatifyingSwift:line configProperties:templateProperties];
@@ -160,19 +160,26 @@
 
 #pragma mark - top comment
 
-- (NSString *)topCommentForFileType:(ProjectFileType)filetype
+- (NSString *)topCommentForFileType:(ProjectFileType)filetype configProperties:(TemplateProperties *)templateProperties
 {
   switch (filetype) {
-    case ProjectFileObjcInterface:
     case ProjectFileObjcImplementation:
-    case ProjectFileSwift: {
-      NSURL *url = [[Stencil sharedPlugin].pluginBundle URLForResource:@"HeaderComments" withExtension:@"sctemplate"];
-      NSData *data = [[NSData alloc] initWithContentsOfURL:url];
-      return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    } break;
+    case ProjectFileSwift:
+      return [self defaultHeaderComments];
+    case ProjectFileObjcInterface: {
+      NSString *comments = [self defaultHeaderComments];
+      return [comments stringByAppendingFormat:@"\n#import \"%@.h\"\n", templateProperties.thingNameToInheritFrom];
+    }
     default:
       return nil;
   }
+}
+
+- (NSString *)defaultHeaderComments
+{
+  NSURL *url = [[Stencil sharedPlugin].pluginBundle URLForResource:@"HeaderComments" withExtension:@"sctemplate"];
+  NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+  return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
 #pragma mark - generic copying
