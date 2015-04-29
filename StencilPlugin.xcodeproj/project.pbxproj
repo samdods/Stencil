@@ -28,10 +28,24 @@
 		EACD8A5B1AE6C63F00706E6B /* HeaderComments.sctemplate in Resources */ = {isa = PBXBuildFile; fileRef = EA4FB67F1AE39543001EFB21 /* HeaderComments.sctemplate */; };
 		EAD6226B1AE83563002723B6 /* StencilTemplateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAD6226A1AE83563002723B6 /* StencilTemplateWindow.xib */; };
 		EAD85AD51AEEBBBC00415E84 /* Stencil in Resources */ = {isa = PBXBuildFile; fileRef = EAD85AD41AEEBBBC00415E84 /* Stencil */; };
+		EADE959D1AF152CA00C30880 /* Stencil in CopyFiles */ = {isa = PBXBuildFile; fileRef = EAD85AD41AEEBBBC00415E84 /* Stencil */; };
 		EAF198261AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAF198251AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib */; };
 		EAF198331AE82B8A005A5BC0 /* StencilREADME in Resources */ = {isa = PBXBuildFile; fileRef = EAF198321AE82B8A005A5BC0 /* StencilREADME */; };
 		F302472A1AAA8763C7FEBEFF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1A7095B005B6F4C3F7C8DFE /* libPods.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EADE959C1AF150FA00C30880 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "Library/Developer/Xcode/Templates/File Templates";
+			dstSubfolderSpec = 0;
+			files = (
+				EADE959D1AF152CA00C30880 /* Stencil in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		10C1169B0EF5D3E85F2D491E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -264,6 +278,7 @@
 				EA31BC321AE1AFDE00167EFD /* Resources */,
 				EA31BC331AE1AFDE00167EFD /* Frameworks */,
 				F27C888E22AD89BE020E865A /* Copy Pods Resources */,
+				EADE959C1AF150FA00C30880 /* CopyFiles */,
 			);
 			buildRules = (
 			);
