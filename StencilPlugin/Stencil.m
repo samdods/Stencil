@@ -12,6 +12,8 @@
 #import "TemplateOptionsWindow.h"
 #import "TemplateFactory.h"
 
+static void *StencilMenuObserver = &StencilMenuObserver;
+
 NSString *const MenuItemTitleNewFileFromCustomTemplate = @"New File from Custom Template…";
 NSString *const MenuItemTitleFileFromCustomTemplate = @"File from Custom Template…";
 NSString *const PluginNameAndCorrespondingDirectory = @"Stencil";
@@ -28,6 +30,7 @@ static BOOL ForceShowTemplatesOnly = NO;
 @interface Stencil () <TemplateOptionsWindowDelegate>
 @property (nonatomic, assign) BOOL projectNavigatorContextualMenuIsOpened;
 @property (nonatomic, readwrite) BOOL showCustomTemplatesOnly;
+@property (nonatomic, strong) NSMutableSet *observedMenus;
 @end
 
 @implementation Stencil
@@ -35,6 +38,18 @@ static BOOL ForceShowTemplatesOnly = NO;
 + (instancetype)sharedPlugin
 {
   return sharedPlugin;
+}
+
+- (void)dealloc
+{
+  for (NSMenu *menu in self.observedMenus) {
+    [menu removeObserver:self forKeyPath:@"highlightedItem"];
+  }
+}
+
+- (NSMutableSet *)observedMenus
+{
+  return _observedMenus ?: (_observedMenus = [NSMutableSet new]);
 }
 
 + (void)pluginDidLoad:(NSBundle *)plugin
@@ -55,7 +70,6 @@ static BOOL ForceShowTemplatesOnly = NO;
   }
   _pluginBundle = pluginBundle;
   [self updateMainMenuItems];
-  [self copyBuiltInTemplates];
   return self;
 }
 
@@ -65,7 +79,7 @@ static BOOL ForceShowTemplatesOnly = NO;
   [[menuItem submenu] itemWithTitle:@"New"];
   
   NSMenu *menuNew = [[[menuItem submenu] itemWithTitle:@"New"] submenu];
-  menuNew.delegate = self;
+  [self observeHighlightedItemForMenu:menuNew];
   [menuNew duplicateItemWithTitle:@"File…" duplicateTitle:@"File from Custom Template…"];
 }
 
@@ -114,16 +128,27 @@ static BOOL ForceShowTemplatesOnly = NO;
   return [[[workSpace valueForKey:@"representingFilePath"] valueForKey:@"pathString"] stringByDeletingLastPathComponent];
 }
 
-#pragma mark - copying built-in templates
+#pragma mark - NSMenu observing
 
-- (void)copyBuiltInTemplates
+- (void)observeHighlightedItemForMenu:(NSMenu *)menu
 {
+  if ([self.observedMenus containsObject:menu]) {
+    return;
+  }
+  [menu addObserver:self forKeyPath:@"highlightedItem" options:NSKeyValueObservingOptionNew context:StencilMenuObserver];
+  [self.observedMenus addObject:menu];
 }
 
-#pragma mark - NSMenuDelegate
-
-- (void)menu:(NSMenu *)menu willHighlightItem:(NSMenuItem *)item
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(NSMenu *)menu change:(NSDictionary *)change context:(void *)context
 {
+  if (context != StencilMenuObserver) {
+    return;
+  }
+  
+  NSMenuItem *item = change[NSKeyValueChangeNewKey];
+  if (![item isKindOfClass:[NSMenuItem class]]) {
+    return;
+  }
   self.showCustomTemplatesOnly = ([item.title isEqualToString:MenuItemTitleFileFromCustomTemplate] || [item.title isEqualToString:MenuItemTitleNewFileFromCustomTemplate]);
   self.beginCreateTemplateFromGroup = (item == self.menuItemCreateTemplateFromGroup);
 }

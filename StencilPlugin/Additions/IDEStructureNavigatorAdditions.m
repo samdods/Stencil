@@ -29,7 +29,7 @@
   dzl_implementationCombine(NSClassFromString(@"IDEStructureNavigator"), self, dzl_no_assert);
 }
 
-- (id<ProjectGroup>)selectedGroup
+- (id<ProjectGroup>)dzl_selectedGroup
 {
   id group = [self valueForKey:@"_itemFromContextualClickedRows"];
   if ([group isKindOfClass:NSClassFromString(@"IDEGroupNavigableItem")]) {
@@ -38,7 +38,7 @@
   return nil;
 }
 
-- (id<ProjectFile>)selectedFile
+- (id<ProjectFile>)dzl_selectedFile
 {
   id file = [self valueForKey:@"_itemFromContextualClickedRows"];
   if ([file isKindOfClass:NSClassFromString(@"IDEFileReferenceNavigableItem")]) {
@@ -53,9 +53,9 @@
     return dzlSuper(_testOrDeleteItems:items useContextualMenuSelection:selection);
   }
   
-  id<ProjectGroup> group = [self selectedGroup];
+  id<ProjectGroup> group = [self dzl_selectedGroup];
   if (!group) {
-    id<ProjectFile> file = [self selectedFile];
+    id<ProjectFile> file = [self dzl_selectedFile];
     group = file.parentItem;
   }
   

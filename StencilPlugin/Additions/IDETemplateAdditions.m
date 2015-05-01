@@ -24,7 +24,9 @@ static IMP PSPDFReplaceMethodWithBlock(Class c, SEL origSEL, id block) {
   
   // get original method
   Method origMethod = class_getClassMethod(c, origSEL);
-  NSCParameterAssert(origMethod);
+  if (!origMethod) {
+    return nil;
+  }
   
   // convert block to IMP trampoline and replace method implementation
   IMP newIMP = imp_implementationWithBlock(block);

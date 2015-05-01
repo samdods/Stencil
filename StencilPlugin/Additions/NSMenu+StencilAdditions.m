@@ -24,7 +24,7 @@ NSString *const ProjectNavigatorContextualMenu = @"Project navigator contextual 
   }
   
   typeof(self) menu = dzlSuper(initWithTitle:aTitle);
-  menu.delegate = [Stencil sharedPlugin];
+  [[Stencil sharedPlugin] observeHighlightedItemForMenu:menu];
   return menu;
 }
 
@@ -32,7 +32,7 @@ NSString *const ProjectNavigatorContextualMenu = @"Project navigator contextual 
 {
   BOOL isContextualMenu = [self.title isEqualToString:ProjectNavigatorContextualMenu];
   if (isContextualMenu) {
-    self.delegate = [Stencil sharedPlugin];
+    [[Stencil sharedPlugin] observeHighlightedItemForMenu:self];
   }
   
   BOOL addCustomFileItem = (isContextualMenu && [menuItemBeingAddedByXcode.title isEqualToString:@"New File…"]);

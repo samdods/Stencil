@@ -11,7 +11,7 @@
 
 @implementation NSObject (StencilAdditions)
 
-+ (NSArray *)stencil_printMethods
++ (NSArray *)dzl_printMethods
 {
   uint numberOfMethods;
   Method *methods = class_copyMethodList(self, &numberOfMethods);

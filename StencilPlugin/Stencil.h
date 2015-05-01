@@ -15,7 +15,7 @@ FOUNDATION_EXPORT NSString *const FileTemplatesDirectoryPath;
 
 @class TemplateConfig;
 
-@interface Stencil : NSObject <NSMenuDelegate>
+@interface Stencil : NSObject
 
 + (instancetype)sharedPlugin;
 
@@ -35,5 +35,7 @@ FOUNDATION_EXPORT NSString *const FileTemplatesDirectoryPath;
 @property (nonatomic, assign) BOOL beginCreateTemplateFromGroup;
 
 - (void)showTemplateOptionsInWindow:(NSWindow *)window defaultTemplateConfig:(TemplateConfig *)config;
+
+- (void)observeHighlightedItemForMenu:(NSMenu *)menu;
 
 @end

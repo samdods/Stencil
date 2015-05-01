@@ -10,6 +10,6 @@
 
 @interface NSObject (StencilAdditions)
 
-+ (NSArray *)stencil_printMethods;
++ (NSArray *)dzl_printMethods;
 
 @end
