@@ -10,6 +10,8 @@
 
 @interface StencilWeakObjectWrapper : NSObject
 
-@property (nonatomic, weak) id wrappedObject;
++ (instancetype) wrap:(NSObject *)object;
+
+@property (nonatomic, weak, readonly) NSObject *wrappedObject;
 
 @end

@@ -11,6 +11,8 @@
 #import "NSMenu+StencilAdditions.h"
 #import "TemplateOptionsWindow.h"
 #import "TemplateFactory.h"
+#import "StencilWeakObjectWrapper.h"
+#import "DeallocationObserver.h"
 
 static void *StencilMenuObserver = &StencilMenuObserver;
 
@@ -38,13 +40,6 @@ static BOOL ForceShowTemplatesOnly = NO;
 + (instancetype)sharedPlugin
 {
   return sharedPlugin;
-}
-
-- (void)dealloc
-{
-  for (NSMenu *menu in self.observedMenus) {
-    [menu removeObserver:self forKeyPath:@"highlightedItem"];
-  }
 }
 
 - (NSMutableSet *)observedMenus
@@ -132,11 +127,20 @@ static BOOL ForceShowTemplatesOnly = NO;
 
 - (void)observeHighlightedItemForMenu:(NSMenu *)menu
 {
-  if ([self.observedMenus containsObject:menu]) {
+  StencilWeakObjectWrapper *wrapper = [StencilWeakObjectWrapper wrap:menu];
+  if ([self.observedMenus containsObject:wrapper]) {
     return;
   }
   [menu addObserver:self forKeyPath:@"highlightedItem" options:NSKeyValueObservingOptionNew context:StencilMenuObserver];
-  [self.observedMenus addObject:menu];
+  [self.observedMenus addObject:wrapper];
+  
+  DeallocationObserver *observer = [DeallocationObserver new];
+  observer.observedObject = menu;
+  __unsafe_unretained NSMenu *unsafeMenu = menu;
+  observer.deallocBlock = ^(NSMenu *deallocatedMenu) {
+    [unsafeMenu removeObserver:self forKeyPath:@"highlightedItem" context:StencilMenuObserver];
+    [self.observedMenus removeObject:wrapper];
+  };
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(NSMenu *)menu change:(NSDictionary *)change context:(void *)context

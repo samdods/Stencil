@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		EA0000D01AE7A56800E85807 /* ThingTypeToClassNamesMap.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0000CF1AE7A56800E85807 /* ThingTypeToClassNamesMap.m */; };
+		EA23E0461AF4D8D6008E4A50 /* StencilWeakObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = EA23E0451AF4D8D6008E4A50 /* StencilWeakObjectWrapper.m */; };
+		EA23E0491AF4D8F1008E4A50 /* DeallocationObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = EA23E0481AF4D8F1008E4A50 /* DeallocationObserver.m */; };
 		EA31BC391AE1AFDE00167EFD /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA31BC381AE1AFDE00167EFD /* AppKit.framework */; };
 		EA31BC3B1AE1AFDE00167EFD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA31BC3A1AE1AFDE00167EFD /* Foundation.framework */; };
 		EA3EB1B51AE39510009553F9 /* TemplateInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA3EB1B41AE39510009553F9 /* TemplateInfo.plist */; };
 		EACD8A4C1AE6C5B500706E6B /* TemplateConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D3DBC1AE57D61007BD36A /* TemplateConfig.m */; };
 		EACD8A4D1AE6C5B900706E6B /* TemplateOptionsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D3DB31AE56BDC007BD36A /* TemplateOptionsWindow.m */; };
-		EACD8A4E1AE6C5BB00706E6B /* StencilWeakObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4FB68E1AE3B364001EFB21 /* StencilWeakObjectWrapper.m */; };
 		EACD8A4F1AE6C5BF00706E6B /* ProjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4FB6841AE398E5001EFB21 /* ProjectGroup.m */; };
 		EACD8A501AE6C5C100706E6B /* ProjectFile.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4FB6871AE399A3001EFB21 /* ProjectFile.m */; };
 		EACD8A521AE6C5CC00706E6B /* NSInputStream+StencilAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4FB6921AE4D44C001EFB21 /* NSInputStream+StencilAdditions.m */; };
@@ -53,6 +54,10 @@
 		A1A7095B005B6F4C3F7C8DFE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA0000CE1AE7A56800E85807 /* ThingTypeToClassNamesMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThingTypeToClassNamesMap.h; sourceTree = "<group>"; };
 		EA0000CF1AE7A56800E85807 /* ThingTypeToClassNamesMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThingTypeToClassNamesMap.m; sourceTree = "<group>"; };
+		EA23E0441AF4D8D6008E4A50 /* StencilWeakObjectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StencilWeakObjectWrapper.h; sourceTree = "<group>"; };
+		EA23E0451AF4D8D6008E4A50 /* StencilWeakObjectWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StencilWeakObjectWrapper.m; sourceTree = "<group>"; };
+		EA23E0471AF4D8F1008E4A50 /* DeallocationObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeallocationObserver.h; sourceTree = "<group>"; };
+		EA23E0481AF4D8F1008E4A50 /* DeallocationObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeallocationObserver.m; sourceTree = "<group>"; };
 		EA31BC351AE1AFDE00167EFD /* StencilPlugin.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StencilPlugin.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA31BC381AE1AFDE00167EFD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		EA31BC3A1AE1AFDE00167EFD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -79,8 +84,6 @@
 		EA4FB6841AE398E5001EFB21 /* ProjectGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectGroup.m; sourceTree = "<group>"; };
 		EA4FB6861AE399A3001EFB21 /* ProjectFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectFile.h; sourceTree = "<group>"; };
 		EA4FB6871AE399A3001EFB21 /* ProjectFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectFile.m; sourceTree = "<group>"; };
-		EA4FB68D1AE3B364001EFB21 /* StencilWeakObjectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StencilWeakObjectWrapper.h; sourceTree = "<group>"; };
-		EA4FB68E1AE3B364001EFB21 /* StencilWeakObjectWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StencilWeakObjectWrapper.m; sourceTree = "<group>"; };
 		EA4FB6911AE4D44C001EFB21 /* NSInputStream+StencilAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInputStream+StencilAdditions.h"; sourceTree = "<group>"; };
 		EA4FB6921AE4D44C001EFB21 /* NSInputStream+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInputStream+StencilAdditions.m"; sourceTree = "<group>"; };
 		EA4FB6941AE4D768001EFB21 /* NSOutputStream+StencilAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOutputStream+StencilAdditions.h"; sourceTree = "<group>"; };
@@ -113,6 +116,17 @@
 				10C1169B0EF5D3E85F2D491E /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		EA23E0431AF4D89E008E4A50 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				EA23E0441AF4D8D6008E4A50 /* StencilWeakObjectWrapper.h */,
+				EA23E0451AF4D8D6008E4A50 /* StencilWeakObjectWrapper.m */,
+				EA23E0471AF4D8F1008E4A50 /* DeallocationObserver.h */,
+				EA23E0481AF4D8F1008E4A50 /* DeallocationObserver.m */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		EA31BC2C1AE1AFDE00167EFD = {
@@ -148,7 +162,7 @@
 			children = (
 				EA3D3DBA1AE57D44007BD36A /* Model */,
 				EA3D3DAC1AE56711007BD36A /* User Interface */,
-				EA4FB68C1AE3B34D001EFB21 /* Weak Object Wrapper */,
+				EA23E0431AF4D89E008E4A50 /* Helpers */,
 				EA4FB6821AE398B2001EFB21 /* SDK Fakes */,
 				EA3EB1B31AE3909B009553F9 /* Resources */,
 				EAB55BA11AE2D456001EBD12 /* Additions */,
@@ -218,15 +232,6 @@
 				EA4FB6871AE399A3001EFB21 /* ProjectFile.m */,
 			);
 			path = "SDK Fakes";
-			sourceTree = "<group>";
-		};
-		EA4FB68C1AE3B34D001EFB21 /* Weak Object Wrapper */ = {
-			isa = PBXGroup;
-			children = (
-				EA4FB68D1AE3B364001EFB21 /* StencilWeakObjectWrapper.h */,
-				EA4FB68E1AE3B364001EFB21 /* StencilWeakObjectWrapper.m */,
-			);
-			path = "Weak Object Wrapper";
 			sourceTree = "<group>";
 		};
 		EA4FB6901AE4D429001EFB21 /* Parsing */ = {
@@ -382,12 +387,13 @@
 				EACD8A5A1AE6C5E300706E6B /* Stencil.m in Sources */,
 				EACD8A521AE6C5CC00706E6B /* NSInputStream+StencilAdditions.m in Sources */,
 				EACD8A591AE6C5DF00706E6B /* IDEStructureNavigatorAdditions.m in Sources */,
+				EA23E0491AF4D8F1008E4A50 /* DeallocationObserver.m in Sources */,
 				EACD8A541AE6C5D100706E6B /* NSString+StencilRegex.m in Sources */,
-				EACD8A4E1AE6C5BB00706E6B /* StencilWeakObjectWrapper.m in Sources */,
 				EACD8A551AE6C5D300706E6B /* TemplateFactory.m in Sources */,
 				EACD8A4C1AE6C5B500706E6B /* TemplateConfig.m in Sources */,
 				EA0000D01AE7A56800E85807 /* ThingTypeToClassNamesMap.m in Sources */,
 				EACD8A581AE6C5DC00706E6B /* IDETemplateAdditions.m in Sources */,
+				EA23E0461AF4D8D6008E4A50 /* StencilWeakObjectWrapper.m in Sources */,
 				EACD8A501AE6C5C100706E6B /* ProjectFile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
