@@ -87,7 +87,7 @@
   
   NSString *line = inputStream.stc_nextReadLine;
   while (line) {
-    NSString *output = [line stringByMatching:pattern replaceWith:@"$1:$2"];
+    NSString *output = [[line stringByMatching:pattern replaceWith:@"$1:$2"] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSArray *protocolNames = [output componentsSeparatedByString:@":"];
     if (protocolNames) {
       block(protocolNames);

@@ -18,7 +18,7 @@ static void *StencilMenuObserver = &StencilMenuObserver;
 
 NSString *const MenuItemTitleNewFileFromCustomTemplate = @"New File from Custom Template…";
 NSString *const MenuItemTitleFileFromCustomTemplate = @"File from Custom Template…";
-NSString *const PluginNameAndCorrespondingDirectory = @"Stencil";
+NSString *const PluginNameAndCorrespondingDirectory = @"StencilPlugin";
 NSString *const FileTemplatesDirectoryPath = @"File Templates/Custom";
 
 static Stencil *sharedPlugin;
