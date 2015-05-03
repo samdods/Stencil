@@ -6,9 +6,10 @@ A plugin for Xcode allowing you to easily create custom file templates
 
 ## Installing
 
-The simplest way to install is through [Alcatraz Package Manager](http://alcatraz.io/) for Xcode.
+<!--The simplest way to install is through [Alcatraz Package Manager](http://alcatraz.io/) for Xcode.
+Alternatively, you can -->
 
-Alternatively, you can clone this repository, open the Xcode project, build the project, then restart Xcode
+Clone this repository, open the Xcode project, build the project, then restart Xcode
 for the plugin to take effect.
 
 ## Website
