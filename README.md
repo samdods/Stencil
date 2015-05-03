@@ -2,6 +2,8 @@
 
 A plugin for Xcode allowing you to easily create custom file templates
 
+<img src="create-new-template.jpg" title="Showing how to create a new template"/>
+
 ## Installing
 
 The simplest way to install is through [Alcatraz Package Manager](http://alcatraz.io/) for Xcode.
