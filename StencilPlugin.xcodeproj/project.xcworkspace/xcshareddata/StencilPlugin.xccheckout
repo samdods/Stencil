@@ -5,23 +5,23 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>E4A96203-EE37-472D-8B1E-C6DFA8E6E50C</string>
+	<string>AB040520-E50D-4A5F-AD71-D2F917F69486</string>
 	<key>IDESourceControlProjectName</key>
 	<string>StencilPlugin</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>69C0E36E0F1F24628C4B9AD1F13911D7A6D25C2A</key>
-		<string>bitbucket.org:sdods3782/stencilplugin.git</string>
+		<string>github.com:samdods/Stencil.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>StencilPlugin.xcworkspace</string>
+	<string>StencilPlugin.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>69C0E36E0F1F24628C4B9AD1F13911D7A6D25C2A</key>
-		<string>..</string>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>bitbucket.org:sdods3782/stencilplugin.git</string>
+	<string>github.com:samdods/Stencil.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>

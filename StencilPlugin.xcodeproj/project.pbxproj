@@ -13,6 +13,7 @@
 		EA31BC391AE1AFDE00167EFD /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA31BC381AE1AFDE00167EFD /* AppKit.framework */; };
 		EA31BC3B1AE1AFDE00167EFD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA31BC3A1AE1AFDE00167EFD /* Foundation.framework */; };
 		EA3EB1B51AE39510009553F9 /* TemplateInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA3EB1B41AE39510009553F9 /* TemplateInfo.plist */; };
+		EA91AC7B1AF75EBC005B4E74 /* NSObject+DZLObjcAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA91AC7A1AF75EBC005B4E74 /* NSObject+DZLObjcAdditions.m */; };
 		EACD8A4C1AE6C5B500706E6B /* TemplateConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D3DBC1AE57D61007BD36A /* TemplateConfig.m */; };
 		EACD8A4D1AE6C5B900706E6B /* TemplateOptionsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D3DB31AE56BDC007BD36A /* TemplateOptionsWindow.m */; };
 		EACD8A4F1AE6C5BF00706E6B /* ProjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4FB6841AE398E5001EFB21 /* ProjectGroup.m */; };
@@ -32,7 +33,6 @@
 		EADE959D1AF152CA00C30880 /* Stencil in CopyFiles */ = {isa = PBXBuildFile; fileRef = EAD85AD41AEEBBBC00415E84 /* Stencil */; };
 		EAF198261AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAF198251AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib */; };
 		EAF198331AE82B8A005A5BC0 /* StencilREADME in Resources */ = {isa = PBXBuildFile; fileRef = EAF198321AE82B8A005A5BC0 /* StencilREADME */; };
-		F302472A1AAA8763C7FEBEFF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1A7095B005B6F4C3F7C8DFE /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -49,8 +49,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		10C1169B0EF5D3E85F2D491E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		275C778DFA544CFD5FAB6F79 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A1A7095B005B6F4C3F7C8DFE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA0000CE1AE7A56800E85807 /* ThingTypeToClassNamesMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThingTypeToClassNamesMap.h; sourceTree = "<group>"; };
 		EA0000CF1AE7A56800E85807 /* ThingTypeToClassNamesMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThingTypeToClassNamesMap.m; sourceTree = "<group>"; };
@@ -88,6 +86,14 @@
 		EA4FB6921AE4D44C001EFB21 /* NSInputStream+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInputStream+StencilAdditions.m"; sourceTree = "<group>"; };
 		EA4FB6941AE4D768001EFB21 /* NSOutputStream+StencilAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOutputStream+StencilAdditions.h"; sourceTree = "<group>"; };
 		EA4FB6951AE4D768001EFB21 /* NSOutputStream+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutputStream+StencilAdditions.m"; sourceTree = "<group>"; };
+		EA91AC721AF75EA1005B4E74 /* DZLClassSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZLClassSingleton.h; path = DZLObjcAdditions/DZLClassSingleton.h; sourceTree = "<group>"; };
+		EA91AC731AF75EA1005B4E74 /* DZLImplementationCombine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZLImplementationCombine.h; path = DZLObjcAdditions/DZLImplementationCombine.h; sourceTree = "<group>"; };
+		EA91AC741AF75EA1005B4E74 /* DZLImplementationSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZLImplementationSafe.h; path = DZLObjcAdditions/DZLImplementationSafe.h; sourceTree = "<group>"; };
+		EA91AC751AF75EA1005B4E74 /* DZLProtocolImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZLProtocolImplementation.h; path = DZLObjcAdditions/DZLProtocolImplementation.h; sourceTree = "<group>"; };
+		EA91AC761AF75EA1005B4E74 /* DZLSynthesizeLazy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZLSynthesizeLazy.h; path = DZLObjcAdditions/DZLSynthesizeLazy.h; sourceTree = "<group>"; };
+		EA91AC781AF75EBC005B4E74 /* DZLSuper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZLSuper.h; path = DZLObjcAdditions/Private/DZLSuper.h; sourceTree = "<group>"; };
+		EA91AC791AF75EBC005B4E74 /* NSObject+DZLObjcAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+DZLObjcAdditions.h"; path = "DZLObjcAdditions/Private/NSObject+DZLObjcAdditions.h"; sourceTree = "<group>"; };
+		EA91AC7A1AF75EBC005B4E74 /* NSObject+DZLObjcAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+DZLObjcAdditions.m"; path = "DZLObjcAdditions/Private/NSObject+DZLObjcAdditions.m"; sourceTree = "<group>"; };
 		EAB55BA31AE2D519001EBD12 /* NSMenu+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+StencilAdditions.m"; sourceTree = "<group>"; };
 		EAD6226A1AE83563002723B6 /* StencilTemplateWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StencilTemplateWindow.xib; sourceTree = "<group>"; };
 		EAD85AD41AEEBBBC00415E84 /* Stencil */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Stencil; sourceTree = "<group>"; };
@@ -102,22 +108,12 @@
 			files = (
 				EA31BC391AE1AFDE00167EFD /* AppKit.framework in Frameworks */,
 				EA31BC3B1AE1AFDE00167EFD /* Foundation.framework in Frameworks */,
-				F302472A1AAA8763C7FEBEFF /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		851AC8D0C97F2C9797E01BFC /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				275C778DFA544CFD5FAB6F79 /* Pods.debug.xcconfig */,
-				10C1169B0EF5D3E85F2D491E /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		EA23E0431AF4D89E008E4A50 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,7 +131,6 @@
 				EA31BC3C1AE1AFDE00167EFD /* StencilPlugin */,
 				EA31BC371AE1AFDE00167EFD /* Frameworks */,
 				EA31BC361AE1AFDE00167EFD /* Products */,
-				851AC8D0C97F2C9797E01BFC /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -160,6 +155,7 @@
 		EA31BC3C1AE1AFDE00167EFD /* StencilPlugin */ = {
 			isa = PBXGroup;
 			children = (
+				EAB992F51AF75D5500F506D9 /* Vendor */,
 				EA3D3DBA1AE57D44007BD36A /* Model */,
 				EA3D3DAC1AE56711007BD36A /* User Interface */,
 				EA23E0431AF4D89E008E4A50 /* Helpers */,
@@ -249,6 +245,29 @@
 			path = Parsing;
 			sourceTree = "<group>";
 		};
+		EA91AC711AF75E84005B4E74 /* DZLObjcAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				EA91AC721AF75EA1005B4E74 /* DZLClassSingleton.h */,
+				EA91AC731AF75EA1005B4E74 /* DZLImplementationCombine.h */,
+				EA91AC741AF75EA1005B4E74 /* DZLImplementationSafe.h */,
+				EA91AC751AF75EA1005B4E74 /* DZLProtocolImplementation.h */,
+				EA91AC761AF75EA1005B4E74 /* DZLSynthesizeLazy.h */,
+				EA91AC771AF75EA6005B4E74 /* Private */,
+			);
+			name = DZLObjcAdditions;
+			sourceTree = "<group>";
+		};
+		EA91AC771AF75EA6005B4E74 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				EA91AC781AF75EBC005B4E74 /* DZLSuper.h */,
+				EA91AC791AF75EBC005B4E74 /* NSObject+DZLObjcAdditions.h */,
+				EA91AC7A1AF75EBC005B4E74 /* NSObject+DZLObjcAdditions.m */,
+			);
+			name = Private;
+			sourceTree = "<group>";
+		};
 		EAB55BA11AE2D456001EBD12 /* Additions */ = {
 			isa = PBXGroup;
 			children = (
@@ -261,6 +280,14 @@
 				EA3EB1B01AE2D90B009553F9 /* IDEStructureNavigatorAdditions.m */,
 			);
 			path = Additions;
+			sourceTree = "<group>";
+		};
+		EAB992F51AF75D5500F506D9 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				EA91AC711AF75E84005B4E74 /* DZLObjcAdditions */,
+			);
+			path = Vendor;
 			sourceTree = "<group>";
 		};
 		EAD85A971AEEA86000415E84 /* Built-in Templates */ = {
@@ -278,11 +305,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA31BC461AE1AFDE00167EFD /* Build configuration list for PBXNativeTarget "StencilPlugin" */;
 			buildPhases = (
-				379C0FCF89680A5AE0E36829 /* Check Pods Manifest.lock */,
 				EA31BC311AE1AFDE00167EFD /* Sources */,
 				EA31BC321AE1AFDE00167EFD /* Resources */,
 				EA31BC331AE1AFDE00167EFD /* Frameworks */,
-				F27C888E22AD89BE020E865A /* Copy Pods Resources */,
 				EADE959C1AF150FA00C30880 /* CopyFiles */,
 			);
 			buildRules = (
@@ -341,45 +366,13 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		379C0FCF89680A5AE0E36829 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		F27C888E22AD89BE020E865A /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		EA31BC311AE1AFDE00167EFD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				EACD8A4D1AE6C5B900706E6B /* TemplateOptionsWindow.m in Sources */,
+				EA91AC7B1AF75EBC005B4E74 /* NSObject+DZLObjcAdditions.m in Sources */,
 				EACD8A561AE6C5D600706E6B /* NSMenu+StencilAdditions.m in Sources */,
 				EACD8A571AE6C5D900706E6B /* NSObject+StencilAdditions.m in Sources */,
 				EACD8A4F1AE6C5BF00706E6B /* ProjectGroup.m in Sources */,
@@ -472,7 +465,6 @@
 		};
 		EA31BC471AE1AFDE00167EFD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 275C778DFA544CFD5FAB6F79 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
@@ -488,7 +480,6 @@
 		};
 		EA31BC481AE1AFDE00167EFD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 10C1169B0EF5D3E85F2D491E /* Pods.release.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
