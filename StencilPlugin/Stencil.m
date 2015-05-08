@@ -75,7 +75,7 @@ static BOOL ForceShowTemplatesOnly = NO;
   
   NSMenu *menuNew = [[[menuItem submenu] itemWithTitle:@"New"] submenu];
   [self observeHighlightedItemForMenu:menuNew];
-  [menuNew duplicateItemWithTitle:@"File…" duplicateTitle:@"File from Custom Template…"];
+  [menuNew duplicateItemWithTitle:@"File…" duplicateTitle:MenuItemTitleFileFromCustomTemplate];
 }
 
 - (BOOL)canCreateFromCustomTemplate
@@ -155,6 +155,10 @@ static BOOL ForceShowTemplatesOnly = NO;
   }
   self.showCustomTemplatesOnly = ([item.title isEqualToString:MenuItemTitleFileFromCustomTemplate] || [item.title isEqualToString:MenuItemTitleNewFileFromCustomTemplate]);
   self.beginCreateTemplateFromGroup = (item == self.menuItemCreateTemplateFromGroup);
+  
+  if (item == self.menuItemNewFromCustomTemplate) {
+    item.action = self.menuItemNewFile.action;
+  }
 }
 
 - (BOOL)showCustomTemplatesOnly

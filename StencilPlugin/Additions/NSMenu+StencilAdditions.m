@@ -18,7 +18,7 @@ NSString *const ProjectNavigatorContextualMenu = @"Project navigator contextual 
 {
   [Stencil sharedPlugin].beginCreateTemplateFromGroup = NO;
   if ([Stencil sharedPlugin].canCreateFromCustomTemplate) {
-    [Stencil sharedPlugin].menuItemNewFromCustomTemplate.action = [Stencil sharedPlugin].menuItemNewFile.action;
+    [Stencil sharedPlugin].menuItemNewFromCustomTemplate.action = [Stencil sharedPlugin].menuItemDelete.action;
   } else {
     [Stencil sharedPlugin].menuItemNewFromCustomTemplate.action = nil;
   }
@@ -38,7 +38,7 @@ NSString *const ProjectNavigatorContextualMenu = @"Project navigator contextual 
   BOOL addCustomFileItem = (isContextualMenu && [menuItemBeingAddedByXcode.title isEqualToString:@"New File…"]);
   
   if (addCustomFileItem) {
-    NSMenuItem *customMenuItem = [[NSMenuItem alloc] initWithTitle:MenuItemTitleNewFileFromCustomTemplate action:menuItemBeingAddedByXcode.action keyEquivalent:@""];
+    NSMenuItem *customMenuItem = [[NSMenuItem alloc] initWithTitle:MenuItemTitleNewFileFromCustomTemplate action:nil keyEquivalent:@""];
     dzlSuper(addItem:customMenuItem);
     [Stencil sharedPlugin].menuItemNewFile = menuItemBeingAddedByXcode;
     [Stencil sharedPlugin].menuItemNewFromCustomTemplate = customMenuItem;

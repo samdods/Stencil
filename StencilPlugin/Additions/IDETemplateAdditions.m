@@ -80,7 +80,6 @@ static IMP PSPDFReplaceMethodWithBlock(Class c, SEL origSEL, id block) {
     }
   }
   
-  NSLog(@"%@", path);
   dzlSuper(_processChildrenOfFilePath:path enumerator:enumerator);
 }
 
