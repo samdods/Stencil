@@ -8,36 +8,19 @@
 
 #import "ProjectGroup.h"
 #import "ProjectFile.h"
-#import "DZLImplementationSafe.h"
 
-@interface ProjectGroup : NSObject
-@end
+@implementation NSArray (ProjectGroupAdditions)
 
-@implementation ProjectGroup
-
-+ (void)load
+- (NSArray *)validatedTemplateFiles:(NSError **)error
 {
-  dzl_implementationSafe(NSClassFromString(@"IDEGroupNavigableItem"), self);
-}
-
-- (NSDictionary *)validatedFileRefsByType:(NSError **)error
-{
-  NSArray *groupFileRefs = [[self valueForKey:@"childRepresentedObjects"] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-    return [evaluatedObject isKindOfClass:NSClassFromString(@"Xcode3FileReference")];
-  }]];
-  NSMutableDictionary *validatedFileRefsByType = [NSMutableDictionary new];
-  for (id<ProjectFile> file in groupFileRefs) {
+  NSMutableArray *validatedFileRefs = [NSMutableArray new];
+  for (id<ProjectFile> file in [self valueForKey:@"representedObject"]) {
     switch (file.type) {
       case ProjectFileObjcInterface:
       case ProjectFileObjcImplementation:
       case ProjectFileUserInterface:
       case ProjectFileSwift:
-        if (validatedFileRefsByType[@(file.type)]) {
-          NSString *message = [NSString stringWithFormat:@"Multiple of the same filetype (%@)", file.extension];
-          [self setError:error code:ProjectGroupErrorCodeMultipleOfSameFileType message:message];
-          return nil;
-        }
-        validatedFileRefsByType[@(file.type)] = file;
+        [validatedFileRefs addObject:file];
         break;
       default: {
         NSString *message = [NSString stringWithFormat:@"Unsupported filetype (%@)", file.extension];
@@ -47,31 +30,23 @@
     }
   }
   
-  NSDictionary *fileRefs = validatedFileRefsByType.copy;
-  BOOL isValid = [self areHeaderAndImplementationSameName:fileRefs];
-  isValid = isValid && [self isNotMixingSwiftWithObjc:fileRefs];
+  NSArray *fileRefs = validatedFileRefs.copy;
+  BOOL isValid = [self isNotMixingSwiftWithObjc:fileRefs];
   return isValid ? fileRefs : nil;
 }
 
-- (BOOL)areHeaderAndImplementationSameName:(NSDictionary *)fileRefsByType
+- (BOOL)isNotMixingSwiftWithObjc:(NSArray *)fileRefs
 {
-  id<ProjectFile> header = fileRefsByType[@(ProjectFileObjcInterface)];
-  id<ProjectFile> implem = fileRefsByType[@(ProjectFileObjcImplementation)];
-  if (header && implem) {
-    return [header.nameWithoutExtension isEqualToString:implem.nameWithoutExtension];
+  BOOL hasSwift = NO;
+  BOOL hasObjc = NO;
+  for (id<ProjectFile> file in fileRefs) {
+    if (file.type == ProjectFileSwift) {
+      hasSwift = YES;
+    } else if (file.type != ProjectFileUserInterface) {
+      hasObjc = YES;
+    }
   }
-  return YES;
-}
-
-- (BOOL)isNotMixingSwiftWithObjc:(NSDictionary *)fileRefsByType
-{
-  id<ProjectFile> swiftFile = fileRefsByType[@(ProjectFileSwift)];
-  if (!swiftFile) {
-    return YES;
-  }
-  id<ProjectFile> header = fileRefsByType[@(ProjectFileObjcInterface)];
-  id<ProjectFile> implem = fileRefsByType[@(ProjectFileObjcImplementation)];
-  return (!header && !implem);
+  return !(hasObjc && hasSwift);
 }
 
 - (void)setError:(NSError **)error code:(NSInteger)code message:(NSString *)message

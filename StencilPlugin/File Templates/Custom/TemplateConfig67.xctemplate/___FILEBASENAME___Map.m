@@ -1,12 +1,12 @@
 //
-//  ThingTypeToClassNamesMap.m
-//  StencilPlugin
+//  ___FILENAME___
+//  ___PROJECTNAME___
 //
-//  Created by Sam Dods on 22/04/2015.
-//  Copyright (c) 2015 Sam Dods. All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//___COPYRIGHT___
 //
 
-#import "ThingTypeToClassNamesMap.h"
+#import "___FILEBASENAME___.h"
 
 @implementation ThingTypeToClassNamesMap
 

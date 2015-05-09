@@ -29,22 +29,18 @@
   dzl_implementationCombine(NSClassFromString(@"IDEStructureNavigator"), self, dzl_no_assert);
 }
 
-- (id<ProjectGroup>)dzl_selectedGroup
+- (NSArray *)dzl_selectedFiles
 {
-  id group = [self valueForKey:@"_itemFromContextualClickedRows"];
-  if ([group isKindOfClass:NSClassFromString(@"IDEGroupNavigableItem")]) {
-    return group;
+  NSArray *files = [self valueForKey:@"selectedObjects"];
+  if (![files isKindOfClass:[NSArray class]]) {
+    return nil;
   }
-  return nil;
-}
-
-- (id<ProjectFile>)dzl_selectedFile
-{
-  id file = [self valueForKey:@"_itemFromContextualClickedRows"];
-  if ([file isKindOfClass:NSClassFromString(@"IDEFileReferenceNavigableItem")]) {
-    return file;
+  for (id file in files) {
+    if (![file isKindOfClass:NSClassFromString(@"IDEFileReferenceNavigableItem")]) {
+      return nil;
+    }
   }
-  return nil;
+  return files;
 }
 
 - (char)_testOrDeleteItems:(char)items useContextualMenuSelection:(char)selection
@@ -53,18 +49,22 @@
     return dzlSuper(_testOrDeleteItems:items useContextualMenuSelection:selection);
   }
   
-  id<ProjectGroup> group = [self dzl_selectedGroup];
-  if (!group) {
-    id<ProjectFile> file = [self dzl_selectedFile];
-    group = file.parentItem;
+  NSArray *files = [self dzl_selectedFiles];
+  if (!files) {
+    [[TemplateFactory defaultFactory] showAlertWithMessage:@"You cannot create a template from the current selection. Please ensure you have selected source files only."];
+    return 0;
   }
   
   [Stencil sharedPlugin].beginCreateTemplateFromGroup = NO;
   
   NSError *error = nil;
-  TemplateConfig *config = [TemplateConfig defaultConfigForGroup:group error:&error];
+  TemplateConfig *config = [TemplateConfig defaultConfigForFiles:files error:&error];
   if (error) {
     [[TemplateFactory defaultFactory] showAlertForError:error];
+    return 0;
+  }
+  if (!config.thingTypeToNamesMaps.count) {
+    [[TemplateFactory defaultFactory] showAlertWithMessage:@"Unsupported file type."];
     return 0;
   }
   

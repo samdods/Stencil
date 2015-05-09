@@ -1,12 +1,12 @@
 //
-//  TemplateConfig.m
-//  StencilPlugin
+//  ___FILENAME___
+//  ___PROJECTNAME___
 //
-//  Created by Sam Dods on 20/04/2015.
-//  Copyright (c) 2015 Sam Dods. All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//___COPYRIGHT___
 //
 
-#import "TemplateConfig.h"
+#import "___FILEBASENAME___.h"
 #import "ProjectFile.h"
 #import "ProjectGroup.h"
 #import "NSInputStream+StencilAdditions.h"
@@ -117,7 +117,7 @@
 
 
 
-@implementation TemplateProperties
+@implementation ___FILEBASENAMEASIDENTIFIER___
 
 - (instancetype)initWithName:(NSString *)name thingType:(STCThingType)thingType nameToReplace:(NSString *)replace inheritFrom:(NSString *)inherit description:(NSString *)description templateFileMap:(NSDictionary *)templateFileMap
 {

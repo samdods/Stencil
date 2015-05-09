@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, ProjectGroupErrorCode) {
-  ProjectGroupErrorCodeMultipleOfSameFileType = 32,
   ProjectGroupErrorCodeUnsupportedFileType = 33,
 };
 
@@ -19,6 +18,12 @@ typedef NS_ENUM(NSInteger, ProjectGroupErrorCode) {
 
 @property (nonatomic, readonly) NSArray *childRepresentedObjects;
 
-- (NSDictionary *)validatedFileRefsByType:(NSError **)error;
+@end
+
+
+
+@interface NSArray (ProjectGroupAdditions)
+
+- (NSArray *)validatedTemplateFiles:(NSError **)error;
 
 @end

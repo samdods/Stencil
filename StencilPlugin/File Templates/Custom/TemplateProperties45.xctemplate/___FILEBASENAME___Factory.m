@@ -1,12 +1,12 @@
 //
-//  TemplateFactory.m
-//  StencilPlugin
+//  ___FILENAME___
+//  ___PROJECTNAME___
 //
-//  Created by Sam Dods on 20/04/2015.
-//  Copyright (c) 2015 Sam Dods. All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//___COPYRIGHT___
 //
 
-#import "TemplateFactory.h"
+#import "___FILEBASENAME___.h"
 #import "TemplateConfig.h"
 #import "ProjectGroup.h"
 #import "ProjectFile.h"
@@ -59,8 +59,7 @@
 {
   NSMutableDictionary *fileTypeByTargetPath = [NSMutableDictionary new];
   for (id<ProjectFile> file in config.fileRefs) {
-    NSString *targetFilePath = config.properties.templateFilenameByOriginalFilename[file.nameWithoutExtension];
-    targetFilePath = [targetFilePath stringByAppendingString:file.extension];
+    NSString *targetFilePath = config.properties.templateFilenameByOriginalFilename[file.name];
     targetFilePath = [targetPath stringByAppendingPathComponent:targetFilePath];
     if (config.properties.thingType == STCThingTypeObjcInterface) {
       [self createObjcInterfaceTemplateFromFile:file targetPath:targetFilePath type:file.type configProperties:config.properties];
@@ -106,11 +105,7 @@
     NSString *output = [self stringByTemplatifyingInterface:line configProperties:templateProperties];
     if (filetype == ProjectFileObjcImplementation) {
       NSMutableString *mutableOutput = [output mutableCopy];
-      NSString *templateFilename = templateProperties.templateFilenameByOriginalFilename[file.name];
-      NSRange rangeOfDot = [templateFilename rangeOfString:@"."];
-      templateFilename = [templateFilename substringToIndex:rangeOfDot.location];
-      NSString *importReplacement = [NSString stringWithFormat:@"#import \"%@.h\"", templateFilename];
-      [mutableOutput matchPattern:[NSString stringWithFormat:@"#import \"%@.h\"", file.nameWithoutExtension] replaceWith:importReplacement];
+      [mutableOutput matchPattern:[NSString stringWithFormat:@"#import \"%@.h\"", file.nameWithoutExtension] replaceWith:@"#import \"___FILEBASENAME___.h\""];
       return [mutableOutput copy];
     }
     return output;
@@ -294,9 +289,6 @@
       [codeFilePaths addObject:filePath];
     }
   }];
-  codeFilePaths = [[codeFilePaths sortedArrayUsingComparator:^NSComparisonResult(NSString *path1, NSString *path2) {
-    return [path1 compare:path2];
-  }] mutableCopy];
   [codeFilePaths addObject:@"/tmp/StencilREADME"];
   [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFiles:codeFilePaths];
   [[[NSApplication sharedApplication] delegate] application:[NSApplication sharedApplication] openFiles:interfaceFilePaths];

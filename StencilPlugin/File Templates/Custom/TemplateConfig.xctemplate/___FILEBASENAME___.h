@@ -1,10 +1,12 @@
 //
-//  TemplateConfig.h
-//  StencilPlugin
+//  ___FILENAME___
+//  ___PROJECTNAME___
 //
-//  Created by Sam Dods on 20/04/2015.
-//  Copyright (c) 2015 Sam Dods. All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//___COPYRIGHT___
 //
+
+#import "TemplateConfig.h"
 
 #import <Foundation/Foundation.h>
 #import "ProjectGroup.h"
@@ -18,15 +20,14 @@
 @property (nonatomic, readonly) NSString *thingNameToReplace;
 @property (nonatomic, readonly) NSString *thingNameToInheritFrom;
 @property (nonatomic, readonly) NSString *templateDescription;
-@property (nonatomic, readonly) NSDictionary *templateFilenameByOriginalFilename;
 
-- (instancetype)initWithName:(NSString *)name thingType:(STCThingType)thingType nameToReplace:(NSString *)replace inheritFrom:(NSString *)inherit description:(NSString *)description templateFileMap:(NSDictionary *)templateFileMap;
+- (instancetype)initWithName:(NSString *)name thingType:(STCThingType)thingType nameToReplace:(NSString *)replace inheritFrom:(NSString *)inherit description:(NSString *)description;
 
 @end
 
 
 
-@interface TemplateConfig : NSObject
+@interface ___FILEBASENAMEASIDENTIFIER___ : TemplateConfig
 
 /**
  *  Generates the defaults for the given group. Use this method to instantiate a template config and then

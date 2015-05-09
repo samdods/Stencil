@@ -1,17 +1,19 @@
 //
-//  TemplateConfig.h
-//  StencilPlugin
+//  ___FILENAME___
+//  ___PROJECTNAME___
 //
-//  Created by Sam Dods on 20/04/2015.
-//  Copyright (c) 2015 Sam Dods. All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//___COPYRIGHT___
 //
+
+#import "TemplateProperties.h"
 
 #import <Foundation/Foundation.h>
 #import "ProjectGroup.h"
 #import "ThingTypeToClassNamesMap.h"
 
 
-@interface TemplateProperties : NSObject
+@interface ___FILEBASENAMEASIDENTIFIER___ : TemplateProperties
 
 @property (nonatomic, readonly) NSString *templateName;
 @property (nonatomic, readonly) STCThingType thingType;

@@ -1,24 +1,24 @@
 //
-//  TemplateConfig.m
-//  StencilPlugin
+//  ___FILENAME___
+//  ___PROJECTNAME___
 //
-//  Created by Sam Dods on 20/04/2015.
-//  Copyright (c) 2015 Sam Dods. All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//___COPYRIGHT___
 //
 
-#import "TemplateConfig.h"
+#import "___FILEBASENAME___.h"
 #import "ProjectFile.h"
 #import "ProjectGroup.h"
 #import "NSInputStream+StencilAdditions.h"
 #import "NSString+StencilRegex.h"
 #import "ThingTypeToClassNamesMap.h"
 
-@interface TemplateConfig ()
+@interface ___FILEBASENAMEASIDENTIFIER___ ()
 @property (nonatomic, readwrite) TemplateProperties *properties;
 @end
 
 
-@implementation TemplateConfig
+@implementation ___FILEBASENAMEASIDENTIFIER___
 
 + (instancetype)defaultConfigForFiles:(NSArray *)files error:(NSError **)error
 {

@@ -31,7 +31,6 @@
 		EAD6226B1AE83563002723B6 /* StencilTemplateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAD6226A1AE83563002723B6 /* StencilTemplateWindow.xib */; };
 		EAD85AD51AEEBBBC00415E84 /* Stencil in Resources */ = {isa = PBXBuildFile; fileRef = EAD85AD41AEEBBBC00415E84 /* Stencil */; };
 		EADE959D1AF152CA00C30880 /* Stencil in CopyFiles */ = {isa = PBXBuildFile; fileRef = EAD85AD41AEEBBBC00415E84 /* Stencil */; };
-		EAF198261AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAF198251AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib */; };
 		EAF198331AE82B8A005A5BC0 /* StencilREADME in Resources */ = {isa = PBXBuildFile; fileRef = EAF198321AE82B8A005A5BC0 /* StencilREADME */; };
 /* End PBXBuildFile section */
 
@@ -97,7 +96,6 @@
 		EAB55BA31AE2D519001EBD12 /* NSMenu+StencilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+StencilAdditions.m"; sourceTree = "<group>"; };
 		EAD6226A1AE83563002723B6 /* StencilTemplateWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StencilTemplateWindow.xib; sourceTree = "<group>"; };
 		EAD85AD41AEEBBBC00415E84 /* Stencil */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Stencil; sourceTree = "<group>"; };
-		EAF198251AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STCTemplateOptionsWindow.xib; sourceTree = "<group>"; };
 		EAF198321AE82B8A005A5BC0 /* StencilREADME */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = StencilREADME; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -192,7 +190,6 @@
 				EA3D3DB21AE56BDC007BD36A /* TemplateOptionsWindow.h */,
 				EA3D3DB31AE56BDC007BD36A /* TemplateOptionsWindow.m */,
 				EAD6226A1AE83563002723B6 /* StencilTemplateWindow.xib */,
-				EAF198251AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib */,
 			);
 			path = "Template Options";
 			sourceTree = "<group>";
@@ -360,7 +357,6 @@
 				EAF198331AE82B8A005A5BC0 /* StencilREADME in Resources */,
 				EAD85AD51AEEBBBC00415E84 /* Stencil in Resources */,
 				EA3EB1B51AE39510009553F9 /* TemplateInfo.plist in Resources */,
-				EAF198261AE7F15C005A5BC0 /* STCTemplateOptionsWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,9 +1,9 @@
 //
-//  NSMenu+StencilAdditions.m
-//  Stencil
+//  ___FILENAME___
+//  ___PROJECTNAME___
 //
-//  Created by Sam Dods on 18/04/2015.
-//  Copyright (c) 2015 Sam Dods. All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//___COPYRIGHT___
 //
 
 #import "NSMenu+StencilAdditions.h"
@@ -35,7 +35,7 @@ NSString *const ProjectNavigatorContextualMenu = @"Project navigator contextual 
     [[Stencil sharedPlugin] observeHighlightedItemForMenu:self];
   }
   
-  BOOL addCustomFileItem = (isContextualMenu && [menuItemBeingAddedByXcode.title isEqualToString:@"New File…"]);
+  BOOL addCustomFileItem = (isContextualMenu && [menuItemBeingAddedByXcode.title isEqualToString:@"New Fileâ¦"]);
   
   if (addCustomFileItem) {
     NSMenuItem *customMenuItem = [[NSMenuItem alloc] initWithTitle:MenuItemTitleNewFileFromCustomTemplate action:nil keyEquivalent:@""];
@@ -50,7 +50,7 @@ NSString *const ProjectNavigatorContextualMenu = @"Project navigator contextual 
   BOOL addCreateTemplate = (isContextualMenu && [menuItemBeingAddedByXcode.title isEqualToString:@"Delete"]);
   
   if (addCreateTemplate) {
-    NSMenuItem *customMenuItem = [[NSMenuItem alloc] initWithTitle:@"New Template from Selection" action:menuItemBeingAddedByXcode.action keyEquivalent:@""];
+    NSMenuItem *customMenuItem = [[NSMenuItem alloc] initWithTitle:@"Create File Template from Group" action:menuItemBeingAddedByXcode.action keyEquivalent:@""];
     dzlSuper(addItem:customMenuItem);
     [Stencil sharedPlugin].menuItemDelete = menuItemBeingAddedByXcode;
     [Stencil sharedPlugin].menuItemCreateTemplateFromGroup = customMenuItem;

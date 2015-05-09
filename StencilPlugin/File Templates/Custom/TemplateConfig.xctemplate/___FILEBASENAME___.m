@@ -1,24 +1,24 @@
 //
-//  TemplateConfig.m
-//  StencilPlugin
+//  ___FILENAME___
+//  ___PROJECTNAME___
 //
-//  Created by Sam Dods on 20/04/2015.
-//  Copyright (c) 2015 Sam Dods. All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//___COPYRIGHT___
 //
 
-#import "TemplateConfig.h"
+#import "___FILEBASENAME___.h"
 #import "ProjectFile.h"
 #import "ProjectGroup.h"
 #import "NSInputStream+StencilAdditions.h"
 #import "NSString+StencilRegex.h"
 #import "ThingTypeToClassNamesMap.h"
 
-@interface TemplateConfig ()
+@interface ___FILEBASENAMEASIDENTIFIER___ ()
 @property (nonatomic, readwrite) TemplateProperties *properties;
 @end
 
 
-@implementation TemplateConfig
+@implementation ___FILEBASENAMEASIDENTIFIER___
 
 + (instancetype)defaultConfigForFiles:(NSArray *)files error:(NSError **)error
 {
@@ -51,7 +51,6 @@
 + (NSOrderedSet *)objcMapsFromFileAtPath:(NSString *)filePath
 {
   NSMutableOrderedSet *maps = [NSMutableOrderedSet new];
-  [self processFileAtPath:filePath matching:@"^@implementation\\s+(\\w+).*" thingType:STCThingTypeObjcInterface maps:maps];
   [self processFileAtPath:filePath matching:@"^@interface\\s+(\\w+)\\s*\\(\\s*\\w*\\s*\\).*" thingType:STCThingTypeObjcInterface maps:maps];
   [self processFileAtPath:filePath matching:@"^@interface\\s+(\\w+)\\s*:\\s*(\\w+).*" thingType:STCThingTypeObjcInterface maps:maps];
   [self processFileAtPath:filePath matching:@"^@protocol\\s+(\\w+)\\s*<(\\w+)>.*" thingType:STCThingTypeObjcProtocol maps:maps];
@@ -119,7 +118,7 @@
 
 @implementation TemplateProperties
 
-- (instancetype)initWithName:(NSString *)name thingType:(STCThingType)thingType nameToReplace:(NSString *)replace inheritFrom:(NSString *)inherit description:(NSString *)description templateFileMap:(NSDictionary *)templateFileMap
+- (instancetype)initWithName:(NSString *)name thingType:(STCThingType)thingType nameToReplace:(NSString *)replace inheritFrom:(NSString *)inherit description:(NSString *)description
 {
   if (!(self = [super init])) {
     return nil;
@@ -129,7 +128,6 @@
   _thingNameToReplace = replace;
   _thingNameToInheritFrom = inherit;
   _templateDescription = description;
-  _templateFilenameByOriginalFilename = templateFileMap;
   return self;
 }
 
