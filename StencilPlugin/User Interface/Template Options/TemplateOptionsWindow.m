@@ -28,6 +28,7 @@
 @property (weak) IBOutlet NSTextField *findTextField;
 @property (weak) IBOutlet NSTextField *replaceTextField;
 @property (weak) IBOutlet NSButton *advancedButton;
+@property (weak) IBOutlet NSButton *customReplaceEnabledButton;
 @end
 
 @implementation TemplateOptionsWindow
@@ -107,7 +108,16 @@
 - (IBAction)didChangeAdvanced:(NSButton *)advancedButton
 {
   self.findTextField.enabled = advancedButton.state;
-  self.replaceTextField.enabled = advancedButton.state;
+  self.customReplaceEnabledButton.enabled = advancedButton.state;
+  self.replaceTextField.enabled = self.customReplaceEnabledButton.state;
+}
+
+- (IBAction)didChangeCustomReplaceEnabled:(NSButton *)customReplaceButton
+{
+  self.replaceTextField.enabled = customReplaceButton.state;
+  if (!self.replaceTextField.enabled) {
+    self.replaceTextField.stringValue = @"___FILEBASENAMEASIDENTIFIER___";
+  }
 }
 
 - (void)updateInheritChoicePopUp

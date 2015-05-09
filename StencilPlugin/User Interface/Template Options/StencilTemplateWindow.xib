@@ -136,7 +136,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MTy-ke-pmh">
-                        <rect key="frame" x="154" y="282" width="183" height="22"/>
+                        <rect key="frame" x="154" y="282" width="158" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="ClassName" drawsBackground="YES" id="XtV-u1-3t4">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -151,14 +151,6 @@ Gw
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cWn-cc-eFy">
-                        <rect key="frame" x="352" y="284" width="73" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Replace" id="I2c-JT-n7J">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mty-6r-Tfu">
                         <rect key="frame" x="154" y="155" width="538" height="94"/>
                         <clipView key="contentView" misplaced="YES" id="ts3-Ad-8s4">
@@ -166,7 +158,7 @@ Gw
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="hxp-vC-aAs" viewBased="YES" id="8r6-uq-1NT">
-                                    <rect key="frame" x="0.0" y="0.0" width="238" height="134"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="529" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -204,7 +196,7 @@ Gw
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="template" width="259" minWidth="40" maxWidth="1000" id="IyD-PE-PfI">
+                                        <tableColumn identifier="template" width="266" minWidth="40" maxWidth="1000" id="IyD-PE-PfI">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Template Filename">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -277,17 +269,28 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NqP-xm-Cpt">
-                        <rect key="frame" x="431" y="281" width="261" height="22"/>
+                        <rect key="frame" x="480" y="281" width="212" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="___FILEBASENAMEASIDENTIFIER___" drawsBackground="YES" id="MEk-Co-x6a">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hTc-pU-Gpy">
+                        <rect key="frame" x="349" y="283" width="125" height="18"/>
+                        <buttonCell key="cell" type="check" title="Custom Replace" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="nmQ-7b-k8g">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="didChangeCustomReplaceEnabled:" target="QvC-M9-y7g" id="6Pu-uq-c2Q"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <connections>
                 <outlet property="advancedButton" destination="shW-8L-dBt" id="9aj-x2-5ai"/>
+                <outlet property="customReplaceEnabledButton" destination="hTc-pU-Gpy" id="xBZ-Vx-svV"/>
                 <outlet property="descriptionTextField" destination="lIc-aU-1qr" id="Gbt-pP-ayg"/>
                 <outlet property="findTextField" destination="MTy-ke-pmh" id="a9o-cb-goK"/>
                 <outlet property="inheritFromPopUpButton" destination="BOp-9v-lgt" id="fvz-sP-F2J"/>
