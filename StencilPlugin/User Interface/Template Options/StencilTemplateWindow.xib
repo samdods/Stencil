@@ -287,6 +287,7 @@ Gw
                 </subviews>
             </view>
             <connections>
+                <outlet property="advancedButton" destination="shW-8L-dBt" id="9aj-x2-5ai"/>
                 <outlet property="descriptionTextField" destination="lIc-aU-1qr" id="Gbt-pP-ayg"/>
                 <outlet property="findTextField" destination="MTy-ke-pmh" id="a9o-cb-goK"/>
                 <outlet property="inheritFromPopUpButton" destination="BOp-9v-lgt" id="fvz-sP-F2J"/>

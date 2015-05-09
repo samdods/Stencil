@@ -27,6 +27,7 @@
 @property (weak) IBOutlet NSTableView *tableView;
 @property (weak) IBOutlet NSTextField *findTextField;
 @property (weak) IBOutlet NSTextField *replaceTextField;
+@property (weak) IBOutlet NSButton *advancedButton;
 @end
 
 @implementation TemplateOptionsWindow
@@ -80,7 +81,7 @@
     [[TemplateFactory defaultFactory] showAlertWithMessage:@"Multiple files cannot be cast to the same output template filename."];
     return;
   }
-  self.templateConfig.properties = [[TemplateProperties alloc] initWithName:self.templateNameTextField.stringValue thingType:map.thingType nameToReplace:map.names.firstObject inheritFrom:inheritFrom  description:self.descriptionTextField.stringValue templateFileMap:fileMap];
+  self.templateConfig.properties = [[TemplateProperties alloc] initWithName:self.templateNameTextField.stringValue thingType:map.thingType nameToReplace:map.names.firstObject inheritFrom:inheritFrom  description:self.descriptionTextField.stringValue templateFileMap:fileMap replaceByFind:[self replacementTextByFindText]];
   [self.completionDelegate templateOptionsWindowDidCompleteOK:self];
 }
 
@@ -177,6 +178,11 @@
   NSArray *names = [self.templateConfig.fileRefs valueForKey:@"nameWithoutExtension"];
   NSSet *set = [NSSet setWithArray:names];
   return set.allObjects;
+}
+
+- (NSDictionary *)replacementTextByFindText
+{
+  return self.advancedButton.state ? @{self.findTextField.stringValue : self.replaceTextField.stringValue} : nil;
 }
 
 @end

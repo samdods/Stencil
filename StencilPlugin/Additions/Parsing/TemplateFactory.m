@@ -87,7 +87,7 @@
   NSString *sourcePath = [[Stencil sharedPlugin].pluginBundle pathForResource:@"TemplateInfo" ofType:@"plist"];
   NSString *targetFilePath = [targetPath stringByAppendingPathComponent:@"TemplateInfo.plist"];
   
-  [self copySourceFileAtPath:sourcePath toPath:targetFilePath withTopComment:nil through:^NSString *(NSString *line) {
+  [self copySourceFileAtPath:sourcePath toPath:targetFilePath withTopComment:nil templateProperties:config.properties through:^NSString *(NSString *line) {
     NSMutableString *mutableLine = [line mutableCopy];
     [mutableLine matchPattern:@"__STC_DESCRIPTION__" replaceWith:config.properties.templateDescription];
     return [mutableLine copy];
@@ -99,7 +99,7 @@
 - (void)createObjcInterfaceTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype configProperties:(TemplateProperties *)templateProperties
 {
   NSString *topComment = [self topCommentForFileType:filetype configProperties:templateProperties];
-  [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment through:^NSString *(NSString *line) {
+  [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment templateProperties:templateProperties through:^NSString *(NSString *line) {
     if (filetype == ProjectFileUserInterface) {
       return [self stringByTemplatifyingXIB:line configProperties:templateProperties];
     }
@@ -120,7 +120,7 @@
 - (void)createObjcProtocolTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype configProperties:(TemplateProperties *)templateProperties
 {
   NSString *topComment = [self topCommentForFileType:filetype configProperties:templateProperties];
-  [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment through:^NSString *(NSString *line) {
+  [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment templateProperties:templateProperties through:^NSString *(NSString *line) {
     if (filetype != ProjectFileUserInterface) {
       return [self stringByTemplatifyingObjcProtocol:line configProperties:templateProperties];
     }
@@ -136,7 +136,7 @@
 - (void)createSwiftClassTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype configProperties:(TemplateProperties *)templateProperties
 {
   NSString *topComment = [self topCommentForFileType:filetype configProperties:templateProperties];
-  [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment through:^NSString *(NSString *line) {
+  [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment templateProperties:templateProperties through:^NSString *(NSString *line) {
     if (filetype == ProjectFileUserInterface) {
       return [self stringByTemplatifyingXIB:line configProperties:templateProperties];
     }
@@ -147,7 +147,7 @@
 - (void)createSwiftProtocolTemplateFromFile:(id<ProjectFile>)file targetPath:(NSString *)targetPath type:(ProjectFileType)filetype configProperties:(TemplateProperties *)templateProperties
 {
   NSString *topComment = [self topCommentForFileType:filetype configProperties:templateProperties];
-  [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment through:^NSString *(NSString *line) {
+  [self copySourceFileAtPath:file.fullPath toPath:targetPath withTopComment:topComment templateProperties:templateProperties through:^NSString *(NSString *line) {
     if (filetype != ProjectFileUserInterface) {
       return [self stringByTemplatifyingSwift:line configProperties:templateProperties];
     }
@@ -181,7 +181,7 @@
 
 #pragma mark - generic copying
 
-- (void)copySourceFileAtPath:(NSString *)sourcePath toPath:(NSString *)targetPath withTopComment:(NSString *)topComment through:(NSString *(^)(NSString *line))modifiedStringBlock
+- (void)copySourceFileAtPath:(NSString *)sourcePath toPath:(NSString *)targetPath withTopComment:(NSString *)topComment templateProperties:(TemplateProperties *)templateProperties through:(NSString *(^)(NSString *line))modifiedStringBlock
 {
   NSInputStream *inputStream = [NSInputStream inputStreamWithFileAtPath:sourcePath];
   [inputStream open];
@@ -204,7 +204,11 @@
       line = inputStream.stc_nextReadLine;
       continue;
     }
-    NSString *output = modifiedStringBlock(line);
+    __block NSString *output = line;
+    [templateProperties.replacementTextByFindText enumerateKeysAndObjectsUsingBlock:^(NSString *findText, NSString *replaceText, BOOL *stop) {
+      output = [line stringByReplacingOccurrencesOfString:findText withString:replaceText];
+    }];
+    output = modifiedStringBlock(output);
     [outputStream stc_writeString:output];
     line = inputStream.stc_nextReadLine;
   }

@@ -119,7 +119,7 @@
 
 @implementation TemplateProperties
 
-- (instancetype)initWithName:(NSString *)name thingType:(STCThingType)thingType nameToReplace:(NSString *)replace inheritFrom:(NSString *)inherit description:(NSString *)description templateFileMap:(NSDictionary *)templateFileMap
+- (instancetype)initWithName:(NSString *)name thingType:(STCThingType)thingType nameToReplace:(NSString *)replace inheritFrom:(NSString *)inherit description:(NSString *)description templateFileMap:(NSDictionary *)templateFileMap replaceByFind:(NSDictionary *)replaceByFind
 {
   if (!(self = [super init])) {
     return nil;
@@ -130,6 +130,7 @@
   _thingNameToInheritFrom = inherit;
   _templateDescription = description;
   _templateFilenameByOriginalFilename = templateFileMap;
+  _replacementTextByFindText = replaceByFind;
   return self;
 }
 

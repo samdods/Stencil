@@ -19,8 +19,9 @@
 @property (nonatomic, readonly) NSString *thingNameToInheritFrom;
 @property (nonatomic, readonly) NSString *templateDescription;
 @property (nonatomic, readonly) NSDictionary *templateFilenameByOriginalFilename;
+@property (nonatomic, readonly) NSDictionary *replacementTextByFindText;
 
-- (instancetype)initWithName:(NSString *)name thingType:(STCThingType)thingType nameToReplace:(NSString *)replace inheritFrom:(NSString *)inherit description:(NSString *)description templateFileMap:(NSDictionary *)templateFileMap;
+- (instancetype)initWithName:(NSString *)name thingType:(STCThingType)thingType nameToReplace:(NSString *)replace inheritFrom:(NSString *)inherit description:(NSString *)description templateFileMap:(NSDictionary *)templateFileMap replaceByFind:(NSDictionary *)replaceByFind;
 
 @end
 
