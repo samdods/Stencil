@@ -64,8 +64,13 @@ static BOOL ForceShowTemplatesOnly = NO;
     return nil;
   }
   _pluginBundle = pluginBundle;
-  [self updateMainMenuItems];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFinishLaunching:) name:NSApplicationDidFinishLaunchingNotification object:nil];
   return self;
+}
+
+- (void)didFinishLaunching:(NSNotification *)notification
+{
+  [self updateMainMenuItems];
 }
 
 - (void)updateMainMenuItems
