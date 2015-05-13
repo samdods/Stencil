@@ -62,11 +62,14 @@
 
 + (NSOrderedSet *)swiftMapsFromFileAtPath:(NSString *)filePath
 {
+  NSString *objcPrefix = @"(?:@objc(?:\\s*\\(\\s*\\w+\\s*\\))?)?";
+  NSString *accessPrefix = @"(?:public|private|internal)?";
+    
   NSMutableOrderedSet *maps = [NSMutableOrderedSet new];
-  [self processFileAtPath:filePath matching:@"^[@objc|public|private|internal]*\\s*extension\\s+(\\w+).*" thingType:STCThingTypeSwiftClass maps:maps];
-  [self processFileAtPath:filePath matching:@"^[@objc|public|private|internal]*\\s*class\\s+(\\w+).*" thingType:STCThingTypeSwiftClass maps:maps];
-  [self processFileAtPath:filePath matching:@"^[@objc|public|private|internal]*\\s*class\\s+(\\w+)\\s*:\\s*(\\w+).*" thingType:STCThingTypeSwiftClass maps:maps];
-  [self processFileAtPath:filePath matching:@"^[@objc|public|private|internal]*\\s*protocol\\s+(\\w+)\\s*:\\s*(\\w+).*" thingType:STCThingTypeSwiftProtocol maps:maps];
+  [self processFileAtPath:filePath matching:[NSString stringWithFormat:@"^\\s*%@\\s*%@\\s*extension\\s+(\\w+).*", objcPrefix, accessPrefix] thingType:STCThingTypeSwiftClass maps:maps];
+  [self processFileAtPath:filePath matching:[NSString stringWithFormat:@"^\\s*%@\\s*%@\\s*class\\s+(\\w+).*", objcPrefix, accessPrefix] thingType:STCThingTypeSwiftClass maps:maps];
+  [self processFileAtPath:filePath matching:[NSString stringWithFormat:@"^\\s*%@\\s*%@\\s*class\\s+(\\w+)\\s*:\\s*(\\w+).*", objcPrefix, accessPrefix] thingType:STCThingTypeSwiftClass maps:maps];
+  [self processFileAtPath:filePath matching:[NSString stringWithFormat:@"^\\s*%@\\s*%@\\s*protocol\\s+(\\w+)\\s*:\\s*(\\w+).*", objcPrefix, accessPrefix] thingType:STCThingTypeSwiftProtocol maps:maps];
   return maps.copy;
 }
 
