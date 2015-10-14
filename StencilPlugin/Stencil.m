@@ -190,14 +190,14 @@ static BOOL ForceShowTemplatesOnly = NO;
   templateOptionsWindow.templateConfig = config;
   templateOptionsWindow.completionDelegate = self;
   
-  [NSApp beginSheet:templateOptionsWindow completionHandler:^(NSModalResponse returnCode){
-      if (returnCode == NSModalResponseStop || returnCode == NSModalResponseAbort)                 {
+  [[NSApp keyWindow] beginSheet:templateOptionsWindow completionHandler:^(NSModalResponse returnCode){
+      if (returnCode == NSModalResponseStop || returnCode == NSModalResponseAbort)
+      {
           [self templateOptionsWindowDidCancel:templateOptionsWindow];
       } else {
           // NSModalResponseContinue
           [self templateOptionsWindowDidCompleteOK:templateOptionsWindow];
       }
-      
   }];
 }
 
