@@ -22,4 +22,4 @@ own custom file template and how to use it to create new files.
 
 ## Twitter
 
-If you have questions or concerns, or just want to say hello, please speak to me on Twitter!
+If you have questions or concerns, or just want to say hello, please speak to me on [Twitter](https://twitter.com/dodsios)!
